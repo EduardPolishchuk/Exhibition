@@ -2,8 +2,8 @@ package ua.training.model.entity.enums;
 
 public enum Hall {
     RED( 120),
-    BLUE( 120),
-    GREEN( 120);
+    BLUE( 80),
+    GREEN( 50);
 
     public int getPlaces() {
         return places;
@@ -14,4 +14,5 @@ public enum Hall {
        Hall(int places){
         this.places = places;
     }
+
 }

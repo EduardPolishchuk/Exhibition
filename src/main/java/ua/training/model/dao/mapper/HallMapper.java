@@ -8,8 +8,6 @@ import java.sql.SQLException;
 public class HallMapper implements ObjectMapper<Hall>{
     @Override
     public Hall extractFromResultSet(ResultSet rs) throws SQLException {
-        Hall hall = Hall.valueOf(rs.getString("name"));
-        return hall;
+        return Hall.valueOf(rs.getString("name"));
     }
-
   }

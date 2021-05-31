@@ -45,14 +45,14 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
 //        System.out.println(path);
-        path = path.replaceAll(".*/Exposition_war_exploded/" , "");
+        path = path.replaceAll(".*/Exposition/" , "");
         Command command = commands.getOrDefault(path ,
                 (r)->"/index.jsp");
         String page = command.execute(request);
 //        System.out.println("page: "+page);
         //request.getRequestDispatcher(page).forward(request,response);
         if(page.contains("redirect:")){
-            response.sendRedirect(page.replace("redirect:", "/Exposition_war_exploded"));
+            response.sendRedirect(page.replace("redirect:", "/Exposition"));
         }else {
             request.getRequestDispatcher(page).forward(request, response);
         }

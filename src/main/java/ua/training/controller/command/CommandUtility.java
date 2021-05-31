@@ -17,6 +17,7 @@ class CommandUtility {
     }
 
     static boolean checkUserIsLogged(HttpServletRequest request, String login){
+        @SuppressWarnings("unchecked")
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
                 .getAttribute("loggedUsers");
         if(loggedUsers.stream().anyMatch(login::equals)){
@@ -30,10 +31,11 @@ class CommandUtility {
     }
 
     static boolean logOutUser(HttpServletRequest request) {
-        String login = (String) request.getServletContext()
-                .getAttribute("login");
+        @SuppressWarnings("unchecked")
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
                 .getAttribute("loggedUsers");
+        String login = (String) request.getServletContext()
+                .getAttribute("login");
        if (!loggedUsers.remove(login)){
            return false;
        }

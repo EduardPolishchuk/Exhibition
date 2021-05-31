@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -14,7 +15,33 @@
 
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/logout">Logout</a>
-<c:out value="FEp"></c:out>
+<table>
+    <thead>
+    <tr>
+        <th>Exposition</th>
+        <th>Price</th>
+        <th>Halls</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+<tbody>
+<c:forEach var="exp" items="${expo}" step="1" varStatus="status">
+    <tr>
+        <td>${exp.theme}</td>
+        <td>${exp.price}</td>
+        <td>${exp.halls}</td>
+        <td>${exp.date}</td>
+    </tr>
+tr>td>*5
+
+<%--    <li> ${exp.theme}</li>--%>
+<%--    <li>${exp.price}</li>--%>
+<%--    <li>${exp.halls}</li>--%>
+<%--    <li>${exp.date}</li>--%>
+</c:forEach>
+</tbody>
+</table>
+
 </body>
+<a href="${pageContext.request.contextPath}/logout">Logout</a>
 </html>

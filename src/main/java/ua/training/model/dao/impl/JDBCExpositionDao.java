@@ -18,7 +18,7 @@ import ua.training.model.entity.enums.Hall;
 public class JDBCExpositionDao implements ExpositionDao {
 
     private static final Logger logger = LogManager.getLogger();
-    private Connection connection;
+    private final Connection connection;
 
     public JDBCExpositionDao(Connection connection) {
         this.connection = connection;
@@ -56,7 +56,7 @@ public class JDBCExpositionDao implements ExpositionDao {
         return true;
     }
 
-    private Map<Hall, Integer> getHalls() {
+    public Map<Hall, Integer> getHalls() {
         Map<Hall, Integer> halls = new HashMap<>();
         HallMapper mapper = new HallMapper();
         try (
@@ -80,7 +80,29 @@ public class JDBCExpositionDao implements ExpositionDao {
 
     @Override
     public List<Exposition> findAll() {
-        return null;
+        List<Exposition> list = new ArrayList<>();
+        ExpositionMapper expoMapper = new ExpositionMapper();
+        HallMapper hallMapper = new HallMapper();
+        Set<Hall>  halls;
+        try (
+                PreparedStatement ps = connection.prepareCall("SELECT  hall.name FROM hall join exposition_has_hall on hall.id = exposition_has_hall.hall_id where exposition_id =?");
+                Statement statement = connection.createStatement();
+                ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition")) {
+            while (expoResultSet.next()) {
+                Exposition ex = expoMapper.extractFromResultSet(expoResultSet);
+                ps.setInt(1,ex.getId());
+                ResultSet hallResultSet = ps.executeQuery();
+                halls = new HashSet<>();
+                while (hallResultSet.next()) {
+                  halls.add(hallMapper.extractFromResultSet(hallResultSet));
+                }
+                ex.setHalls(halls);
+                list.add(ex);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
+        return list;
     }
 
     @Override
@@ -105,19 +127,19 @@ public class JDBCExpositionDao implements ExpositionDao {
     @Override
     public Optional<Exposition> findByName(String name) {
 
-        Optional<Exposition> result = Optional.empty();
-        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM teacher WHERE name = ?")) {
-            ps.setString(1, name);
-            ResultSet rs;
-            rs = ps.executeQuery();
-            ExpositionMapper mapper = new ExpositionMapper();
-            if (rs.next()) {
-                result = Optional.of(mapper.extractFromResultSet(rs));
-            }//TODO : ask question how avoid two teachers with the same name
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-        return result;
+//        Optional<Exposition> result = Optional.empty();
+//        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM teacher WHERE name = ?")) {
+//            ps.setString(1, name);
+//            ResultSet rs;
+//            rs = ps.executeQuery();
+//            ExpositionMapper mapper = new ExpositionMapper();
+//            if (rs.next()) {
+//                result = Optional.of(mapper.extractFromResultSet(rs));
+//            }//TODO : ask question how avoid two teachers with the same name
+//        } catch (Exception ex) {
+//            throw new RuntimeException(ex);
+//        }
+        return Optional.empty();
     }
 
 }
