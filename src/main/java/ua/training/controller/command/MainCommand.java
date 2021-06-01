@@ -26,7 +26,7 @@ public class MainCommand implements Command{
 //        list.add(exposition);
 //        list.add(exposition2);
 //        list.add(exposition3);
-//        request.getSession().setAttribute("expo", list);
+        request.getSession().setAttribute("expo", halls);
         return "redirect:/user/main.jsp";
     }
 }

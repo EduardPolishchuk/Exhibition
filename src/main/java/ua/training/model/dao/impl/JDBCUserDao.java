@@ -90,8 +90,8 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void delete(int id) {
-
+    public boolean delete(int id) {
+        return false;
     }
 
     @Override

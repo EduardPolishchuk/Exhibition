@@ -10,11 +10,12 @@
     <title>Exposition Events</title>
 </head>
 <body>
+<jsp:include page="common/header.jsp"/>
+
 <h2>
     Welcome to Exposition Events <br/>
 </h2>
 <br/>
-<jsp:include page="common/header.jsp"/>
 <br/>
 <a href="${pageContext.request.contextPath}/login">Please log in</a>
 <br>

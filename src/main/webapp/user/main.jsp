@@ -12,32 +12,23 @@
 <html>
 <head>
     <title>Title</title>
-
+    <jsp:include page="/common/tablestyle.jsp"/>
 </head>
 <body>
 <table>
     <thead>
     <tr>
-        <th>Exposition</th>
-        <th>Price</th>
-        <th>Halls</th>
-        <th>Date</th>
+        <th>Hall</th>
+        <th>Places</th>
     </tr>
     </thead>
 <tbody>
 <c:forEach var="exp" items="${expo}" step="1" varStatus="status">
     <tr>
-        <td>${exp.theme}</td>
-        <td>${exp.price}</td>
-        <td>${exp.halls}</td>
-        <td>${exp.date}</td>
+        <td>${exp}</td>
+        <td>${exp.places}</td>
     </tr>
-tr>td>*5
 
-<%--    <li> ${exp.theme}</li>--%>
-<%--    <li>${exp.price}</li>--%>
-<%--    <li>${exp.halls}</li>--%>
-<%--    <li>${exp.date}</li>--%>
 </c:forEach>
 </tbody>
 </table>

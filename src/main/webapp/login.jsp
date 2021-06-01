@@ -5,6 +5,7 @@
 
 </head>
 <body>
+<jsp:include page="common/header.jsp"/>
 <h1>Вход в систему</h1>
 <form method="post" action="${pageContext.request.contextPath}/login">
     <hr/>

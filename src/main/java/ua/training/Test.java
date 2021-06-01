@@ -18,9 +18,12 @@ public class Test {
 //        UserDao userDao = daoFactory.createUserDao();
 //        System.out.println(userDao.findById(1));
         ExpositionDao expositionDao = daoFactory.createExpositionDao();
-        for (Exposition ex : expositionDao.findAll()) {
-            System.out.println(ex);
-        }
+        System.out.println(expositionDao.delete(22));
+
+
+//        for (Exposition ex : expositionDao.findAll()) {
+//            System.out.println(ex);
+//        }
 //        System.out.println(expositionDao.findAll());
 //        Set<Hall> halls = new HashSet<>();
 //        halls.add(Hall.BLUE);

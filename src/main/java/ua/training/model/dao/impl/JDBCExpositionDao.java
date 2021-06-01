@@ -83,18 +83,18 @@ public class JDBCExpositionDao implements ExpositionDao {
         List<Exposition> list = new ArrayList<>();
         ExpositionMapper expoMapper = new ExpositionMapper();
         HallMapper hallMapper = new HallMapper();
-        Set<Hall>  halls;
+        Set<Hall> halls;
         try (
                 PreparedStatement ps = connection.prepareCall("SELECT  hall.name FROM hall join exposition_has_hall on hall.id = exposition_has_hall.hall_id where exposition_id =?");
                 Statement statement = connection.createStatement();
                 ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition")) {
             while (expoResultSet.next()) {
                 Exposition ex = expoMapper.extractFromResultSet(expoResultSet);
-                ps.setInt(1,ex.getId());
+                ps.setInt(1, ex.getId());
                 ResultSet hallResultSet = ps.executeQuery();
                 halls = new HashSet<>();
                 while (hallResultSet.next()) {
-                  halls.add(hallMapper.extractFromResultSet(hallResultSet));
+                    halls.add(hallMapper.extractFromResultSet(hallResultSet));
                 }
                 ex.setHalls(halls);
                 list.add(ex);
@@ -111,8 +111,27 @@ public class JDBCExpositionDao implements ExpositionDao {
     }
 
     @Override
-    public void delete(int id) {
-
+    public boolean delete(int id) {
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareCall("INSERT INTO canceled_exposition SELECT * FROM exposition WHERE id =?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps = connection.prepareCall("DELETE FROM exposition WHERE id=?");
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            ps = connection.prepareCall("UPDATE exposition_has_hall SET date = null WHERE exposition_id=?");
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+            rollback(connection);
+            return false;
+        }finally {
+            close();
+        }
+        return true;
     }
 
     @Override
