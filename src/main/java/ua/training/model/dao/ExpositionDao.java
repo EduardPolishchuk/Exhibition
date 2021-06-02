@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface ExpositionDao extends GenericDao<Exposition> {
 
-    Optional<Exposition> findByName(String name);
+    Optional<Exposition> findByTheme(String theme);
     // Optional<Teacher> findByNameProxy(String name);
 }

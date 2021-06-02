@@ -18,8 +18,23 @@ public class Test {
 //        UserDao userDao = daoFactory.createUserDao();
 //        System.out.println(userDao.findById(1));
         ExpositionDao expositionDao = daoFactory.createExpositionDao();
-        System.out.println(expositionDao.delete(22));
+//        System.out.println(expositionDao.delete(22));
 
+        LocalDate calendar = LocalDate.of(2020, 2, 26);
+        Set<Hall> halls = new HashSet<>();
+        halls.add(Hall.BLUE);
+        halls.add(Hall.GREEN);
+        Exposition ex = Exposition.builder()
+                .id(1)
+                .theme("Grass")
+                .date(calendar)
+                .description("graaaaaaas")
+                .halls(halls)
+                .imageUrl("/url/url")
+                .price(200)
+                .max(200)
+                .build();
+        System.out.println(expositionDao.update(ex));
 
 //        for (Exposition ex : expositionDao.findAll()) {
 //            System.out.println(ex);

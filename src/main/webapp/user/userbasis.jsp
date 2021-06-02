@@ -1,4 +1,7 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="resources"/>
 <html>
 <head>
     <title>USER</title>
@@ -7,7 +10,7 @@
 <body>
 <jsp:include page="/common/header.jsp"/>
 <h2><strong>
-    Welcome to Exposition Events
+    <fmt:message key="welcomeText"/>
 </strong>
 
 </h2>

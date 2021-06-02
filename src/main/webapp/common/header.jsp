@@ -28,7 +28,7 @@
             <c:otherwise>
                 <div style="display: flex; justify-content: flex-start">
                     <h6>
-                        <a style="" href="${pageContext.request.contextPath}/login"> <fmt:message key="login"/></a>
+                        <a style="" href="${pageContext.request.contextPath}/login"> <fmt:message key="singIn"/></a>
                     </h6>
                 </div>
             </c:otherwise>

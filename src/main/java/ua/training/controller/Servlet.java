@@ -27,7 +27,6 @@ public class Servlet extends HttpServlet {
                 new LoginCommand());
         commands.put("exception" , new ExceptionCommand());
         commands.put("main" , new MainCommand());
-        commands.put("changeLanguage" , new ChangeLanguageCommand());
     }
 
     public void doGet(HttpServletRequest request,

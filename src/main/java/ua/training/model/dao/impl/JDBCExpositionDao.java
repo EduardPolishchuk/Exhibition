@@ -29,7 +29,6 @@ public class JDBCExpositionDao implements ExpositionDao {
         try {
             connection.setAutoCommit(false);
             int genExpositionID;
-            Map<Hall, Integer> halls = getHalls();
             PreparedStatement ps1 = connection.prepareCall("INSERT INTO exposition (theme,`date`) VALUES (?,?)");
             ps1.setString(1, exposition.getTheme());
             ps1.setDate(2, Date.valueOf(exposition.getDate()));
@@ -40,7 +39,7 @@ public class JDBCExpositionDao implements ExpositionDao {
             for (Hall hall : exposition.getHalls()) {
                 ps1 = connection.prepareCall("INSERT INTO exposition_has_hall (exposition_id, hall_id,`date`) VALUES (?,?,?)");
                 ps1.setInt(1, genExpositionID);
-                ps1.setInt(2, halls.get(hall));
+                ps1.setInt(2, hall.getId());
                 ps1.setDate(3, Date.valueOf(exposition.getDate()));
                 ps1.executeUpdate();
             }
@@ -55,23 +54,7 @@ public class JDBCExpositionDao implements ExpositionDao {
         return true;
     }
 
-    public Map<Hall, Integer> getHalls() {
-        Map<Hall, Integer> halls = new HashMap<>();
-        HallMapper mapper = new HallMapper();
-        try (
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM hall");
-                ResultSet resultSet = preparedStatement.executeQuery()) {
-            while (resultSet.next()) {
-                halls.put(mapper.extractFromResultSet(resultSet)
-                        , resultSet.getInt("id"));
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage());
-        }
-        return halls;
-    }
-
-    @Override
+       @Override
     public Exposition findById(int id) {
         return null;
     }
@@ -108,18 +91,25 @@ public class JDBCExpositionDao implements ExpositionDao {
     public boolean update(Exposition exposition) {
         try {
             connection.setAutoCommit(false);
-            Map<Hall, Integer> halls = getHalls();
-            PreparedStatement ps1 = connection.prepareCall("INSERT INTO exposition (theme,`date`) VALUES (?,?)");
-            ps1.setString(1, exposition.getTheme());
-            ps1.setDate(2, Date.valueOf(exposition.getDate()));
-            ps1.executeUpdate();
-            ResultSet resultSet = ps1.getGeneratedKeys();
-            resultSet.next();
+            PreparedStatement ps = connection.prepareCall("UPDATE exposition, exposition_description SET date=?,theme=?,price=?,max_places=?,description=?," +
+                    "image_url=? where exposition.id = exposition_description.exposition_id AND exposition_id=?");
+            ps.setDate(1, Date.valueOf(exposition.getDate()));
+            ps.setString(2, exposition.getTheme());
+            ps.setInt(3, exposition.getPrice());
+            ps.setInt(4, exposition.getMax());
+            ps.setString(5, exposition.getDescription());
+            ps.setString(6, exposition.getImageUrl());
+            ps.setInt(7, exposition.getId());
+            ps.executeUpdate();
+            ps = connection.prepareCall("DELETE FROM exposition_has_hall WHERE exposition_id=?");
+            ps.setInt(1, exposition.getId());
+            ps.executeUpdate();
             for (Hall hall : exposition.getHalls()) {
-                ps1 = connection.prepareCall("INSERT INTO exposition_has_hall (exposition_id, hall_id,`date`) VALUES (?,?,?)");
-                ps1.setInt(2, halls.get(hall));
-                ps1.setDate(3, Date.valueOf(exposition.getDate()));
-                ps1.executeUpdate();
+                ps = connection.prepareCall("INSERT INTO exposition_has_hall (exposition_id, hall_id, date) VALUES (?,?,?)");
+                ps.setInt(1,exposition.getId());
+                ps.setInt(2,hall.getId());
+                ps.setDate(3,Date.valueOf(exposition.getDate()));
+                ps.executeUpdate();
             }
             connection.commit();
         } catch (SQLException ex) {
@@ -140,17 +130,17 @@ public class JDBCExpositionDao implements ExpositionDao {
             ps.setInt(1, id);
             ps.executeUpdate();
             ps = connection.prepareCall("DELETE FROM exposition WHERE id=?");
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ps.executeUpdate();
             ps = connection.prepareCall("UPDATE exposition_has_hall SET date = null WHERE exposition_id=?");
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
             rollback(connection);
             return false;
-        }finally {
+        } finally {
             close();
         }
         return true;
@@ -166,21 +156,21 @@ public class JDBCExpositionDao implements ExpositionDao {
     }
 
     @Override
-    public Optional<Exposition> findByName(String name) {
+    public Optional<Exposition> findByTheme(String theme) {
 
-//        Optional<Exposition> result = Optional.empty();
-//        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM teacher WHERE name = ?")) {
-//            ps.setString(1, name);
-//            ResultSet rs;
-//            rs = ps.executeQuery();
-//            ExpositionMapper mapper = new ExpositionMapper();
-//            if (rs.next()) {
-//                result = Optional.of(mapper.extractFromResultSet(rs));
-//            }//TODO : ask question how avoid two teachers with the same name
-//        } catch (Exception ex) {
-//            throw new RuntimeException(ex);
-//        }
-        return Optional.empty();
+        Optional<Exposition> result = Optional.empty();
+        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM exposition WHERE theme = ?")) {
+            ps.setString(1, theme);
+            ResultSet rs;
+            rs = ps.executeQuery();
+            ExpositionMapper mapper = new ExpositionMapper();
+            if (rs.next()) {
+                result = Optional.of(mapper.extractFromResultSet(rs));
+            }//TODO : ask question how avoid two teachers with the same name
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        return result;
     }
 
 }

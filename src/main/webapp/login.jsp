@@ -15,15 +15,13 @@
         <hr>
     </form>
     <title>Login to the system</title>
-
 </head>
 <body>
 <h1><fmt:message key="loginToSystem"/></h1>
-
 <form method="post" action="${pageContext.request.contextPath}/login">
     <hr/>
     <tr>
-        <td><fmt:message key="login"/> </td>
+        <td><fmt:message key="userName"/> </td>
         <td><input type="text" name="login"></td>
     </tr><br/><br/>
 
@@ -31,12 +29,10 @@
         <td><fmt:message key="password"/> </td>
         <td><input type="password" name="password"></td>
     </tr><br/><br/>
-
-    <input class="button" type="submit" value="Войти">
+    <input class="button" type="submit" value="<fmt:message key="singIn"/>">
     </table>
 </form>
 <hr/>
 <a href="${pageContext.request.contextPath}/"><fmt:message key="home"/> </a>
-
 </body>
 </html>

@@ -16,6 +16,7 @@ import java.util.Set;
 public class Exposition {
     private String theme;
     private String description;
+    private String imageUrl;
     private int price;
     private Set<Hall> halls;
     private LocalDate date;
