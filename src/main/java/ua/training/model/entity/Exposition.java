@@ -34,34 +34,4 @@ public class Exposition {
         this.halls = halls;
         this.updateMax();
     }
-
-//    public Exposition() {
-//    }
-
-//    public Exposition(String theme, int price, Set<Hall> halls, LocalDate date) {
-//        this.theme = theme;
-//        this.price = price;
-//        this.halls = halls;
-//        this.date = date;
-//        setMax();
-//    }
-
-
-
-
-
-    public static void main(String[] args) {
-//        Set<Hall> halls = new HashSet<>();
-//        halls.add(Hall.BLUE);
-//        halls.add(Hall.GREEN);
-//                LocalDate calendar = LocalDate.of(2020, 1, 25);
-//        Exposition exposition = new Exposition("Theme", 120, halls, calendar);
-////        Exposition exposition = new Exposition();
-////        exposition.setDate(calendar);
-////        exposition.setHalls(halls);
-////        Set<Hall> halls2 = exposition.getHalls();
-////        exposition.setPrice(125);
-////        exposition.setTheme("Theme");
-//        System.out.println(exposition);
-    }
 }

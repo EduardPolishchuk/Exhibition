@@ -24,7 +24,6 @@ public class JDBCExpositionDao implements ExpositionDao {
         this.connection = connection;
     }
 
-
     @Override
     public boolean create(Exposition exposition) {
         try {
@@ -106,8 +105,31 @@ public class JDBCExpositionDao implements ExpositionDao {
     }
 
     @Override
-    public void update(Exposition entity) {
-
+    public boolean update(Exposition exposition) {
+        try {
+            connection.setAutoCommit(false);
+            Map<Hall, Integer> halls = getHalls();
+            PreparedStatement ps1 = connection.prepareCall("INSERT INTO exposition (theme,`date`) VALUES (?,?)");
+            ps1.setString(1, exposition.getTheme());
+            ps1.setDate(2, Date.valueOf(exposition.getDate()));
+            ps1.executeUpdate();
+            ResultSet resultSet = ps1.getGeneratedKeys();
+            resultSet.next();
+            for (Hall hall : exposition.getHalls()) {
+                ps1 = connection.prepareCall("INSERT INTO exposition_has_hall (exposition_id, hall_id,`date`) VALUES (?,?,?)");
+                ps1.setInt(2, halls.get(hall));
+                ps1.setDate(3, Date.valueOf(exposition.getDate()));
+                ps1.executeUpdate();
+            }
+            connection.commit();
+        } catch (SQLException ex) {
+            logger.log(Level.ERROR, ex.getMessage());
+            rollback(connection);
+            return false;
+        } finally {
+            close();
+        }
+        return true;
     }
 
     @Override

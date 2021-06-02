@@ -8,12 +8,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Doctor App</title>
+    <title>ERROR</title>
 </head>
     <body>
+    <jsp:include page="/common/header.jsp"/>
         <h2>
-           Error Page<br/>
-            <i>Error <%= exception %></i>
+           Error<br/>
+            <i>Oops, something went wrong...
+                <a href="${pageContext.request.contextPath}/">Back.</a>
+            </i>
         </h2>
 
 

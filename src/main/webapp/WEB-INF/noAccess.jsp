@@ -11,9 +11,9 @@
     <title>No Access</title>
 </head>
     <body>
+    <jsp:include page="/common/header.jsp"/>
         <h2>
            Sorry, you don't have access to this page<br/>
-            <i>Error <%= exception %></i>
         </h2>
         <a href="${pageContext.request.contextPath}/">На головну</a>
        <br>

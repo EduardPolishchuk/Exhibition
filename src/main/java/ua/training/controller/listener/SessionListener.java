@@ -9,11 +9,12 @@ import java.util.HashSet;
 public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-
+        httpSessionEvent.getSession().setAttribute("language","uk");
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+        @SuppressWarnings("unchecked")
         HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
                 .getSession().getServletContext()
                 .getAttribute("loggedUsers");

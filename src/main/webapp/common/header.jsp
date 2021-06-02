@@ -1,34 +1,45 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: y
-  Date: 16.05.21
-  Time: 12:37
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="uk"/>
-<fmt:setBundle basename="resources_utf8_uk"/>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="resources"/>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>Title</title>
+    <form style="background-color: black; text-align: end " ><br>
+        <button type="submit" class="btn btn-light" name="language" value="en"><strong>EN</strong></button>
+        <button type="submit" class="btn btn-light" name="language" value="uk"><strong>UA</strong></button>
+<%--        <input type="hidden" name="command" value="changeLanguage"/>--%>
+        <c:choose>
+            <c:when test="${login != null}">
+                <div style="display: flex; justify-content: flex-start">
+                    <h5 style="color: aliceblue">${login}<br/>
+                    </h5>
+                    <h6>
+                        <a style="" href="${pageContext.request.contextPath}/logout"> <fmt:message key="logout"/></a>
+                    </h6>
+                </div>
+                <br/>
+            </c:when>
+            <c:otherwise>
+                <div style="display: flex; justify-content: flex-start">
+                    <h6>
+                        <a style="" href="${pageContext.request.contextPath}/login"> <fmt:message key="login"/></a>
+                    </h6>
+                </div>
+            </c:otherwise>
+        </c:choose>
+        <hr>
+    </form>
 </head>
 <body>
-<h4 style="text-align: end">
-    <form action="/Servlet" method="post" >
-        <button type="submit" name="language" value="en">EN</button>
-        <button type="submit" name="language" value="uk">UA</button>
-        <input type="hidden" name="command" value="changeLanguage"/>
-    </form>
-</h4>
-
-<a href="/"><fmt:message key="beautyShop"/></a>
-<c:if test="${login}">
-    <div style="display: flex; justify-content: flex-end">
-        <a href="/logout">logout</a>
-    </div>
-</c:if>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
 <hr>
 </body>
 </html>

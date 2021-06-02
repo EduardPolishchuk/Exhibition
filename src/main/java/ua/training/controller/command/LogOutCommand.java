@@ -9,7 +9,7 @@ public class LogOutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         CommandUtility.logOutUser(request);
-        CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, "guest");
+        CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, null);
         return "redirect:/";
     }
 }

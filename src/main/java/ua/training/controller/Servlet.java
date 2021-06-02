@@ -27,6 +27,7 @@ public class Servlet extends HttpServlet {
                 new LoginCommand());
         commands.put("exception" , new ExceptionCommand());
         commands.put("main" , new MainCommand());
+        commands.put("changeLanguage" , new ChangeLanguageCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -44,16 +45,19 @@ public class Servlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
+        System.out.println(path);
 //        System.out.println(path);
         path = path.replaceAll(".*/Exposition/" , "");
         Command command = commands.getOrDefault(path ,
                 (r)->"/index.jsp");
+        System.out.println(path);
         String page = command.execute(request);
 //        System.out.println("page: "+page);
         //request.getRequestDispatcher(page).forward(request,response);
         if(page.contains("redirect:")){
             response.sendRedirect(page.replace("redirect:", "/Exposition"));
-        }else {
+        }
+        else {
             request.getRequestDispatcher(page).forward(request, response);
         }
     }
