@@ -14,7 +14,7 @@
     <jsp:include page="/common/header.jsp"/>
         <h2>
            Error<br/>
-            <i>Oops, something went wrong...
+            <i>Oops, something went wrong...<%= exception %>
                 <a href="${pageContext.request.contextPath}/">Back.</a>
             </i>
         </h2>

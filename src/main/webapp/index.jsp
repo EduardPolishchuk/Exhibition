@@ -6,12 +6,25 @@
 <fmt:setBundle basename="resources"/>
 
 <html>
-<head>
+<head >
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Exposition Events</title>
 </head>
-<body>
+<body >
 <jsp:include page="common/header.jsp"/>
 <h2><fmt:message key="welcomeText"/></h2>
+<hr/>
+<table style="background-image: url(images/123.jpg)">
+    <h2>Expositions </h2>
+
+    <c:forEach var="item" items="${expoList}" >
+        <tr>
+            <th>${item.theme} ITEM_THEME</th>
+            <th>${item.date} ITEM_DATE</th>
+            <th>
+            </th>
+        </tr>
+    </c:forEach>
+</table>
 </body>
 </html>

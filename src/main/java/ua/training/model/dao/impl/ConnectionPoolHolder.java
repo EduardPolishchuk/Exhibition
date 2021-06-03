@@ -11,7 +11,10 @@ import java.util.Properties;
 
 public class ConnectionPoolHolder {
     private static volatile DataSource dataSource;
-    private static final String PROPERTIES_PATH = "src/main/resources/dp.properties";
+    private static final String PROPERTIES = "dp.properties";
+    private static final String CONNECTION_URL = "connection.url";
+    private static final String USERNAME = "dbUser";
+    private static final String PASSWORD = "dbPassword";
 
     public static DataSource getDataSource(){
 
@@ -20,14 +23,14 @@ public class ConnectionPoolHolder {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
                     Properties properties = new Properties();
-                    try(InputStream in = Files.newInputStream(Paths.get(PROPERTIES_PATH))){
+                    try(InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTIES)){
                         properties.load(in);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    ds.setUrl(properties.getProperty("connection.url"));
-                    ds.setUsername(properties.getProperty("dbUser"));
-                    ds.setPassword(properties.getProperty("dbPassword"));
+                    ds.setUrl(properties.getProperty(CONNECTION_URL));
+                    ds.setUsername(properties.getProperty(USERNAME));
+                    ds.setPassword(properties.getProperty(PASSWORD));
                     ds.setMinIdle(5);
                     ds.setMaxIdle(10);
                     ds.setMaxOpenPreparedStatements(100);
@@ -36,5 +39,16 @@ public class ConnectionPoolHolder {
             }
         }
         return dataSource;
+
+    }
+
+    public static void main(String[] args) {
+        Properties properties = new Properties();
+        try(InputStream in = Files.newInputStream(Paths.get(PROPERTIES))){
+            properties.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(properties.getProperty("connection.url")+"?");
     }
 }

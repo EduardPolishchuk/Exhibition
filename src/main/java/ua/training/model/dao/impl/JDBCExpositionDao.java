@@ -83,6 +83,8 @@ public class JDBCExpositionDao implements ExpositionDao {
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
+        }finally {
+            close();
         }
         return list;
     }

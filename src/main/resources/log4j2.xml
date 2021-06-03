@@ -8,7 +8,7 @@
     </Properties>
     <ThresholdFilter/>
     <Appenders>
-        <File name="TxtFile" fileName="exposition_project_logs/log.txt" bufferedIO="true">
+        <File name="TxtFile" fileName="exhibition_project_logs/log.txt" bufferedIO="true">
             <PatternLayout pattern="${pattern_file}"/>
         </File>
         <Console name="Console" target="SYSTEM_OUT">

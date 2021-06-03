@@ -1,37 +1,31 @@
 package ua.training.controller.filter;
 
+import ua.training.model.entity.User;
+import ua.training.model.service.ExhibitionService;
+
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AuthFilter implements Filter {
+    private ExhibitionService exhibitionService = new ExhibitionService();
+
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        Filter.super.init(filterConfig);
     }
 
     @Override
-    public void doFilter(ServletRequest request,
-                         ServletResponse response,
-                         FilterChain filterChain) throws IOException, ServletException {
-
-        final HttpServletRequest req = (HttpServletRequest) request;
-        final HttpServletResponse res = (HttpServletResponse) response;
-
-        HttpSession session = req.getSession();
-        ServletContext context = request.getServletContext();
-//        System.out.println(session);
-//        System.out.println(session.getAttribute("role"));
-//        System.out.println(context.getAttribute("loggedUsers"));
-
-
-        filterChain.doFilter(request,response);
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+           filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
     public void destroy() {
+        Filter.super.destroy();
+    }
 
+    private boolean access(User user, String page) {
+        return user != null && page.contains(user.getRole().toString().toLowerCase());
     }
 }
