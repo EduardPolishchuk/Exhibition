@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Builder
-public class Exposition {
+public class Exhibition {
     private String theme;
     private String description;
     private String imageUrl;

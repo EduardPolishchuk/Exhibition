@@ -54,7 +54,7 @@ public class Servlet extends HttpServlet {
 //        System.out.println("page: "+page);
         //request.getRequestDispatcher(page).forward(request,response);
         if(page.contains("redirect:")){
-            response.sendRedirect(page.replace("redirect:", "/Exposition"));
+            response.sendRedirect(page.replace("redirect:", "/Exhibition"));
         }
         else {
             request.getRequestDispatcher(page).forward(request, response);

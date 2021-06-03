@@ -3,8 +3,7 @@ package ua.training.model.dao.impl;
 import ua.training.model.dao.ExpositionDao;
 import ua.training.model.dao.mapper.ExpositionMapper;
 import ua.training.model.dao.mapper.HallMapper;
-import ua.training.model.dao.mapper.ObjectMapper;
-import ua.training.model.entity.Exposition;
+import ua.training.model.entity.Exhibition;
 
 import java.sql.*;
 import java.sql.Date;
@@ -13,34 +12,35 @@ import java.util.*;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.training.model.entity.User;
 import ua.training.model.entity.enums.Hall;
 
-public class JDBCExpositionDao implements ExpositionDao {
+public class JDBCExhibitionDao implements ExpositionDao {
 
     private static final Logger logger = LogManager.getLogger();
     private final Connection connection;
 
-    public JDBCExpositionDao(Connection connection) {
+    public JDBCExhibitionDao(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public boolean create(Exposition exposition) {
+    public boolean create(Exhibition exhibition) {
         try {
             connection.setAutoCommit(false);
             int genExpositionID;
             PreparedStatement ps1 = connection.prepareCall("INSERT INTO exposition (theme,`date`) VALUES (?,?)");
-            ps1.setString(1, exposition.getTheme());
-            ps1.setDate(2, Date.valueOf(exposition.getDate()));
+            ps1.setString(1, exhibition.getTheme());
+            ps1.setDate(2, Date.valueOf(exhibition.getDate()));
             ps1.executeUpdate();
             ResultSet resultSet = ps1.getGeneratedKeys();
             resultSet.next();
             genExpositionID = resultSet.getInt(1);
-            for (Hall hall : exposition.getHalls()) {
+            for (Hall hall : exhibition.getHalls()) {
                 ps1 = connection.prepareCall("INSERT INTO exposition_has_hall (exposition_id, hall_id,`date`) VALUES (?,?,?)");
                 ps1.setInt(1, genExpositionID);
                 ps1.setInt(2, hall.getId());
-                ps1.setDate(3, Date.valueOf(exposition.getDate()));
+                ps1.setDate(3, Date.valueOf(exhibition.getDate()));
                 ps1.executeUpdate();
             }
             connection.commit();
@@ -55,14 +55,14 @@ public class JDBCExpositionDao implements ExpositionDao {
     }
 
        @Override
-    public Exposition findById(int id) {
-        return null;
+    public Optional<Exhibition> findById(int id) {
+        return Optional.empty();
     }
 
 
     @Override
-    public List<Exposition> findAll() {
-        List<Exposition> list = new ArrayList<>();
+    public List<Exhibition> findAll() {
+        List<Exhibition> list = new ArrayList<>();
         ExpositionMapper expoMapper = new ExpositionMapper();
         HallMapper hallMapper = new HallMapper();
         Set<Hall> halls;
@@ -71,7 +71,7 @@ public class JDBCExpositionDao implements ExpositionDao {
                 Statement statement = connection.createStatement();
                 ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition")) {
             while (expoResultSet.next()) {
-                Exposition ex = expoMapper.extractFromResultSet(expoResultSet);
+                Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
                 ps.setInt(1, ex.getId());
                 ResultSet hallResultSet = ps.executeQuery();
                 halls = new HashSet<>();
@@ -90,27 +90,27 @@ public class JDBCExpositionDao implements ExpositionDao {
     }
 
     @Override
-    public boolean update(Exposition exposition) {
+    public boolean update(Exhibition exhibition) {
         try {
             connection.setAutoCommit(false);
             PreparedStatement ps = connection.prepareCall("UPDATE exposition, exposition_description SET date=?,theme=?,price=?,max_places=?,description=?," +
                     "image_url=? where exposition.id = exposition_description.exposition_id AND exposition_id=?");
-            ps.setDate(1, Date.valueOf(exposition.getDate()));
-            ps.setString(2, exposition.getTheme());
-            ps.setInt(3, exposition.getPrice());
-            ps.setInt(4, exposition.getMax());
-            ps.setString(5, exposition.getDescription());
-            ps.setString(6, exposition.getImageUrl());
-            ps.setInt(7, exposition.getId());
+            ps.setDate(1, Date.valueOf(exhibition.getDate()));
+            ps.setString(2, exhibition.getTheme());
+            ps.setInt(3, exhibition.getPrice());
+            ps.setInt(4, exhibition.getMax());
+            ps.setString(5, exhibition.getDescription());
+            ps.setString(6, exhibition.getImageUrl());
+            ps.setInt(7, exhibition.getId());
             ps.executeUpdate();
             ps = connection.prepareCall("DELETE FROM exposition_has_hall WHERE exposition_id=?");
-            ps.setInt(1, exposition.getId());
+            ps.setInt(1, exhibition.getId());
             ps.executeUpdate();
-            for (Hall hall : exposition.getHalls()) {
+            for (Hall hall : exhibition.getHalls()) {
                 ps = connection.prepareCall("INSERT INTO exposition_has_hall (exposition_id, hall_id, date) VALUES (?,?,?)");
-                ps.setInt(1,exposition.getId());
+                ps.setInt(1, exhibition.getId());
                 ps.setInt(2,hall.getId());
-                ps.setDate(3,Date.valueOf(exposition.getDate()));
+                ps.setDate(3,Date.valueOf(exhibition.getDate()));
                 ps.executeUpdate();
             }
             connection.commit();
@@ -158,9 +158,9 @@ public class JDBCExpositionDao implements ExpositionDao {
     }
 
     @Override
-    public Optional<Exposition> findByTheme(String theme) {
+    public Optional<Exhibition> findByTheme(String theme) {
 
-        Optional<Exposition> result = Optional.empty();
+        Optional<Exhibition> result = Optional.empty();
         try (PreparedStatement ps = connection.prepareCall("SELECT * FROM exposition WHERE theme = ?")) {
             ps.setString(1, theme);
             ResultSet rs;

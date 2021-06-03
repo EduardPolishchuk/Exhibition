@@ -14,7 +14,7 @@ public class JDBCDaoFactory extends DaoFactory {
 
     @Override
     public ExpositionDao createExpositionDao() {
-        return new JDBCExpositionDao(getConnection());
+        return new JDBCExhibitionDao(getConnection());
     }
     @Override
     public UserDao createUserDao() {

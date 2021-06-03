@@ -1,11 +1,11 @@
 package ua.training.model.dao;
 
-import ua.training.model.entity.Exposition;
+import ua.training.model.entity.Exhibition;
 
 import java.util.Optional;
 
-public interface ExpositionDao extends GenericDao<Exposition> {
+public interface ExpositionDao extends GenericDao<Exhibition> {
 
-    Optional<Exposition> findByTheme(String theme);
+    Optional<Exhibition> findByTheme(String theme);
     // Optional<Teacher> findByNameProxy(String name);
 }

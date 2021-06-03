@@ -1,21 +1,19 @@
 package ua.training.model.dao.impl;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.model.dao.UserDao;
 import ua.training.model.dao.mapper.ExpositionMapper;
 import ua.training.model.dao.mapper.UserMapper;
-import ua.training.model.entity.Exposition;
+import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.User;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
 public class JDBCUserDao implements UserDao {
+    private static final Logger logger = LogManager.getLogger();
     private Connection connection;
 
 
@@ -29,33 +27,28 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
         User user = null;
-        final String query = "" +
-                "select * from user where id=" + id;
-        try (Statement st = connection.createStatement()) {
-            ResultSet rs = st.executeQuery(query);
+              try {
+            UserMapper userMapper = new UserMapper();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user JOIN role r on r.id = user.role_id WHERE user.id=?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-//                user = new User();
-//                user.setId(rs.getInt("id"));
-//                user.setLogin(rs.getString("login"));
-//                user.setPassword(rs.getString("password"));
-//                if(rs.getString("role").equals("admin")){
-//                    user.setRole(User.ROLE.ADMIN);
-//                }else {
-//                    user.setRole(User.ROLE.USER);
-//                }
+                user = userMapper.extractFromResultSet(rs);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.ERROR, e.getMessage());
+        }finally {
+            close();
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 
     @Override
     public List<User> findAll() {
         Map<Integer, User> users = new HashMap<>();
-        Map<Integer, Exposition> teachers = new HashMap<>();
+        Map<Integer, Exhibition> teachers = new HashMap<>();
 
         final String query = "" +
                 " select * from user";
@@ -68,17 +61,17 @@ public class JDBCUserDao implements UserDao {
             while (rs.next()) {
                 User user = studentMapper
                         .extractFromResultSet(rs);
-                Exposition exposition = teacherMapper
+                Exhibition exhibition = teacherMapper
                         .extractFromResultSet(rs);
 //                user = studentMapper
 //                        .makeUnique(users, user);
-//                exposition = teacherMapper
-//                        .makeUnique(teachers, exposition);
-                user.getExpositions().add(exposition);
+//                exhibition = teacherMapper
+//                        .makeUnique(teachers, exhibition);
+                user.getExhibitions().add(exhibition);
             }
             return new ArrayList<>(users.values());
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
             return null;
         }
     }
@@ -86,7 +79,7 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public boolean update(User entity) {
-return false;
+        return false;
     }
 
     @Override
@@ -99,7 +92,7 @@ return false;
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.ERROR, e.getMessage());
         }
     }
 }
