@@ -37,6 +37,7 @@ public class LoginCommand implements Command {
             return "redirect:/homepage/userbasis.jsp";
         } else {
             CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, login);
+            System.out.println("======================>");
             return "/login.jsp";
         }
     }

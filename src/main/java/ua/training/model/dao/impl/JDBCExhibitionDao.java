@@ -69,7 +69,7 @@ public class JDBCExhibitionDao implements ExpositionDao {
         try (
                 PreparedStatement ps = connection.prepareCall("SELECT  hall.name FROM hall join exposition_has_hall on hall.id = exposition_has_hall.hall_id where exposition_id =?");
                 Statement statement = connection.createStatement();
-                ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition")) {
+                ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id")) {
             while (expoResultSet.next()) {
                 Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
                 ps.setInt(1, ex.getId());

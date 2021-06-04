@@ -19,6 +19,8 @@ public class ExpositionMapper implements ObjectMapper<Exhibition> {
                 .id(rs.getInt("id"))
                 .price(rs.getInt("price"))
                 .current(rs.getInt("current_places"))
+                .description(rs.getString("description"))
+                .imageUrl(rs.getString("image_url"))
                 .theme(rs.getString("theme"))
                 .build();
 

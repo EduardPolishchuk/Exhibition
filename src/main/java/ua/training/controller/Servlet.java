@@ -28,6 +28,7 @@ public class Servlet extends HttpServlet {
         commands.put("main" , new MainCommand());
         commands.put("clientList" , new ClientListCommand());
         commands.put("start" , new PreLoadCommand());
+        commands.put("singUp" , new SingUpCommand());
     }
 
     public void doGet(HttpServletRequest request,
