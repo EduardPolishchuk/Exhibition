@@ -21,13 +21,16 @@
     </thead>
 <tbody>
 <h1>${expoList}</h1>
+<img  src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Exposition_%22Gauguin%2C_Van_Gogh%2C_les_peintres_de_la_couleur%22.jpg">
 <c:forEach var="exp" items="${expoList}" step="1" varStatus="status">
     <tr>
-        <img style="size: B5" src="https://i1.sndcdn.com/avatars-000296802399-mmqk5k-t500x500.jpg" alt="nema">
+
         <td>${exp.theme}</td>
         <td>${exp.halls}</td>
     </tr>
 </c:forEach>
+<img  src="https://news.artnet.com/app/news-upload/2018/04/VISUEL-NU-e1523542093641.jpg"/>
+<img  src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F97b1c8e4-b31e-42a1-9d93-83fe161f56b2_1920x1075.jpeg"/>
 </tbody>
 </table>
 

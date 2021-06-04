@@ -31,10 +31,10 @@ public class LoginCommand implements Command {
 
         if ("admin".equals(role)) {
             CommandUtility.setUserRole(request, User.ROLE.ADMIN, login);
-            return "redirect:/admin/adminbasis.jsp";
+            return "redirect:/homepage/adminbasis.jsp";
         } else if ("user".equals(role)) {
             CommandUtility.setUserRole(request, User.ROLE.USER, login);
-            return "redirect:/user/userbasis.jsp";
+            return "redirect:/homepage/userbasis.jsp";
         } else {
             CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, login);
             return "/login.jsp";

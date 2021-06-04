@@ -1,18 +1,25 @@
 package ua.training;
 
-import ua.training.model.dao.DaoFactory;
-import ua.training.model.dao.ExpositionDao;
 import ua.training.model.entity.Exhibition;
+import ua.training.model.entity.User;
+import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
 
 import java.sql.*;
+import java.util.List;
+import java.util.Optional;
 
 public class Test {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        ExhibitionService exhibitionService = new ExhibitionService();
         UserService userService = new UserService();
-        System.out.println(userService.findById(1));
-
-
+        Optional<User> user = userService.findById(1);
+        System.out.println(user.get());
+        System.out.println(userService.isValid("wer","1"));
+        List<Exhibition> list = exhibitionService.getAllExpositions();
+        for (Exhibition e:list             ) {
+            System.out.println(e);
+        }
     }
 
     public static synchronized boolean dbCheck(String login, String pass) throws SQLException, ClassNotFoundException {

@@ -22,14 +22,32 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public boolean create(User entity) {
-        return false;
+    public boolean create(User user) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO user (login,email,password,first_name,last_name,role_id) VALUES (?,?,?,?,?,1)");
+            int i = 0;
+            ps.setString(i++, user.getLogin());
+            ps.setString(i++, user.getEmail());
+            ps.setString(i++, user.getPassword());
+            ps.setString(i++, user.getFirstName());
+            ps.setString(i, user.getLastName());
+            ps.executeUpdate();
+            ResultSet resultSet = ps.getGeneratedKeys();
+            resultSet.next();
+            user.setId(resultSet.getInt("id"));
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+            return false;
+        } finally {
+            close();
+        }
+        return true;
     }
 
     @Override
     public Optional<User> findById(int id) {
         User user = null;
-              try {
+        try {
             UserMapper userMapper = new UserMapper();
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM user JOIN role r on r.id = user.role_id WHERE user.id=?");
             ps.setInt(1, id);
@@ -39,7 +57,7 @@ public class JDBCUserDao implements UserDao {
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
-        }finally {
+        } finally {
             close();
         }
         return Optional.ofNullable(user);
@@ -47,44 +65,61 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        Map<Integer, User> users = new HashMap<>();
-        Map<Integer, Exhibition> teachers = new HashMap<>();
-
+        List<User> users = new ArrayList<>();
         final String query = "" +
                 " select * from user";
         try (Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(query);
-
-            ExpositionMapper teacherMapper = new ExpositionMapper();
-            UserMapper studentMapper = new UserMapper();
-
+            UserMapper userMapper = new UserMapper();
             while (rs.next()) {
-                User user = studentMapper
-                        .extractFromResultSet(rs);
-                Exhibition exhibition = teacherMapper
-                        .extractFromResultSet(rs);
-//                user = studentMapper
-//                        .makeUnique(users, user);
-//                exhibition = teacherMapper
-//                        .makeUnique(teachers, exhibition);
-                user.getExhibitions().add(exhibition);
+                users.add(userMapper.extractFromResultSet(rs));
             }
-            return new ArrayList<>(users.values());
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
-            return null;
         }
+        return users;
     }
 
 
     @Override
-    public boolean update(User entity) {
-        return false;
+    public boolean update(User user) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE user SET login=?,email=?,password=?,first_name=?,last_name=? WHERE id =?");
+            int i = 0;
+            ps.setString(i++, user.getLogin());
+            ps.setString(i++, user.getEmail());
+            ps.setString(i++, user.getPassword());
+            ps.setString(i++, user.getFirstName());
+            ps.setString(i++, user.getLastName());
+            ps.setInt(i, user.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+            return false;
+        } finally {
+            close();
+        }
+        return true;
     }
 
     @Override
     public boolean delete(int id) {
         return false;
+    }
+
+    public boolean isValid(String login, String password) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT id FROM user WHERE login=? AND password=?");
+            ps.setString(1, login);
+            ps.setString(2, password);
+            ResultSet resultSet = ps.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+            return false;
+        } finally {
+            close();
+        }
     }
 
     @Override

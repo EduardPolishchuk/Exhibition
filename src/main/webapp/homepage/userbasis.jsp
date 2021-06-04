@@ -10,14 +10,13 @@
 
 </head>
 <body>
-<jsp:include page="/common/header.jsp"/>
+<jsp:include page="/common/header2.jsp"/>
 <h2><strong>
     <fmt:message key="welcomeText"/>
 </strong>
 </h2>
 <a href="${pageContext.request.contextPath}/main">MAIN </a>
 <hr/>
-
     <table>
         <h2>Expositions</h2>
         <c:forEach var="item" items="${expoList}" >

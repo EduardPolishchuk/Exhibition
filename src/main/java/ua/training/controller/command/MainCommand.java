@@ -10,6 +10,6 @@ public class MainCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         request.getSession().setAttribute("expoList", exhibitionService.getAllExpositions());
-        return "/user/usermain.jsp";
+        return "/homepage/usermain.jsp";
     }
 }

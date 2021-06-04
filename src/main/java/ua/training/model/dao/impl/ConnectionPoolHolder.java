@@ -15,6 +15,7 @@ public class ConnectionPoolHolder {
     private static final String CONNECTION_URL = "connection.url";
     private static final String USERNAME = "dbUser";
     private static final String PASSWORD = "dbPassword";
+    private static final String DRIVER = "dbDriver";
 
     public static DataSource getDataSource(){
 
@@ -28,6 +29,7 @@ public class ConnectionPoolHolder {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    ds.setDriverClassName(properties.getProperty(DRIVER));
                     ds.setUrl(properties.getProperty(CONNECTION_URL));
                     ds.setUsername(properties.getProperty(USERNAME));
                     ds.setPassword(properties.getProperty(PASSWORD));

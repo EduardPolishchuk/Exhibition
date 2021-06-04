@@ -17,6 +17,8 @@ public class ExpositionMapper implements ObjectMapper<Exhibition> {
         Exhibition exhibition = Exhibition.builder()
                 .date(toLocalDate(rs.getDate("date")))
                 .id(rs.getInt("id"))
+                .price(rs.getInt("price"))
+                .current(rs.getInt("current_places"))
                 .theme(rs.getString("theme"))
                 .build();
 

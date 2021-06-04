@@ -7,5 +7,6 @@
 <jsp:include page="/common/header.jsp"/>
 <h1>Hello <strong>${login}</strong>!</h1>
 <a href="${pageContext.request.contextPath}/logout">Logout</a>
+<a href="${pageContext.request.contextPath}/clientList">Logout</a>
 </body>
 </html>

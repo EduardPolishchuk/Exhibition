@@ -20,20 +20,20 @@ public class Servlet extends HttpServlet {
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
-
         commands.put("logout",
                 new LogOutCommand());
         commands.put("login",
                 new LoginCommand());
         commands.put("exception" , new ExceptionCommand());
         commands.put("main" , new MainCommand());
+        commands.put("clientList" , new ClientListCommand());
+        commands.put("start" , new PreLoadCommand());
     }
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws IOException, ServletException {
         processRequest(request, response);
-        //response.getWriter().print("Hello from servlet");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,13 +46,11 @@ public class Servlet extends HttpServlet {
         String path = request.getRequestURI();
         System.out.println(path);
 //        System.out.println(path);
-        path = path.replaceAll(".*/Exposition/" , "");
+        path = path.replaceAll(".*/Exhibition/" , "");
         Command command = commands.getOrDefault(path ,
                 (r)->"/index.jsp");
         System.out.println(path);
         String page = command.execute(request);
-//        System.out.println("page: "+page);
-        //request.getRequestDispatcher(page).forward(request,response);
         if(page.contains("redirect:")){
             response.sendRedirect(page.replace("redirect:", "/Exhibition"));
         }

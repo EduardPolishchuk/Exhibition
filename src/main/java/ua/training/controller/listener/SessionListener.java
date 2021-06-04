@@ -3,24 +3,22 @@ package ua.training.controller.listener;
 import ua.training.model.dao.DaoFactory;
 import ua.training.model.dao.ExpositionDao;
 import ua.training.model.entity.Exhibition;
+import ua.training.model.entity.User;
+import ua.training.model.service.ExhibitionService;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.HashSet;
+import java.util.List;
 
 
 public class SessionListener implements HttpSessionListener {
+    ExhibitionService exhibitionService = new ExhibitionService();
+
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        DaoFactory daoFactory = DaoFactory.getInstance();
-        ExpositionDao exp = daoFactory.createExpositionDao();
-        httpSessionEvent.getSession().setAttribute("expoList", exp.findAll());
-        System.out.println("Works");
-        exp.close();
-        for (Exhibition e : exp.findAll()) {
-            System.out.println(e);
-        }
-        System.out.println("SESSION CREATED====>");
+        List<Exhibition> exhibitions = exhibitionService.getAllExpositions();
+        httpSessionEvent.getSession().setAttribute("expoList",exhibitions);
     }
 
     @Override
@@ -31,8 +29,8 @@ public class SessionListener implements HttpSessionListener {
                 .getAttribute("loggedUsers");
         String login = (String) httpSessionEvent.getSession()
                 .getAttribute("login");
+//        httpSessionEvent.getSession().setAttribute("role", User.ROLE.UNKNOWN);
         loggedUsers.remove(login);
         httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
-        System.out.println("SESSION DESTROYED====>");
     }
 }

@@ -34,5 +34,6 @@
 </form>
 <hr/>
 <a href="${pageContext.request.contextPath}/"><fmt:message key="home"/> </a>
+<a href="${pageContext.request.contextPath}/singUp"><fmt:message key="home"/> </a>
 </body>
 </html>
