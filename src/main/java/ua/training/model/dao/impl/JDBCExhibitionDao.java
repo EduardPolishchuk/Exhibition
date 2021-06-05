@@ -54,7 +54,7 @@ public class JDBCExhibitionDao implements ExpositionDao {
         return true;
     }
 
-       @Override
+    @Override
     public Optional<Exhibition> findById(int id) {
         return Optional.empty();
     }
@@ -65,25 +65,25 @@ public class JDBCExhibitionDao implements ExpositionDao {
         List<Exhibition> list = new ArrayList<>();
         ExpositionMapper expoMapper = new ExpositionMapper();
         HallMapper hallMapper = new HallMapper();
-        Set<Hall> halls;
+//        Set<Hall> halls;
         try (
-                PreparedStatement ps = connection.prepareCall("SELECT  hall.name FROM hall join exposition_has_hall on hall.id = exposition_has_hall.hall_id where exposition_id =?");
+//                PreparedStatement ps = connection.prepareCall("SELECT  hall.name FROM hall join exposition_has_hall on hall.id = exposition_has_hall.hall_id where exposition_id =?");
                 Statement statement = connection.createStatement();
                 ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id")) {
             while (expoResultSet.next()) {
                 Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
-                ps.setInt(1, ex.getId());
-                ResultSet hallResultSet = ps.executeQuery();
-                halls = new HashSet<>();
-                while (hallResultSet.next()) {
-                    halls.add(hallMapper.extractFromResultSet(hallResultSet));
-                }
-                ex.setHalls(halls);
+//                ps.setInt(1, ex.getId());
+//                ResultSet hallResultSet = ps.executeQuery();
+//                halls = new HashSet<>();
+//                while (hallResultSet.next()) {
+//                    halls.add(hallMapper.extractFromResultSet(hallResultSet));
+//                }
+                ex.setHalls(getHalls(ex));
                 list.add(ex);
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
-        }finally {
+        } finally {
             close();
         }
         return list;
@@ -109,8 +109,8 @@ public class JDBCExhibitionDao implements ExpositionDao {
             for (Hall hall : exhibition.getHalls()) {
                 ps = connection.prepareCall("INSERT INTO exposition_has_hall (exposition_id, hall_id, date) VALUES (?,?,?)");
                 ps.setInt(1, exhibition.getId());
-                ps.setInt(2,hall.getId());
-                ps.setDate(3,Date.valueOf(exhibition.getDate()));
+                ps.setInt(2, hall.getId());
+                ps.setDate(3, Date.valueOf(exhibition.getDate()));
                 ps.executeUpdate();
             }
             connection.commit();
@@ -148,6 +148,21 @@ public class JDBCExhibitionDao implements ExpositionDao {
         return true;
     }
 
+    public Optional<Map<Exhibition, Integer>> getUserExhibitions(int id) {
+        Map<Exhibition, Integer> map = new HashMap<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition LEFT JOIN exposition e on user_has_exposition.exposition_id = e.id WHERE user_id=?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+//                if (map.containsValue())
+            }
+        } catch (SQLException e) {
+
+        }
+        return Optional.ofNullable(map);
+    }
+
     @Override
     public void close() {
         try {
@@ -168,11 +183,28 @@ public class JDBCExhibitionDao implements ExpositionDao {
             ExpositionMapper mapper = new ExpositionMapper();
             if (rs.next()) {
                 result = Optional.of(mapper.extractFromResultSet(rs));
-            }//TODO : ask question how avoid two teachers with the same name
+            }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
         return result;
+    }
+
+    private Set<Hall> getHalls(Exhibition exhibition) {
+        HallMapper hallMapper = new HallMapper();
+        Set<Hall> halls = new HashSet<>();
+        try {
+            PreparedStatement ps = connection.prepareCall("SELECT  hall.name FROM hall join exposition_has_hall on hall.id = exposition_has_hall.hall_id where exposition_id =?");
+            ps.setInt(1, exhibition.getId());
+            ResultSet hallResultSet = ps.executeQuery();
+            while (hallResultSet.next()) {
+                halls.add(hallMapper.extractFromResultSet(hallResultSet));
+            }
+            exhibition.setHalls(halls);
+        } catch (SQLException e) {
+
+        }
+        return halls;
     }
 
 }

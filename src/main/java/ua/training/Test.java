@@ -20,6 +20,7 @@ public class Test {
         for (Exhibition e:list             ) {
             System.out.println(e);
         }
+
     }
 
     public static synchronized boolean dbCheck(String login, String pass) throws SQLException, ClassNotFoundException {

@@ -7,7 +7,6 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="resources"/>
 
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,21 +31,27 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="${pageContext.request.contextPath}/" class="nav-link px-2 text-secondary">Home</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                <c:choose>
+                    <c:when test="${role == 'USER'}">
+                        <li><a href="{pageContext.request.contextPath}/main" class="nav-link px-2 text-white">My Events</a></li>
+                    </c:when>
+                </c:choose>
+
+
+
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
             </form>
 
-            <form action="${pageContext.request.contextPath}/login2.jsp" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
+            <form action="${pageContext.request.contextPath}/login2.jsp"
+                  class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
                 <button type="submit" class="btn btn-outline-light me-2"><fmt:message key="singIn"/></button>
             </form>
 
-            <form action="${pageContext.request.contextPath}/singUp.jsp" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+            <form action="${pageContext.request.contextPath}/singUp.jsp"
+                  class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <button type="submit" class="btn btn-warning"><fmt:message key="singUp"/></button>
             </form>
 
