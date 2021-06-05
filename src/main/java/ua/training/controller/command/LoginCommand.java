@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import ua.training.Test;
 import ua.training.model.dao.UserDao;
 import ua.training.model.entity.User;
+import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 public class LoginCommand implements Command {
     UserService userService = new UserService();
+    ExhibitionService exhibitionService = new ExhibitionService();
 
 
     @Override
@@ -31,6 +33,7 @@ public class LoginCommand implements Command {
         if (result.isPresent()){
             user = result.get();
             request.getSession().setAttribute("user",user);
+            request.getSession().setAttribute("userExhib",exhibitionService.getUserExhibitions(user).get());
         }else {
             return "/login.jsp";
         }

@@ -48,8 +48,7 @@ public class Servlet extends HttpServlet {
         System.out.println(path);
 //        System.out.println(path);
         path = path.replaceAll(".*/Exhibition/" , "");
-        Command command = commands.getOrDefault(path ,
-                (r)->"/index.jsp");
+        Command command = commands.getOrDefault(path , new PreLoadCommand());
         System.out.println(path);
         String page = command.execute(request);
         if(page.contains("redirect:")){

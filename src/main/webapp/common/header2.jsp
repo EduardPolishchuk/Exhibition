@@ -33,7 +33,7 @@
                 <li><a href="${pageContext.request.contextPath}/" class="nav-link px-2 text-secondary">Home</a></li>
                 <c:choose>
                     <c:when test="${role == 'USER'}">
-                        <li><a href="Exhibition/main" class="nav-link px-2 text-white">My Events</a></li>
+                        <li><a href="${pageContext.request.contextPath}/userEvents" class="nav-link px-2 text-white">My Events</a></li>
                     </c:when>
                 </c:choose>
 

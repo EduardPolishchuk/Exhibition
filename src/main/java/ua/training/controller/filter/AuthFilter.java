@@ -20,16 +20,21 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         System.out.println(request.getSession().getAttribute("role"));
         User.ROLE role1 = (User.ROLE) request.getSession().getAttribute("role");
         String[] uri = request.getRequestURI().split("/");
-        if(access(role1, uri[uri.length - 1])) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
+//        if(access(role1, uri[uri.length - 1])) {
+//            filterChain.doFilter(servletRequest, servletResponse);
+//            return;
+//        }
+        if (User.ROLE.UNKNOWN.equals(role1) || role1 == null) {
+            request.getRequestDispatcher("/WEB-INF/noAccess.jsp").forward(request, response);
+
         }
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        filterChain.doFilter(servletRequest, servletResponse);
 //        response.sendRedirect("/WEB-INF/noAccess.jsp");
-        request.getRequestDispatcher("/WEB-INF/noAccess.jsp").forward(request, response);
+
     }
 
     @Override

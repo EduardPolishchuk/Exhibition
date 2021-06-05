@@ -29,9 +29,12 @@ public class JDBCExhibitionDao implements ExpositionDao {
         try {
             connection.setAutoCommit(false);
             int genExpositionID;
-            PreparedStatement ps1 = connection.prepareCall("INSERT INTO exposition (theme,`date`) VALUES (?,?)");
+            PreparedStatement ps1 = connection.prepareCall("INSERT INTO exposition (theme,`date`,price,current_places,max_places) VALUES (?,?,?,?,?)");
             ps1.setString(1, exhibition.getTheme());
             ps1.setDate(2, Date.valueOf(exhibition.getDate()));
+            ps1.setInt(3, exhibition.getPrice());
+            ps1.setInt(4, exhibition.getCurrent());
+            ps1.setInt(5, exhibition.getMax());
             ps1.executeUpdate();
             ResultSet resultSet = ps1.getGeneratedKeys();
             resultSet.next();
@@ -67,6 +70,28 @@ public class JDBCExhibitionDao implements ExpositionDao {
         try (
                 Statement statement = connection.createStatement();
                 ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id")) {
+            while (expoResultSet.next()) {
+                Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
+                ex.setHalls(getHalls(ex));
+                list.add(ex);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        } finally {
+            close();
+        }
+        return list;
+    }
+
+    public List<Exhibition> findFrom(int start, int itemsPer) {
+        List<Exhibition> list = new ArrayList<>();
+        ExpositionMapper expoMapper = new ExpositionMapper();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id ORDER BY ? LIMIT ? offset ?");
+            ps.setString(1, "id");
+            ps.setInt(2, itemsPer);
+            ps.setInt(3, start);
+            ResultSet expoResultSet = ps.executeQuery();
             while (expoResultSet.next()) {
                 Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
                 ex.setHalls(getHalls(ex));
@@ -143,17 +168,17 @@ public class JDBCExhibitionDao implements ExpositionDao {
         ExpositionMapper expositionMapper = new ExpositionMapper();
         Map<Exhibition, Integer> map = new HashMap<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition JOIN exposition e on user_has_exposition.exposition_id = e.id WHERE user_id=?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition join exposition e on user_has_exposition.exposition_id = e.id join exposition_description ed on e.id = ed.exposition_id WHERE user_id=?");
             ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Exhibition ex = expositionMapper.extractFromResultSet(rs);
                 ex.setHalls(getHalls(ex));
-                map.put(ex,rs.getInt("tickets_count"));
+                map.put(ex, rs.getInt("tickets_count"));
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
-        }finally {
+        } finally {
             close();
         }
         return Optional.of(map);
@@ -184,6 +209,20 @@ public class JDBCExhibitionDao implements ExpositionDao {
             throw new RuntimeException(ex);
         }
         return result;
+    }
+
+    public int getRowsNumber() {
+        int rows = 0;
+        try (
+                Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery("SELECT COUNT(1) from exposition")) {
+            if (rs.next()) {
+                rows = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
+        return rows;
     }
 
     private Set<Hall> getHalls(Exhibition exhibition) {

@@ -2,6 +2,7 @@ package ua.training.model.service;
 
 import ua.training.model.dao.DaoFactory;
 import ua.training.model.dao.ExpositionDao;
+import ua.training.model.dao.impl.JDBCExhibitionDao;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.User;
 
@@ -18,13 +19,29 @@ public class ExhibitionService {
         }
     }
 
+    public List<Exhibition> getFrom(int start, int per) {
+        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
+            return expositionDao.findFrom(start, per);
+        }
+    }
+
+    public boolean create(Exhibition exhibition) {
+        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
+            return expositionDao.create(exhibition);
+        }
+    }
 
     public Optional<Map<Exhibition, Integer>> getUserExhibitions(User user) {
-        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()){
+        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
             return expositionDao.getUserExhibitions(user);
         }
     }
 
+    public int getRowsNumber() {
+        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
+            return expositionDao.getRowsNumber();
+        }
+    }
 
 //    public Optional<Exhibition> getById(int id) {
 //        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
