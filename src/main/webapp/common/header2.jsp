@@ -31,7 +31,7 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/" class="nav-link px-2 text-secondary">Home</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
@@ -42,7 +42,7 @@
                 <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
             </form>
 
-            <form action="${pageContext.request.contextPath}/login.jsp" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
+            <form action="${pageContext.request.contextPath}/login2.jsp" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
                 <button type="submit" class="btn btn-outline-light me-2"><fmt:message key="singIn"/></button>
             </form>
 
