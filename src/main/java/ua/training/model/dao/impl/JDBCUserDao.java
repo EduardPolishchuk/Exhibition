@@ -107,21 +107,24 @@ public class JDBCUserDao implements UserDao {
         return false;
     }
 
-    public boolean isValid(String login, String password) {
+    public Optional<User> isValid(String login, String password) {
+        Optional<User> result = Optional.empty();
+        UserMapper userMapper = new UserMapper();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT id FROM user WHERE login=? AND password=?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user join role r on r.id = user.role_id WHERE login=? AND password=?");
             ps.setString(1, login);
             ps.setString(2, password);
             ResultSet resultSet = ps.executeQuery();
-            return resultSet.next();
+            if (resultSet.next()) {
+                result = Optional.of(userMapper.extractFromResultSet(resultSet));
+            }
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
-            return false;
         } finally {
             close();
         }
+        return result;
     }
-
 
 
     @Override

@@ -9,14 +9,14 @@ import java.util.Optional;
 public class UserService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public Optional<User> findById (int id){
-        try (UserDao userDao = daoFactory.createUserDao()){
+    public Optional<User> findById(int id) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findById(id);
         }
     }
 
-    public boolean isValid(String login, String password){
-        try(UserDao userDao = daoFactory.createUserDao()){
+    public Optional<User> isValid(String login, String password) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.isValid(login, password);
         }
     }

@@ -13,14 +13,17 @@ public class Test {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         ExhibitionService exhibitionService = new ExhibitionService();
         UserService userService = new UserService();
-        Optional<User> user = userService.findById(1);
-        System.out.println(user.get());
-        System.out.println(userService.isValid("wer","1"));
-        List<Exhibition> list = exhibitionService.getAllExpositions();
-        for (Exhibition e:list             ) {
-            System.out.println(e);
+//        Optional<User> user = userService.findById(1);
+//        System.out.println(user.get());
+//        System.out.println(userService.isValid("wer","1"));
+//        List<Exhibition> list = exhibitionService.getAllExpositions();
+//        for (Exhibition e:list             ) {
+//            System.out.println(e);
+//        }
+//
+        if (userService.isValid("wer", "2").isPresent()) {
+            System.out.println(userService.isValid("wer", "2").get());
         }
-
     }
 
     public static synchronized boolean dbCheck(String login, String pass) throws SQLException, ClassNotFoundException {

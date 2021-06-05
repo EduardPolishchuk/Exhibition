@@ -13,12 +13,14 @@
 <body>
 <jsp:include page="/common/header.jsp"/>
 <table>
-    <thead>
-    <tr>
-        <th>Theme</th>
-        <th>Halls</th>
-    </tr>
-    </thead>
+    <c:forEach var="item" items="myExhib">
+        <thead>
+        <tr>
+            <th>item.theme</th>
+        </tr>
+        </thead>
+    </c:forEach>
+
 <tbody>
 <h1>${expoList}</h1>
 <img  src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Exposition_%22Gauguin%2C_Van_Gogh%2C_les_peintres_de_la_couleur%22.jpg">

@@ -64,20 +64,11 @@ public class JDBCExhibitionDao implements ExpositionDao {
     public List<Exhibition> findAll() {
         List<Exhibition> list = new ArrayList<>();
         ExpositionMapper expoMapper = new ExpositionMapper();
-        HallMapper hallMapper = new HallMapper();
-//        Set<Hall> halls;
         try (
-//                PreparedStatement ps = connection.prepareCall("SELECT  hall.name FROM hall join exposition_has_hall on hall.id = exposition_has_hall.hall_id where exposition_id =?");
                 Statement statement = connection.createStatement();
                 ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id")) {
             while (expoResultSet.next()) {
                 Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
-//                ps.setInt(1, ex.getId());
-//                ResultSet hallResultSet = ps.executeQuery();
-//                halls = new HashSet<>();
-//                while (hallResultSet.next()) {
-//                    halls.add(hallMapper.extractFromResultSet(hallResultSet));
-//                }
                 ex.setHalls(getHalls(ex));
                 list.add(ex);
             }
@@ -148,19 +139,24 @@ public class JDBCExhibitionDao implements ExpositionDao {
         return true;
     }
 
-    public Optional<Map<Exhibition, Integer>> getUserExhibitions(int id) {
+    public Optional<Map<Exhibition, Integer>> getUserExhibitions(User user) {
+        ExpositionMapper expositionMapper = new ExpositionMapper();
         Map<Exhibition, Integer> map = new HashMap<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition LEFT JOIN exposition e on user_has_exposition.exposition_id = e.id WHERE user_id=?");
-            ps.setInt(1, id);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition JOIN exposition e on user_has_exposition.exposition_id = e.id WHERE user_id=?");
+            ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-//                if (map.containsValue())
+                Exhibition ex = expositionMapper.extractFromResultSet(rs);
+                ex.setHalls(getHalls(ex));
+                map.put(ex,rs.getInt("tickets_count"));
             }
         } catch (SQLException e) {
-
+            logger.log(Level.ERROR, e.getMessage());
+        }finally {
+            close();
         }
-        return Optional.ofNullable(map);
+        return Optional.of(map);
     }
 
     @Override
@@ -202,7 +198,7 @@ public class JDBCExhibitionDao implements ExpositionDao {
             }
             exhibition.setHalls(halls);
         } catch (SQLException e) {
-
+            logger.log(Level.ERROR, e.getMessage());
         }
         return halls;
     }

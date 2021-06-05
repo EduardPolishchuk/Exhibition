@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -19,7 +19,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private List<Exhibition> exhibitions;
+    private Map<Exhibition, Integer> exhibitionsTickets;
     private ROLE role;
     private BigDecimal balance;
 
