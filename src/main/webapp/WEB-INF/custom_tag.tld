@@ -13,7 +13,7 @@
             FormatDate with java8 type
         </description>
         <name>formatDate</name>
-        <tag-class>ua.training.controller.FormatDateTag</tag-class>
+        <tag-class>ua.training.controller.util.FormatDateTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <description>

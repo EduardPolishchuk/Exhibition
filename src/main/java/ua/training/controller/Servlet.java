@@ -25,7 +25,7 @@ public class Servlet extends HttpServlet {
         commands.put("login",
                 new LoginCommand());
         commands.put("exception" , new ExceptionCommand());
-        commands.put("main" , new MainCommand());
+        commands.put("homepage/userevents" , new MainCommand());
         commands.put("clientList" , new ClientListCommand());
         commands.put("start" , new PreLoadCommand());
         commands.put("singUp" , new SingUpCommand());

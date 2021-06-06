@@ -13,13 +13,13 @@ public class MainCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        User user = (User)  request.getSession().getAttribute("user");
+        User user = (User)  request.getSession().getAttribute("userProfile");
         Optional<Map<Exhibition, Integer>> ops = exhibitionService.getUserExhibitions(user);
         ops.ifPresent(exhibitionIntegerMap -> request.getSession().setAttribute("myExhib", exhibitionIntegerMap));
-
+        System.out.println("MAIN");
 
 
 //        request.getSession().setAttribute("expoList", exhibitionService.getAllExpositions());
-        return "/homepage/usermain.jsp";
+        return "/homepage/userbasis.jsp";
     }
 }

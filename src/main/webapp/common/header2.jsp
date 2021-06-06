@@ -32,24 +32,33 @@
                 <li><a href="${pageContext.request.contextPath}/" class="nav-link px-2 text-secondary">Home</a></li>
                 <c:choose>
                     <c:when test="${role == 'USER'}">
-                        <li><a href="${pageContext.request.contextPath}/userEvents" class="nav-link px-2 text-white">My Events</a></li>
+                        <li><a href="${pageContext.request.contextPath}/homepage/userevents" class="nav-link px-2 text-white">My Events</a></li>
+                        <li><a href="${pageContext.request.contextPath}/homepage/profile.jsp" class="nav-link px-2 text-white">My Profile</a></li>
                     </c:when>
                 </c:choose>
             </ul>
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
             </form>
-
-            <form action="${pageContext.request.contextPath}/login2.jsp"
-                  class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
-                <button type="submit" class="btn btn-outline-light me-2"><fmt:message key="singIn"/></button>
-            </form>
-
-            <form action="${pageContext.request.contextPath}/singUp.jsp"
-                  class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <button type="submit" class="btn btn-warning"><fmt:message key="singUp"/></button>
-            </form>
-
+            <c:choose>
+                <c:when test="${role == 'USER' || role == 'ADMIN'}">
+                    <h5 class="display-6" style="color: aliceblue">${login}</h5>
+                    <form action="${pageContext.request.contextPath}/logout"
+                          class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
+                        <button type="submit" class="btn btn-outline-light me-2"><fmt:message key="logout"/></button>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <form action="${pageContext.request.contextPath}/login.jsp"
+                          class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
+                        <button type="submit" class="btn btn-outline-light me-2"><fmt:message key="singIn"/></button>
+                    </form>
+                    <form action="${pageContext.request.contextPath}/singUp.jsp"
+                          class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                        <button type="submit" class="btn btn-warning"><fmt:message key="singUp"/></button>
+                    </form>
+                </c:otherwise>
+            </c:choose>
             <div class="text-end">
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                     <c:if test="${currentPage != null}">

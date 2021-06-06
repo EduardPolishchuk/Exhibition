@@ -1,4 +1,4 @@
-package ua.training.controller;
+package ua.training.controller.util;
 
 import org.apache.taglibs.standard.tag.common.core.Util;
 

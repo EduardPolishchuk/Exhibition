@@ -23,14 +23,14 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        @SuppressWarnings("unchecked")
-        HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
-                .getSession().getServletContext()
-                .getAttribute("loggedUsers");
-        String login = (String) httpSessionEvent.getSession()
-                .getAttribute("login");
-//        httpSessionEvent.getSession().setAttribute("role", User.ROLE.UNKNOWN);
-        loggedUsers.remove(login);
-        httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
+//        @SuppressWarnings("unchecked")
+//        HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
+//                .getSession().getServletContext()
+//                .getAttribute("loggedUsers");
+//        String login = (String) httpSessionEvent.getSession()
+//                .getAttribute("login");
+////        httpSessionEvent.getSession().setAttribute("role", User.ROLE.UNKNOWN);
+//        loggedUsers.remove(login);
+//        httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
     }
 }

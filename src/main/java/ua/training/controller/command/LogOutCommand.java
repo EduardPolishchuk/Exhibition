@@ -11,8 +11,8 @@ public class LogOutCommand implements Command {
         if(request.getSession().getAttribute("role").toString().equalsIgnoreCase("unknown")){
             return "/WEB-INF/error.jsp";
         }
-        CommandUtility.logOutUser(request);
-        CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, null);
+        request.getSession().setAttribute("userLoggedIn",null);
+        request.getSession().setAttribute("role",User.ROLE.UNKNOWN);
         return "redirect:/";
     }
 }
