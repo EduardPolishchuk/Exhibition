@@ -5,7 +5,7 @@
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="resources"/>
+<fmt:setBundle basename="locale/resources"/>
 
 <html>
 <head>
@@ -28,7 +28,6 @@
                     <use xlink:href="#bootstrap"></use>
                 </svg>
             </a>
-
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="${pageContext.request.contextPath}/" class="nav-link px-2 text-secondary">Home</a></li>
                 <c:choose>
@@ -36,11 +35,7 @@
                         <li><a href="${pageContext.request.contextPath}/userEvents" class="nav-link px-2 text-white">My Events</a></li>
                     </c:when>
                 </c:choose>
-
-
-
             </ul>
-
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
             </form>
@@ -57,6 +52,9 @@
 
             <div class="text-end">
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <c:if test="${currentPage != null}">
+                        <input type="hidden" class="key" name="page" value="${currentPage}">
+                    </c:if>
                     <button type="submit" class="btn btn-light" name="language" value="en"><strong>EN</strong></button>
                     <button type="submit" class="btn btn-light" name="language" value="uk"><strong>UA</strong></button>
                 </form>

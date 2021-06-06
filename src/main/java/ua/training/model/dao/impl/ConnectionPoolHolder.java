@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class ConnectionPoolHolder {
     private static volatile DataSource dataSource;
-    private static final String PROPERTIES = "dp.properties";
+    private static final String PROPERTIES = "db/db.properties";
     private static final String CONNECTION_URL = "connection.url";
     private static final String USERNAME = "dbUser";
     private static final String PASSWORD = "dbPassword";

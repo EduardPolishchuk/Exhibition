@@ -5,7 +5,7 @@
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="resources"/>
+<fmt:setBundle basename="locale/resources"/>
 <html>
 <head>
     <title>USER</title>
