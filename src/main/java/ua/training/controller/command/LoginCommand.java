@@ -35,7 +35,8 @@ public class LoginCommand implements Command {
             request.getSession().setAttribute("user",user);
             request.getSession().setAttribute("userExhib",exhibitionService.getUserExhibitions(user).get());
         }else {
-            return "/login.jsp";
+//            request.getSession().setAttribute("incorect",null);
+            return "redirect:/login2.jsp?incorect=1";
         }
 
         if ("admin".equalsIgnoreCase(user.getRole().toString())) {

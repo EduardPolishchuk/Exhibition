@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/custom_tag.tld" prefix="custom" %>
+
+
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
@@ -30,6 +33,8 @@
                             <%--                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnaasdasdasdasdasdsdasdasdasdasdasdasdasdasil" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>--%>
                         <div class="card-body">
                             <p class="card-text"><fmt:message key="theme"/>: ${item.theme}</p>
+                            <custom:formatDate value="${item.date}" pattern="dd/MM/yyyy" />
+                            <p class="card-text"><fmt:message key="theme"/>: ${item.date}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -82,7 +87,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item">
-                        <a class="page-link" href="/Exhibition/?page=${currentPage - 1}">Next</a>
+                        <a class="page-link" href="/Exhibition/?page=${currentPage + 1}">Next</a>
                     </li>
                 </c:otherwise>
             </c:choose>
