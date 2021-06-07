@@ -13,6 +13,6 @@ public interface ExpositionDao extends GenericDao<Exhibition> {
     public int getRowsNumber();
     Optional<Map<Exhibition,Integer>> getUserExhibitions(User user);
 
-    Optional<Exhibition> findByTheme(String theme);
+    List<Exhibition> findByTheme(String theme);
     // Optional<Teacher> findByNameProxy(String name);
 }

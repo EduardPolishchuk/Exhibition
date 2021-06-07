@@ -11,82 +11,31 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Test {
+    private static final String LOGIN_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{0,19}$";
+    private static final String EMAIL_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{0,19}$";
+    private static final String FIRST_NAME_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{0,19}$";
+    private static final String LAST_NAME_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{0,19}$";
+    private static final String PASSWORD_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{0,19}$";
+
+
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        ExhibitionService exhibitionService = new ExhibitionService();
-        UserService userService = new UserService();
-//        Optional<User> user = userService.findById(1);
-//        System.out.println(user.get());
-//        System.out.println(userService.isValid("wer","1"));
-        List<Exhibition> list = exhibitionService.getFrom(2,3);
-        for (Exhibition e:list             ) {
-            System.out.println(e);
+        Map<String, String> map = new HashMap<>();
+        String result;
+        String login = "login";
+        String email = "email";
+        String firstName = "firstName";
+        String lastName = "lastName";
+        String password = "password";
+        map.put(login, LOGIN_REG);
+        map.put(email, EMAIL_REG);
+        map.put(firstName, FIRST_NAME_REG);
+        map.put(lastName, LAST_NAME_REG);
+        map.put(password, PASSWORD_REG);
+        for (String str : map.keySet()) {
+            System.out.println(str.matches(map.get(str)));
+            System.out.println(map.get(str));
+            System.out.println(str);
         }
-//
-//        if (userService.isValid("wer", "1").isPresent()) {
-//            System.out.println(userService.isValid("wer", "1").get());
-//        }
-//        LocalDate localDate = LocalDate.of(2021, 4, 30);
-//        Set<Hall> halls = new HashSet<>();
-//        halls.add(Hall.BLUE);
-//        halls.add(Hall.RED);
-//        halls.add(Hall.GREEN);
-//        Exhibition exhibition = Exhibition.builder()
-//                .imageUrl("https://artelagunaprize.com/wp-content/uploads/2021/03/a4.jpg")
-//                .description("desrc").price(120).date(localDate)
-//                .theme("Leo").build();
-//        exhibition.setHalls(halls);
-//        exhibitionService.create(exhibition);
-//        Optional<Map<Exhibition, Integer>> osp = exhibitionService.getUserExhibitions(userService.isValid("wer", "1").get());
-//        Map<Exhibition, Integer> map = osp.get();
-//        for (Exhibition e : map.keySet()) {
-//            System.out.println(e + " Ticket_count:" + map.get(e));
-//
-//        }
-
-
     }
-
-    public static synchronized boolean dbCheck(String login, String pass) throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con =
-                DriverManager.
-                        getConnection("jdbc:" +
-                                        "mysql:" +
-                                        "//localhost:3306/" +
-                                        "mydb",
-                                "root",
-                                "root");
-
-        Statement query = con.createStatement();
-        ResultSet rs = query.executeQuery("SELECT * FROM user where login='" + login + "'");
-        if (rs.next() && rs.getString("password").equals(pass)) {
-            return true;
-        }
-
-
-        return false;
-    }
-
-    public static synchronized String getRole(String login) throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con =
-                DriverManager.
-                        getConnection("jdbc:" +
-                                        "mysql:" +
-                                        "//localhost:3306/" +
-                                        "mydb",
-                                "root",
-                                "root");
-
-        Statement query = con.createStatement();
-        ResultSet rs = query.executeQuery("select role.name FROM role inner join user on user.role_id = role.id where user.login ='" + login + "'");
-        if (rs.next()) {
-            return rs.getString("name").toLowerCase();
-        }
-
-
-        return null;
-    }
-
-
 }

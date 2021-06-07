@@ -43,9 +43,9 @@ public class ExhibitionService {
         }
     }
 
-//    public Optional<Exhibition> getById(int id) {
-//        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
-//            return Optional.ofNullable(expositionDao.findById(id));
-//        }
-//    }
+    public List<Exhibition> findByTheme(String theme) {
+        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
+            return expositionDao.findByTheme(theme);
+        }
+    }
 }

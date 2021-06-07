@@ -20,4 +20,10 @@ public class UserService {
             return userDao.isValid(login, password);
         }
     }
+
+    public boolean createUser(User user){
+        try(UserDao userDao = daoFactory.createUserDao()){
+            return userDao.create(user);
+        }
+    }
 }

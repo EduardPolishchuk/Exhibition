@@ -13,42 +13,36 @@
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>Login to the system</title>
 </head>
-<body style="background-image: url(https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F97b1c8e4-b31e-42a1-9d93-83fe161f56b2_1920x1075.jpeg)">
+<body class="text-center" style="background-image: url(https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F97b1c8e4-b31e-42a1-9d93-83fe161f56b2_1920x1075.jpeg)">
 <jsp:include page="common/header2.jsp"/>
-<%--<h1><fmt:message key="loginToSystem"/></h1>--%>
-<h2 class="display-4" style="color: aliceblue"><fmt:message key="loginToSystem"/></h2>
-<div style="background-color: aliceblue">
-    <form method="post" action="${pageContext.request.contextPath}/login">
-        <hr/>
-        <tr>
-            <td><fmt:message key="userName"/></td>
-            <td><input type="text" name="login"></td>
-        </tr>
-        <br/><br/>
-
-        <tr>
-            <td><fmt:message key="password"/></td>
-            <td><input type="password" name="password"></td>
-        </tr>
-        <br/><br/>
-        <c:if test="${incorrect != null}">
-            <div class="alert alert-danger w-25 p-1 " role="alert">
-                <fmt:message key="${incorrect}"/>
+<h2 class="display-2" style="color: aliceblue"><fmt:message key="loginToSystem"/></h2>
+<div class="container  w-25  ">
+    <div class="row row-cols-1 row-cols-lg row-cols-md-1 g-1">
+        <div class="col ">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="display-5" style="text-align: center">Enter your data</h4>
+                    <form method="post" action="${pageContext.request.contextPath}/login">
+                        <div class="mb-3 ">
+                            <label  class="form-label"><fmt:message key="userName"/></label><br>
+                            <input type="text" name="login" >
+                        </div>
+                        <div class="mb-3">
+                            <label  class="form-label"><fmt:message key="password"/></label><br>
+                            <input type="password" name="password">
+                        </div>
+                        <c:if test="${incorrect != null}">
+                            <div class="alert alert-danger  p-1 " role="alert">
+                                <fmt:message key="${incorrect}"/>
+                            </div>
+                        </c:if>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
-        </c:if>
-        <input class="button" type="submit" value="<fmt:message key="singIn"/>">
-        </table>
-    </form>
-    <hr/>
-</div>
-
-
-<footer class="text-muted py-5">
-
-    <div class="footer__inner" style="background-color: black; text-align: center; color: aliceblue ">
-        &copy; Exhibition Events 2021
+        </div>
     </div>
-</footer>
+</div>
 <%--<jsp:include page="common/footer.jsp"/>--%>
 </body>
 </html>

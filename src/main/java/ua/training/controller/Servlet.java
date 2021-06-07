@@ -29,6 +29,7 @@ public class Servlet extends HttpServlet {
         commands.put("clientList" , new ClientListCommand());
         commands.put("start" , new PreLoadCommand());
         commands.put("singUp" , new SingUpCommand());
+        commands.put("search" , new SearchCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -46,7 +47,6 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         System.out.println(path);
-//        System.out.println(path);
         path = path.replaceAll(".*/Exhibition/" , "");
         Command command = commands.getOrDefault(path , new PreLoadCommand());
         System.out.println(path);

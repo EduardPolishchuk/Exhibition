@@ -37,12 +37,13 @@
                     </c:when>
                 </c:choose>
             </ul>
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+            <form action="${pageContext.request.contextPath}/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <c:set var="searchLocale" value="${language != 'uk'? 'Search...':'Пошук...'}"/>
+                <input type="search" class="form-control form-control-dark" name="search" placeholder="${searchLocale}" aria-label="Search">
             </form>
             <c:choose>
                 <c:when test="${role == 'USER' || role == 'ADMIN'}">
-                    <h5 class="display-6" style="color: aliceblue">${login}</h5>
+                    <h5 class="display-6" style="color: aliceblue">${userProfile.login}</h5>
                     <form action="${pageContext.request.contextPath}/logout"
                           class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
                         <button type="submit" class="btn btn-outline-light me-2"><fmt:message key="logout"/></button>

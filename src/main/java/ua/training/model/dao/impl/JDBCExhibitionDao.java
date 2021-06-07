@@ -194,16 +194,17 @@ public class JDBCExhibitionDao implements ExpositionDao {
     }
 
     @Override
-    public Optional<Exhibition> findByTheme(String theme) {
-
-        Optional<Exhibition> result = Optional.empty();
-        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM exposition WHERE theme = ?")) {
+    public List<Exhibition> findByTheme(String theme) {
+        List<Exhibition> result = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id WHERE theme = ?")) {
             ps.setString(1, theme);
             ResultSet rs;
             rs = ps.executeQuery();
             ExpositionMapper mapper = new ExpositionMapper();
-            if (rs.next()) {
-                result = Optional.of(mapper.extractFromResultSet(rs));
+            while (rs.next()) {
+                Exhibition ex = mapper.extractFromResultSet(rs);
+                ex.setHalls(getHalls(ex));
+                result.add(ex);
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);

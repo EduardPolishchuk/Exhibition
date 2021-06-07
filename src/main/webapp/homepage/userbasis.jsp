@@ -16,7 +16,6 @@
     <fmt:message key="welcomeText"/>
 </strong>
 </h2>
-<a href="${pageContext.request.contextPath}/main">MAIN </a>
 <hr/>
 
 <table class="table" style="background-color: aliceblue">

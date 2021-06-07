@@ -15,26 +15,48 @@
 </head>
 <body class="text-center" style="background-image: url(https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F97b1c8e4-b31e-42a1-9d93-83fe161f56b2_1920x1075.jpeg)">
 <jsp:include page="common/header2.jsp"/>
-<h2 class="display-2" style="color: aliceblue"><fmt:message key="loginToSystem"/></h2>
-<%--<div class="album py-5 bg-light">--%>
+<h2 class="display-3" style="color: aliceblue"><fmt:message key="loginToSystem"/></h2>
     <div class="container justify-content-center w-50 ">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
             <div class="col ">
                 <div class="card shadow-sm">
-<%--                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>--%>
-
                     <div class="card-body">
                         <h3 class="display-4">Enter your data</h3>
-                        <form>
+                        <form method="post"  action="${pageContext.request.contextPath}/singUp">
                             <div class="mb-3 ">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <label  class="form-label">Login</label>
+                                <input type="text" class="form-control" name="login">
+                            </div>
+                            <div class="mb-3 ">
+                                <label  class="form-label">Email address</label>
+                                <input type="text" class="form-control" name="email">
+                            </div>
+                            <div class="mb-3 ">
+                                <label  class="form-label">First Name</label>
+                                <input type="text" class="form-control" name="firstName">
+                            </div>
+                            <div class="mb-3 ">
+                                <label  class="form-label">Last Name</label>
+                                <input type="text" class="form-control" name="lastName">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                             </div>
+                            <c:if test="${error != null}">
+                                <c:choose>
+                                    <c:when test="${error eq 'passwordInvalid' || error eq 'loginInvalid'}">
+                                        <div class="alert alert-danger  p-1 " role="alert">
+                                            <fmt:message key="${error}"/>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="alert alert-danger  p-1 " role="alert">
+                                            <fmt:message key="incorrectInput"/>: "${error}"
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -42,8 +64,6 @@
             </div>
         </div>
     </div>
-<%--</div>--%>
-
 <footer class="text-muted py-5">
 
     <div class="footer__inner" style="background-color: black; text-align: center; color: aliceblue ">
