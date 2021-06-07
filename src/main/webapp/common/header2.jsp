@@ -65,6 +65,9 @@
                     <c:if test="${currentPage != null}">
                         <input type="hidden" class="key" name="page" value="${currentPage}">
                     </c:if>
+                    <c:if test="${search != null}">
+                        <input type="hidden" class="key" name="search" value="${search}">
+                    </c:if>
                     <button type="submit" class="btn btn-light" name="language" value="en"><strong>EN</strong></button>
                     <button type="submit" class="btn btn-light" name="language" value="uk"><strong>UA</strong></button>
                 </form>

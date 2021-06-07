@@ -15,6 +15,7 @@ import java.util.Set;
 @Builder
 public class Exhibition {
     private String theme;
+    private String themeUk;
     private String description;
     private String imageUrl;
     private int price;

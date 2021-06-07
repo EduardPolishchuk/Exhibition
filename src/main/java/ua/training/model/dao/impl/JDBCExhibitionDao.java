@@ -83,12 +83,12 @@ public class JDBCExhibitionDao implements ExpositionDao {
         return list;
     }
 
-    public List<Exhibition> findFrom(int start, int itemsPer) {
+    public List<Exhibition> findFrom(String sortBy ,int start, int itemsPer) {
         List<Exhibition> list = new ArrayList<>();
         ExpositionMapper expoMapper = new ExpositionMapper();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id ORDER BY ? LIMIT ? offset ?");
-            ps.setString(1, "id");
+            ps.setString(1, sortBy.toLowerCase());
             ps.setInt(2, itemsPer);
             ps.setInt(3, start);
             ResultSet expoResultSet = ps.executeQuery();
@@ -196,8 +196,9 @@ public class JDBCExhibitionDao implements ExpositionDao {
     @Override
     public List<Exhibition> findByTheme(String theme) {
         List<Exhibition> result = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id WHERE theme = ?")) {
+        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id WHERE theme = ? or theme_uk=?")) {
             ps.setString(1, theme);
+            ps.setString(2, theme);
             ResultSet rs;
             rs = ps.executeQuery();
             ExpositionMapper mapper = new ExpositionMapper();

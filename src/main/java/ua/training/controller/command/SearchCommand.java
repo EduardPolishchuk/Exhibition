@@ -11,8 +11,8 @@ public class SearchCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request) {
-        System.out.println("doshlo");
         String search = request.getParameter("search");
+        request.getSession().setAttribute("search",search);
         List<Exhibition> list = exhibitionService.findByTheme(search);
         request.getSession().setAttribute("expoList",list);
         return "/index.jsp";

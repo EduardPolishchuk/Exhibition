@@ -12,11 +12,14 @@ public class PreLoadCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        String sortBy = request.getParameter("sortBy");
+        sortBy = sortBy == null ? "id" : sortBy;
+        System.out.println(sortBy);
         int page = 1;
-        if(request.getParameter("page") != null){
+        if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        List<Exhibition> list = exhibitionService.getFrom((page-1)*RECORDS_PER_PAGE,
+        List<Exhibition> list = exhibitionService.getFrom(sortBy,(page - 1) * RECORDS_PER_PAGE,
                 RECORDS_PER_PAGE);
         int noOfRecords = exhibitionService.getRowsNumber();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);

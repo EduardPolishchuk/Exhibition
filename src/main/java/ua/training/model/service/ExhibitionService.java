@@ -19,9 +19,9 @@ public class ExhibitionService {
         }
     }
 
-    public List<Exhibition> getFrom(int start, int per) {
+    public List<Exhibition> getFrom(String sortBy ,int start, int per) {
         try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
-            return expositionDao.findFrom(start, per);
+            return expositionDao.findFrom(sortBy,start, per);
         }
     }
 
