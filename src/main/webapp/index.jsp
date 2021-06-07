@@ -21,17 +21,17 @@
 <body style="background-image: url(https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F97b1c8e4-b31e-42a1-9d93-83fe161f56b2_1920x1075.jpeg)">
 <jsp:include page="common/header2.jsp"/>
 <h2 class="display-2" style="color: aliceblue"><fmt:message key="welcomeText"/></h2>
-<form >
-    <button class="submit" >Sort</button>
-    <select  class="form-select form-select-sm w-25 p-1" aria-label="Default select example" name="sortBy" style="text-align: end ">
+<form style="align-content: end">
+    <select class="form-select form-select-sm w-25 p-1" aria-label="Default select example" name="sortBy"
+            style="text-align: end ">
         <option selected>Sort by</option>
         <option value="Theme">Theme</option>
         <option value="Price">Price</option>
         <option value="Date">Date</option>
     </select>
+    <button type="submit" class="btn btn-light">Sort</button>
 </form>
 
-<hr>
 <div2 class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
@@ -39,22 +39,24 @@
                 <div class="col">
                     <div class="card shadow-sm">
                         <img class="card-img-top" src=${item.imageUrl} alt="Picture" style="max-height: 240px">
-                            <%--                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnaasdasdasdasdasdsdasdasdasdasdasdasdasdasil" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>--%>
                         <div class="card-body">
                             <c:choose>
                                 <c:when test="${language != 'uk'}">
                                     <p class="card-text"><strong>${item.theme}</strong></p>
                                     <p class="card-text">${item.date}</p>
+                                    <p class="card-text">${item.description}</p>
                                 </c:when>
                                 <c:otherwise>
                                     <p class="card-text"><strong>${item.themeUk}</strong></p>
                                     <p class="card-text"><custom:formatDate value="${item.date}"
                                                                             pattern="dd/MM/yyyy"/></p>
+                                    <p class="card-text">${item.description}</p>
                                 </c:otherwise>
                             </c:choose>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary disabled">View</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary disabled">View
+                                    </button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
                                 <small class="text-muted">${item.max-item.current} <fmt:message

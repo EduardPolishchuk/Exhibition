@@ -9,6 +9,9 @@ import java.util.HashSet;
 import java.util.Optional;
 
 public class LoginCommand implements Command {
+    private static final String LOGIN_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{1,19}$";
+    private static final String PASSWORD_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії0-9]{1,}";
+
     UserService userService = new UserService();
     ExhibitionService exhibitionService = new ExhibitionService();
 
@@ -19,8 +22,8 @@ public class LoginCommand implements Command {
         Optional<User> result;
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        boolean loginValid = !(login == null || login.equals(""));
-        boolean passwordValid = !(password == null || password.equals(""));
+        boolean loginValid = login.matches(LOGIN_REG);
+        boolean passwordValid = password.matches(PASSWORD_REG);
         boolean userLoggedIn = request.getSession().getAttribute("userLoggedIn") == null;
 
         if (!loginValid || !passwordValid ) {

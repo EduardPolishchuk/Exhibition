@@ -22,6 +22,7 @@ public class ExpositionMapper implements ObjectMapper<Exhibition> {
                 .description(rs.getString("description"))
                 .imageUrl(rs.getString("image_url"))
                 .theme(rs.getString("theme"))
+                .descriptionUk(rs.getString("description_uk"))
                 .themeUk(rs.getString("theme_uk"))
                 .build();
 

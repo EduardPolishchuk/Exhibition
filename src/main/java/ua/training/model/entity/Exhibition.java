@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import ua.training.model.entity.enums.Hall;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -17,6 +16,7 @@ public class Exhibition {
     private String theme;
     private String themeUk;
     private String description;
+    private String descriptionUk;
     private String imageUrl;
     private int price;
     private Set<Hall> halls;

@@ -29,7 +29,7 @@
                 </svg>
             </a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="${pageContext.request.contextPath}/" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="${pageContext.request.contextPath}/" class="nav-link px-1 text-secondary">Home</a></li>
                 <c:choose>
                     <c:when test="${role == 'USER'}">
                         <li><a href="${pageContext.request.contextPath}/homepage/userevents" class="nav-link px-2 text-white">My Events</a></li>

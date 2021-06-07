@@ -1,4 +1,4 @@
-package ua.training.model.entity.enums;
+package ua.training.model.entity;
 
 public enum Hall {
     RED(120, 1),

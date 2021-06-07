@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.entity.User;
-import ua.training.model.entity.enums.Hall;
+import ua.training.model.entity.Hall;
 
 public class JDBCExhibitionDao implements ExpositionDao {
 
@@ -88,7 +88,8 @@ public class JDBCExhibitionDao implements ExpositionDao {
         ExpositionMapper expoMapper = new ExpositionMapper();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id ORDER BY ? LIMIT ? offset ?");
-            ps.setString(1, sortBy.toLowerCase());
+            System.out.println(sortBy.toLowerCase());
+            ps.setNString(1, sortBy.toLowerCase());
             ps.setInt(2, itemsPer);
             ps.setInt(3, start);
             ResultSet expoResultSet = ps.executeQuery();
