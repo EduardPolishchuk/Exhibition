@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ExpositionDao extends GenericDao<Exhibition> {
 
-    public List<Exhibition> findFrom(String sortBy,int start, int itemsPer);
+    public List<Exhibition> findFrom(int sortBy,int start, int itemsPer);
     public int getRowsNumber();
     Optional<Map<Exhibition,Integer>> getUserExhibitions(User user);
 

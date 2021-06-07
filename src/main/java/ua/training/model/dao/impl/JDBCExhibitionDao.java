@@ -83,13 +83,12 @@ public class JDBCExhibitionDao implements ExpositionDao {
         return list;
     }
 
-    public List<Exhibition> findFrom(String sortBy ,int start, int itemsPer) {
+    public List<Exhibition> findFrom(int sortBy ,int start, int itemsPer) {
         List<Exhibition> list = new ArrayList<>();
         ExpositionMapper expoMapper = new ExpositionMapper();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id ORDER BY ? LIMIT ? offset ?");
-            System.out.println(sortBy.toLowerCase());
-            ps.setNString(1, sortBy.toLowerCase());
+            ps.setInt(1, sortBy);
             ps.setInt(2, itemsPer);
             ps.setInt(3, start);
             ResultSet expoResultSet = ps.executeQuery();

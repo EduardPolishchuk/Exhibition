@@ -12,10 +12,11 @@ public class PreLoadCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String sortBy = request.getParameter("sortBy");
-        sortBy = sortBy == null ? "id" : sortBy;
-        System.out.println(sortBy);
         int page = 1;
+        int sortBy=1;
+        if (request.getParameter("sortBy") != null){
+            sortBy = Integer.parseInt(request.getParameter("sortBy"));
+        }
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
@@ -26,6 +27,7 @@ public class PreLoadCommand implements Command {
         request.setAttribute("expoList", list);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
+        request.setAttribute("sortBy", sortBy);
 
         return "/index.jsp";
     }

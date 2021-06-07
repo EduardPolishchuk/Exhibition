@@ -29,7 +29,7 @@ public class AuthFilter implements Filter {
 //            return;
 //        }
         if (User.ROLE.UNKNOWN.equals(role1) || role1 == null) {
-            request.getRequestDispatcher("/WEB-INF/noAccess.jsp").forward(request, response);
+            request.getRequestDispatcher("/error/noAccess.jsp").forward(request, response);
 
         }
         filterChain.doFilter(servletRequest, servletResponse);

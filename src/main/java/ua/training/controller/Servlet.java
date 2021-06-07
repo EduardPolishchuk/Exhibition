@@ -30,6 +30,7 @@ public class Servlet extends HttpServlet {
         commands.put("start" , new PreLoadCommand());
         commands.put("singUp" , new SingUpCommand());
         commands.put("search" , new SearchCommand());
+        commands.put("homepage/userbuy" , new BuyTicketCommand());
     }
 
     public void doGet(HttpServletRequest request,
