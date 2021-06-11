@@ -8,19 +8,24 @@ import java.util.List;
 
 public class PreLoadCommand implements Command {
     public static final int RECORDS_PER_PAGE = 3;
-    ExhibitionService exhibitionService = new ExhibitionService();
+    private ExhibitionService exhibitionService;
+
+    public PreLoadCommand(ExhibitionService exhibitionService) {
+        this.exhibitionService = exhibitionService;
+    }
+
 
     @Override
     public String execute(HttpServletRequest request) {
         int page = 1;
-        int sortBy=1;
-        if (request.getParameter("sortBy") != null){
+        int sortBy = 1;
+        if (request.getParameter("sortBy") != null) {
             sortBy = Integer.parseInt(request.getParameter("sortBy"));
         }
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        List<Exhibition> list = exhibitionService.getFrom(sortBy,(page - 1) * RECORDS_PER_PAGE,
+        List<Exhibition> list = exhibitionService.getFrom(sortBy, (page - 1) * RECORDS_PER_PAGE,
                 RECORDS_PER_PAGE);
         int noOfRecords = exhibitionService.getRowsNumber();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);

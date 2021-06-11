@@ -17,10 +17,10 @@ public class Test {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         ExhibitionService exhibitionService = new ExhibitionService();
-        List<Exhibition> list = exhibitionService.getFrom(2, 0, 50);
+        List<Exhibition> list = exhibitionService.getFrom(1, 0, 50);
+        list.sort(Comparator.comparing(Exhibition::getPrice).reversed());
         for (Exhibition e : list) {
             System.out.println(e);
         }
-
     }
 }

@@ -2,6 +2,7 @@ package ua.training.controller;
 
 
 import ua.training.controller.command.*;
+import ua.training.model.service.ExhibitionService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -27,7 +28,7 @@ public class Servlet extends HttpServlet {
         commands.put("exception" , new ExceptionCommand());
         commands.put("homepage/userevents" , new MainCommand());
         commands.put("clientList" , new ClientListCommand());
-        commands.put("start" , new PreLoadCommand());
+        commands.put("start" , new PreLoadCommand(new ExhibitionService()));
         commands.put("singUp" , new SingUpCommand());
         commands.put("search" , new SearchCommand());
         commands.put("homepage/userbuy" , new BuyTicketCommand());
@@ -49,7 +50,7 @@ public class Servlet extends HttpServlet {
         String path = request.getRequestURI();
         System.out.println(path);
         path = path.replaceAll(".*/Exhibition/" , "");
-        Command command = commands.getOrDefault(path , new PreLoadCommand());
+        Command command = commands.getOrDefault(path , new PreLoadCommand(new ExhibitionService()));
         System.out.println(path);
         String page = command.execute(request);
         if(page.contains("redirect:")){
