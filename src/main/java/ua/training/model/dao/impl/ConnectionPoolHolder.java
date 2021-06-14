@@ -1,6 +1,9 @@
 package ua.training.model.dao.impl;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -10,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 public class ConnectionPoolHolder {
+    private static final Logger logger = LogManager.getLogger();
     private static volatile DataSource dataSource;
     private static final String PROPERTIES = "db/db.properties";
     private static final String CONNECTION_URL = "connection.url";
@@ -17,17 +21,17 @@ public class ConnectionPoolHolder {
     private static final String PASSWORD = "dbPassword";
     private static final String DRIVER = "dbDriver";
 
-    public static DataSource getDataSource(){
+    public static DataSource getDataSource() {
 
-        if (dataSource == null){
+        if (dataSource == null) {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
                     Properties properties = new Properties();
-                    try(InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTIES)){
+                    try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTIES)) {
                         properties.load(in);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        logger.log(Level.ERROR, e.getMessage());
                     }
                     ds.setDriverClassName(properties.getProperty(DRIVER));
                     ds.setUrl(properties.getProperty(CONNECTION_URL));
@@ -41,16 +45,5 @@ public class ConnectionPoolHolder {
             }
         }
         return dataSource;
-
-    }
-
-    public static void main(String[] args) {
-        Properties properties = new Properties();
-        try(InputStream in = Files.newInputStream(Paths.get(PROPERTIES))){
-            properties.load(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(properties.getProperty("connection.url")+"?");
     }
 }

@@ -32,8 +32,8 @@
                 <li><a href="${pageContext.request.contextPath}/" class="nav-link px-1 text-secondary">Home</a></li>
                 <c:choose>
                     <c:when test="${role == 'USER'}">
-                        <li><a href="${pageContext.request.contextPath}/homepage/userevents" class="nav-link px-2 text-white">My Events</a></li>
-                        <li><a href="${pageContext.request.contextPath}/homepage/profile.jsp" class="nav-link px-2 text-white">My Profile</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/userevents" class="nav-link px-2 text-white">My Events</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/userprofile.jsp" class="nav-link px-2 text-white">My Profile</a></li>
                     </c:when>
                 </c:choose>
             </ul>
@@ -43,7 +43,10 @@
             </form>
             <c:choose>
                 <c:when test="${role == 'USER' || role == 'ADMIN'}">
-                    <h5 class="display-6" style="color: aliceblue">${userProfile.login}</h5>
+                    <h5 class="display-6" style="color: aliceblue">${userProfile.login}
+                        <a href="">${userProfile.balance}</a>
+                    </h5>
+                    <br>
                     <form action="${pageContext.request.contextPath}/logout"
                           class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
                         <button type="submit" class="btn btn-outline-light me-2"><fmt:message key="logout"/></button>
@@ -64,6 +67,7 @@
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                     <c:if test="${currentPage != null}">
                         <input type="hidden" class="key" name="page" value="${currentPage}">
+<%--                        <input type="hidden" class="key" name="sortBy" value="${sortBy}">--%>
                     </c:if>
                     <c:if test="${search != null}">
                         <input type="hidden" class="key" name="search" value="${search}">

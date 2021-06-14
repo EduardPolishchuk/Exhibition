@@ -35,7 +35,7 @@ public class LoginCommand implements Command {
             request.getSession().setAttribute("userProfile",user);
             request.getSession().setAttribute("userLoggedIn",true);
             request.getSession().setAttribute("role",user.getRole());
-            request.getSession().setAttribute("userExhib",exhibitionService.getUserExhibitions(user).get());
+//            request.getSession().setAttribute("userExhib",exhibitionService.getUserExhibitions(user).get());
             return "redirect:/";
         }else {
             String error = userLoggedIn? "loginedError": "passError";

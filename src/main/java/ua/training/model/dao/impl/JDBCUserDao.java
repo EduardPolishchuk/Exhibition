@@ -123,6 +123,13 @@ public class JDBCUserDao implements UserDao {
         return result;
     }
 
+    public boolean buyTicket(User user, int exhibitionId, int amount){
+
+
+
+        return true;
+    }
+
 
     @Override
     public void close() {

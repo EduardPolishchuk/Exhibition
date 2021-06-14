@@ -13,52 +13,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Exhibitions&Events</title>
     <jsp:include page="/common/windowstyle.jsp"/>
-    <style>
-        /*div2 {*/
-        /*    background: rgba(255, 255, 255, 0);*/
-        /*}*/
-        /*#zatemnenie {*/
-        /*    background: rgba(102, 102, 102, 0.5);*/
-        /*    width: 100%;*/
-        /*    height: 100%;*/
-        /*    position: absolute;*/
-        /*    top: 0;*/
-        /*    left: 0;*/
-        /*    display: none;*/
-        /*}*/
-        /*#okno {*/
-        /*    width: 300px;*/
-        /*    height: 50px;*/
-        /*    text-align: center;*/
-        /*    padding: 15px;*/
-        /*    border: 3px solid #0000cc;*/
-        /*    border-radius: 10px;*/
-        /*    color: #0000cc;*/
-        /*    position: absolute;*/
-        /*    top: 0;*/
-        /*    right: 0;*/
-        /*    bottom: 0;*/
-        /*    left: 0;*/
-        /*    margin: auto;*/
-        /*    background: #fff;*/
-        /*    z-index:9999;*/
-        /*}*/
-        /*#zatemnenie:target {display: block;}*/
-        /*.close {*/
-        /*    display: inline-block;*/
-        /*    border: 1px solid #0000cc;*/
-        /*    color: #0000cc;*/
-        /*    padding: 0 12px;*/
-        /*    margin: 10px;*/
-        /*    text-decoration: none;*/
-        /*    background: #f2f2f2;*/
-        /*    font-size: 14pt;*/
-        /*    cursor:pointer;*/
-        /*}*/
-        /*.close:hover {background: #e6e6ff;}*/
-    </style>
 </head>
-<body style="background-image: url(https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F97b1c8e4-b31e-42a1-9d93-83fe161f56b2_1920x1075.jpeg)">
+<body >
 <jsp:include page="common/header2.jsp"/>
 <h2 class="display-2" style="color: aliceblue"><fmt:message key="welcomeText"/></h2>
 <%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" name="modl" value="1">--%>
@@ -142,23 +98,23 @@
                                     <p class="card-text"><strong>${item.themeUk}</strong></p>
                                     <p class="card-text"><custom:formatDate value="${item.date}"
                                                                             pattern="dd/MM/yyyy"/></p>
-                                    <p class="card-text">${item.description}</p>
+                                    <p class="card-text">${item.descriptionUk}</p>
                                 </c:otherwise>
                             </c:choose>
                             <div class="d-flex justify-content-between align-items-center">
-                                <form action="/Exhibition/homepage/userbuy">
+                                <form action="/Exhibition/user/userbuy">
                                     <input type="hidden" name="id" value="${item.id}">
                                     <div class="btn-group">
                                         <c:choose>
                                             <c:when test="${role !='USER' || userProfile.balance < item.price}">
                                                 <button type="submit" class="btn btn-sm btn-outline-secondary"
                                                         disabled><fmt:message
-                                                        key="buy"/></button>
+                                                        key="buy"/>${userProfile.balance}</button>
                                             </c:when>
                                             <c:otherwise>
                                                 <button type="submit" class="btn btn-sm btn-outline-secondary" data-bs-id="idId"
                                                         data-bs-toggle="modal" data-bs-target="#exampleModal"><fmt:message
-                                                        key="buy"/></button>
+                                                        key="buy"/>${userProfile.balance}</button>
                                             </c:otherwise>
                                         </c:choose>
                                     </div>

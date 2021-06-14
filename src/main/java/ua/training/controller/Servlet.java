@@ -26,12 +26,12 @@ public class Servlet extends HttpServlet {
         commands.put("login",
                 new LoginCommand());
         commands.put("exception" , new ExceptionCommand());
-        commands.put("homepage/userevents" , new MainCommand());
+        commands.put("user/userevents" , new MainCommand());
         commands.put("clientList" , new ClientListCommand());
         commands.put("start" , new PreLoadCommand(new ExhibitionService()));
         commands.put("singUp" , new SingUpCommand());
         commands.put("search" , new SearchCommand());
-        commands.put("homepage/userbuy" , new BuyTicketCommand());
+        commands.put("user/userbuy" , new BuyTicketCommand());
     }
 
     public void doGet(HttpServletRequest request,

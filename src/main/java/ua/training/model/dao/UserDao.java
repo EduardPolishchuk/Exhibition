@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface UserDao extends GenericDao<User> {
 
     public Optional<User> isValid(String login, String password);
-
+ public boolean buyTicket(User user, int exhibitionId, int amount);
 }
