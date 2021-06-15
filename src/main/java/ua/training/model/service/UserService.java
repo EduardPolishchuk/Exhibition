@@ -26,4 +26,10 @@ public class UserService {
             return userDao.create(user);
         }
     }
+
+    public boolean buyTicket(User user, int exhibitionId, int amount){
+        try(UserDao userDao = daoFactory.createUserDao()){
+            return userDao.buyTicket(user,exhibitionId,amount);
+        }
+    }
 }

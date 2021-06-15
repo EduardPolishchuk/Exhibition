@@ -17,8 +17,7 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-//        List<Exhibition> exhibitions = exhibitionService.getAllExpositions();
-//        httpSessionEvent.getSession().setAttribute("expoList",exhibitions);
+
     }
 
     @Override

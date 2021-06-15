@@ -123,13 +123,29 @@ public class JDBCUserDao implements UserDao {
         return result;
     }
 
-    public boolean buyTicket(User user, int exhibitionId, int amount){
-
-
-
+    public boolean buyTicket(User user, int exhibitionId, int amount) {
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareStatement("SELECT * from user_has_exposition where user_id=? and exposition_id=?");
+            ps.setInt(1, user.getId());
+            ps.setInt(2, exhibitionId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ps = connection.prepareStatement("UPDATE user_has_exposition SET tickets_count = tickets_count+? WHERE user_id=? and exposition_id=?");
+            } else {
+                ps = connection.prepareStatement("INSERT INTO user_has_exposition(tickets_count, user_id, exposition_id) VALUES (?,?,?)");
+            }
+            ps.setInt(1, amount);
+            ps.setInt(2, user.getId());
+            ps.setInt(3, exhibitionId);
+            ps.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+            return false;
+        }
         return true;
     }
-
 
     @Override
     public void close() {
