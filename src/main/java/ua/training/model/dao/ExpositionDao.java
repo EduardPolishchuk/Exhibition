@@ -14,5 +14,5 @@ public interface ExpositionDao extends GenericDao<Exhibition> {
     Optional<Map<Exhibition,Integer>> getUserExhibitions(User user);
 
     List<Exhibition> findByTheme(String theme);
-    // Optional<Teacher> findByNameProxy(String name);
+
 }

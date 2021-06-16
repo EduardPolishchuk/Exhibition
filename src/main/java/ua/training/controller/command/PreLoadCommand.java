@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PreLoadCommand implements Command {
     public static final int RECORDS_PER_PAGE = 3;
-    private ExhibitionService exhibitionService;
+    private final ExhibitionService exhibitionService;
 
     public PreLoadCommand(ExhibitionService exhibitionService) {
         this.exhibitionService = exhibitionService;

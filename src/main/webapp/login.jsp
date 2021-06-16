@@ -32,8 +32,9 @@
                             <input type="password" name="password">
                         </div>
                         <c:if test="${incorrect != null}">
-                            <div class="alert alert-danger  p-1 " role="alert">
+                            <div class="alert alert-danger  p-2 " role="alert">
                                 <fmt:message key="${incorrect}"/>
+                                <button type="button" class="btn-close p-1" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         </c:if>
                         <button type="submit" class="btn btn-primary">Submit</button>

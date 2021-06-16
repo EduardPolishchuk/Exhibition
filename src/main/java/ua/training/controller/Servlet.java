@@ -3,6 +3,7 @@ package ua.training.controller;
 
 import ua.training.controller.command.*;
 import ua.training.model.service.ExhibitionService;
+import ua.training.model.service.UserService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -31,7 +32,7 @@ public class Servlet extends HttpServlet {
         commands.put("start" , new PreLoadCommand(new ExhibitionService()));
         commands.put("singUp" , new SingUpCommand());
         commands.put("search" , new SearchCommand());
-        commands.put("user/userbuy" , new BuyTicketCommand());
+        commands.put("user/userbuy" , new BuyTicketCommand(new UserService()));
     }
 
     public void doGet(HttpServletRequest request,

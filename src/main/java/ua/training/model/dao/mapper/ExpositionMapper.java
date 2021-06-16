@@ -14,7 +14,7 @@ public class ExpositionMapper implements ObjectMapper<Exhibition> {
 
     @Override
     public Exhibition extractFromResultSet(ResultSet rs) throws SQLException {
-        Exhibition exhibition = Exhibition.builder()
+        return Exhibition.builder()
                 .date(toLocalDate(rs.getDate("date")))
                 .id(rs.getInt("id"))
                 .price(rs.getInt("price"))
@@ -25,14 +25,6 @@ public class ExpositionMapper implements ObjectMapper<Exhibition> {
                 .descriptionUk(rs.getString("description_uk"))
                 .themeUk(rs.getString("theme_uk"))
                 .build();
-
-
-//        teacher.setId(rs.getInt("idteacher"));
-//        teacher.setName(rs.getString("teacher.name"));
-//        teacher.setCourse(rs.getString("course"));
-//        teacher.setRoom(rs.getInt("room"));
-//        teacher.setPassHash(rs.getInt("pass_hash"));
-        return exhibition;
     }
 
     public static LocalDate toLocalDate(Date date) {
