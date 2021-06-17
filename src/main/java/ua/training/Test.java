@@ -12,7 +12,8 @@ public class Test {
 
         ExhibitionService exhibitionService = new ExhibitionService();
         UserService userService = new UserService();
-        User user = userService.findById(9).get();
-        System.out.println(userService.buyTicket(user,3,3));
+        User user = userService.findById(1).get();
+        System.out.println(userService.getUserBalance(user));
+        System.out.println(userService.buyTicket(user,1,2));
     }
 }

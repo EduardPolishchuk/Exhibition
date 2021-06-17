@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class ExpositionMapper implements ObjectMapper<Exhibition> {
+public class ExhibitionMapper implements ObjectMapper<Exhibition> {
 
     @Override
     public Exhibition extractFromResultSet(ResultSet rs) throws SQLException {

@@ -28,13 +28,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/Exhibition/user/userbuy">
+                <form action="/Exhibition/user/userbuy" class="row g-3 needs-validation" novalidate>
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="exId-name" name="exEx">
-                        <label for="message-text" class="col-form-label">Amount:</label>
-                        <input type="text" class="form-control" id="message-text" name="amount" value="1">
+                        <label for="validationCustom01" class="form-label">First name</label>
+                        <input type="text" class="form-control" id="validationCustom01" name="amount" value="1" required>
+<%--                        <label for="message-text" class="col-form-label">Amount:</label>--%>
+<%--                        <input type="text" class="form-control" id="message-text" name="amount" value="1">--%>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

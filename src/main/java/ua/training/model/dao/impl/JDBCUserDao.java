@@ -4,11 +4,10 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.dao.UserDao;
-import ua.training.model.dao.mapper.ExpositionMapper;
 import ua.training.model.dao.mapper.UserMapper;
-import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.User;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
@@ -126,6 +125,12 @@ public class JDBCUserDao implements UserDao {
     public boolean buyTicket(User user, int exhibitionId, int amount) {
         try {
             connection.setAutoCommit(false);
+            PreparedStatement ps2 = connection.prepareStatement("update user,exposition set balance = balance - (exposition.price*?), current_places = current_places + ?  where user.id=? and exposition.id=?;");
+            ps2.setInt(1, amount);
+            ps2.setInt(2, amount);
+            ps2.setInt(3, user.getId());
+            ps2.setInt(4, exhibitionId);
+            ps2.executeUpdate();
             PreparedStatement ps = connection.prepareStatement("SELECT * from user_has_exposition where user_id=? and exposition_id=?");
             ps.setInt(1, user.getId());
             ps.setInt(2, exhibitionId);
@@ -142,9 +147,29 @@ public class JDBCUserDao implements UserDao {
             connection.commit();
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
+            rollback(connection);
             return false;
+        }finally {
+            close();
         }
         return true;
+    }
+
+    public BigDecimal getUserBalance(User user) {
+        BigDecimal balance = BigDecimal.valueOf(0);
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT balance from user where id=?");
+            ps.setInt(1, user.getId());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                balance = rs.getBigDecimal(1);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }finally {
+            close();
+        }
+        return balance;
     }
 
     @Override

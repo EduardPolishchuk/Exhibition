@@ -32,6 +32,7 @@ public class Servlet extends HttpServlet {
         commands.put("start" , new PreLoadCommand(new ExhibitionService()));
         commands.put("singUp" , new SingUpCommand());
         commands.put("search" , new SearchCommand());
+        commands.put("user/update" , new UpdateUserCommand());
         commands.put("user/userbuy" , new BuyTicketCommand(new UserService()));
     }
 

@@ -7,6 +7,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale/resources"/>
 <c:set var="vari" value="${not empty param.edit ? null : 'disabled'}" scope="session"/>
+
 <html>
 <head>
     <title>MyProfile</title>

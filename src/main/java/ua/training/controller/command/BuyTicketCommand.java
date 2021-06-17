@@ -14,17 +14,17 @@ public class BuyTicketCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-//        User user = (User) request.getSession().getAttribute("userProfile");
-//        int id = Integer.parseInt(request.getParameter("exhibitionId"));
-//        if (userService.buyTicket(user,id,1)){
-//            return "redirect:/success.jsp";
-//        }
-
-        String sr = (String) request.getParameter("exEx");
-        String srt = (String) request.getParameter("amount");
-        System.out.println("Ex Id: "+ sr);
-        System.out.println("Amount: "+ srt);
-        return "redirect:/success.jsp";
-//        return "/WEB-INF/error.jsp";
+        int exId = Integer.parseInt(request.getParameter("exEx"));
+        int amount =Integer.parseInt(request.getParameter("amount"));
+        User user = (User) request.getSession().getAttribute("userProfile");
+        System.out.println(user);
+        System.out.println(exId);
+        System.out.println(amount);
+        if (userService.buyTicket(user,exId,amount)){
+            user.setBalance(userService.getUserBalance(user));
+            request.getSession().setAttribute("userProfile",user);
+            return "redirect:/success.jsp";
+        }
+        return "/WEB-INF/error.jsp";
     }
 }

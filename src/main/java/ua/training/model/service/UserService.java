@@ -4,6 +4,7 @@ import ua.training.model.dao.DaoFactory;
 import ua.training.model.dao.UserDao;
 import ua.training.model.entity.User;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public class UserService {
@@ -30,6 +31,12 @@ public class UserService {
     public boolean buyTicket(User user, int exhibitionId, int amount){
         try(UserDao userDao = daoFactory.createUserDao()){
             return userDao.buyTicket(user,exhibitionId,amount);
+        }
+    }
+
+    public BigDecimal getUserBalance(User user) {
+        try(UserDao userDao = daoFactory.createUserDao()){
+            return userDao.getUserBalance(user);
         }
     }
 }
