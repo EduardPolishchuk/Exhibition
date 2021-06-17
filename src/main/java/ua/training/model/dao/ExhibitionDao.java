@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public interface ExpositionDao extends GenericDao<Exhibition> {
+public interface ExhibitionDao extends GenericDao<Exhibition> {
 
     public List<Exhibition> findFrom(int sortBy,int start, int itemsPer);
     public int getRowsNumber();

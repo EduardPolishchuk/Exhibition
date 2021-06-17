@@ -1,8 +1,7 @@
 package ua.training.model.service;
 
 import ua.training.model.dao.DaoFactory;
-import ua.training.model.dao.ExpositionDao;
-import ua.training.model.dao.impl.JDBCExhibitionDao;
+import ua.training.model.dao.ExhibitionDao;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.User;
 
@@ -14,38 +13,38 @@ public class ExhibitionService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public List<Exhibition> getAllExpositions() {
-        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
-            return expositionDao.findAll();
+        try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
+            return exhibitionDao.findAll();
         }
     }
 
     public List<Exhibition> getFrom(int sortBy ,int start, int per) {
-        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
-            return expositionDao.findFrom(sortBy,start, per);
+        try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
+            return exhibitionDao.findFrom(sortBy,start, per);
         }
     }
 
     public boolean create(Exhibition exhibition) {
-        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
-            return expositionDao.create(exhibition);
+        try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
+            return exhibitionDao.create(exhibition);
         }
     }
 
     public Optional<Map<Exhibition, Integer>> getUserExhibitions(User user) {
-        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
-            return expositionDao.getUserExhibitions(user);
+        try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
+            return exhibitionDao.getUserExhibitions(user);
         }
     }
 
     public int getRowsNumber() {
-        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
-            return expositionDao.getRowsNumber();
+        try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
+            return exhibitionDao.getRowsNumber();
         }
     }
 
     public List<Exhibition> findByTheme(String theme) {
-        try (ExpositionDao expositionDao = daoFactory.createExpositionDao()) {
-            return expositionDao.findByTheme(theme);
+        try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
+            return exhibitionDao.findByTheme(theme);
         }
     }
 }

@@ -7,7 +7,7 @@ public enum Hall {
 
     private final int places;
     private final int id;
-
+//todo nameEn nameUk for locale
 
     public int getId() {
         return id;

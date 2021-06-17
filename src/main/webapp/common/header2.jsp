@@ -35,6 +35,10 @@
                         <li><a href="${pageContext.request.contextPath}/user/userevents" class="nav-link px-2 text-white">My Events</a></li>
                         <li><a href="${pageContext.request.contextPath}/user/userprofile.jsp" class="nav-link px-2 text-white">My Profile</a></li>
                     </c:when>
+                    <c:when test="${role == 'ADMIN'}">
+                        <li><a href="${pageContext.request.contextPath}/admin/adminbasis.jsp" class="nav-link px-2 text-white">Admin Main</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/adminClientList.jsp" class="nav-link px-2 text-white">Client List</a></li>
+                    </c:when>
                 </c:choose>
             </ul>
             <form action="${pageContext.request.contextPath}/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">

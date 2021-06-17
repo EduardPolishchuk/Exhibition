@@ -15,7 +15,7 @@
     <title>Exhibitions&Events</title>
     <jsp:include page="/common/windowstyle.jsp"/>
 </head>
-<body >
+<body>
 <jsp:include page="common/header2.jsp"/>
 <h2 class="display-3" style="color: aliceblue"><fmt:message key="welcomeText"/></h2>
 
@@ -34,13 +34,14 @@
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="exId-name" name="exEx">
                         <label for="validationCustom01" class="form-label">First name</label>
-                        <input type="text" class="form-control" id="validationCustom01" name="amount" value="1" required>
-<%--                        <label for="message-text" class="col-form-label">Amount:</label>--%>
-<%--                        <input type="text" class="form-control" id="message-text" name="amount" value="1">--%>
+                        <input type="text" class="form-control" id="validationCustom01" name="amount" value="1"
+                               required>
+                        <%--                        <label for="message-text" class="col-form-label">Amount:</label>--%>
+                        <%--                        <input type="text" class="form-control" id="message-text" name="amount" value="1">--%>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit"  class="btn btn-primary">Send message</button>
+                        <button type="submit" class="btn btn-primary">Send message</button>
                     </div>
                 </form>
             </div>
@@ -51,7 +52,7 @@
 
 <c:if test="${noOfPages > 0}">
     <nav aria-label="...">
-        <form class="w-25">
+        <form class="w-25" style="align-self: center">
             <select class="form-select form-select-sm w-25 p-1" aria-label="Default select example" name="sortBy"
             >
                 <option selected value="1">Sort by</option>
@@ -63,6 +64,7 @@
             <button type="submit" class="btn btn-light w-25 p-1">Sort</button>
         </form>
         <ul class="pagination justify-content-center">
+
             <c:choose>
                 <c:when test="${currentPage <= 1}">
                     <li class="page-item disabled">
@@ -125,20 +127,22 @@
                                 </c:otherwise>
                             </c:choose>
                             <div class="d-flex justify-content-between align-items-center">
-                                    <input type="hidden" name="exhibitionId" value="${item.id}">
-                                    <div class="btn-group">
-                                        <c:choose>
-                                            <c:when test="${role !='USER' || userProfile.balance < item.price}">
-                                                <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                                        disabled><fmt:message
-                                                        key="buy"/></button>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-theme="${item.theme}" data-bs-id="${item.id}"><fmt:message
-                                                        key="buy"/></button>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
+                                <input type="hidden" name="exhibitionId" value="${item.id}">
+                                <div class="btn-group">
+                                    <c:choose>
+                                        <c:when test="${role !='USER' || userProfile.balance < item.price}">
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                    disabled><fmt:message
+                                                    key="buy"/></button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                    data-bs-theme="${item.theme}" data-bs-id="${item.id}"><fmt:message
+                                                    key="buy"/></button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                                 <small class="text-muted">${item.max-item.current} <fmt:message
                                         key="ticketsLeft"/></small>
                                 <small class="text-muted">${item.price} <fmt:message key="uah"/></small>

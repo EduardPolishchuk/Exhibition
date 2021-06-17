@@ -2,7 +2,7 @@ package ua.training.model.dao.impl;
 
 import ua.training.model.dao.DaoFactory;
 import ua.training.model.dao.UserDao;
-import ua.training.model.dao.ExpositionDao;
+import ua.training.model.dao.ExhibitionDao;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -13,7 +13,7 @@ public class JDBCDaoFactory extends DaoFactory {
     private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
     @Override
-    public ExpositionDao createExpositionDao() {
+    public ExhibitionDao createExpositionDao() {
         return new JDBCExhibitionDao(getConnection());
     }
     @Override

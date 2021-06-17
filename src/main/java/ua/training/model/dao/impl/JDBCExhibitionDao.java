@@ -1,6 +1,6 @@
 package ua.training.model.dao.impl;
 
-import ua.training.model.dao.ExpositionDao;
+import ua.training.model.dao.ExhibitionDao;
 import ua.training.model.dao.mapper.ExhibitionMapper;
 import ua.training.model.dao.mapper.HallMapper;
 import ua.training.model.entity.Exhibition;
@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import ua.training.model.entity.User;
 import ua.training.model.entity.Hall;
 
-public class JDBCExhibitionDao implements ExpositionDao {
+public class JDBCExhibitionDao implements ExhibitionDao {
 
     private static final Logger logger = LogManager.getLogger();
     private final Connection connection;
