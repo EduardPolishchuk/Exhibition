@@ -1,15 +1,12 @@
 package ua.training.controller.listener;
 
-import ua.training.model.dao.DaoFactory;
-import ua.training.model.dao.ExpositionDao;
-import ua.training.model.entity.Exhibition;
-import ua.training.model.entity.User;
+import ua.training.controller.command.CommandUtility;
 import ua.training.model.service.ExhibitionService;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import java.util.HashSet;
-import java.util.List;
 
 
 public class SessionListener implements HttpSessionListener {
@@ -22,14 +19,7 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-//        @SuppressWarnings("unchecked")
-//        HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
-//                .getSession().getServletContext()
-//                .getAttribute("loggedUsers");
-//        String login = (String) httpSessionEvent.getSession()
-//                .getAttribute("login");
-////        httpSessionEvent.getSession().setAttribute("role", User.ROLE.UNKNOWN);
-//        loggedUsers.remove(login);
-//        httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
+        HttpServletRequest servletRequest = (HttpServletRequest) httpSessionEvent;
+        CommandUtility.logOutUser(servletRequest);
     }
 }
