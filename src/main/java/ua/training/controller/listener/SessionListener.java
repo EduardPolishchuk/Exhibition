@@ -1,25 +1,28 @@
 package ua.training.controller.listener;
 
-import ua.training.controller.command.CommandUtility;
-import ua.training.model.service.ExhibitionService;
+import ua.training.model.entity.User;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import java.util.HashSet;
 
 
 public class SessionListener implements HttpSessionListener {
-    ExhibitionService exhibitionService = new ExhibitionService();
 
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        HttpServletRequest servletRequest = (HttpServletRequest) httpSessionEvent;
-        CommandUtility.logOutUser(servletRequest);
+        @SuppressWarnings("unchecked")
+        HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent.getSession().getServletContext()
+                .getAttribute("loggedUsers");
+        User user = (User) httpSessionEvent.getSession()
+                .getAttribute("userProfile");
+        loggedUsers.remove(user.getLogin());
+        httpSessionEvent.getSession().setAttribute("role", User.ROLE.UNKNOWN);
+        httpSessionEvent.getSession().getServletContext()
+                .setAttribute("loggedUsers", loggedUsers);
     }
 }

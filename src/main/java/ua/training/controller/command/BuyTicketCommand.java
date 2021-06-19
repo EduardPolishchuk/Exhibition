@@ -17,9 +17,6 @@ public class BuyTicketCommand implements Command {
         int exId = Integer.parseInt(request.getParameter("exEx"));
         int amount =Integer.parseInt(request.getParameter("amount"));
         User user = (User) request.getSession().getAttribute("userProfile");
-        System.out.println(user);
-        System.out.println(exId);
-        System.out.println(amount);
         if (userService.buyTicket(user,exId,amount)){
             user.setBalance(userService.getUserBalance(user));
             request.getSession().setAttribute("userProfile",user);

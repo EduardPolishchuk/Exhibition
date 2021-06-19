@@ -28,7 +28,7 @@ public class Servlet extends HttpServlet {
                 new LoginCommand());
         commands.put("exception" , new ExceptionCommand());
         commands.put("user/userevents" , new MainCommand());
-        commands.put("clientList" , new ClientListCommand());
+        commands.put("admin/adminClientList" , new ClientListCommand());
         commands.put("start" , new PreLoadCommand(new ExhibitionService()));
         commands.put("singUp" , new SingUpCommand());
         commands.put("search" , new SearchCommand());

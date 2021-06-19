@@ -28,7 +28,7 @@ public class LoginCommand implements Command {
             return "redirect:/login.jsp";
         }
         result = userService.isValid(userName, password);
-        if (result.isPresent() && !CommandUtility.checkUserIsLogged(request,userName)) {
+        if (result.isPresent() && !CommandUtility.checkUserIsLogged(request,userName)) {//todo isPresent in model & exception
             user = result.get();
             request.getSession().setAttribute("userProfile", user);
 //            request.getSession().setAttribute("userLoggedIn", true);

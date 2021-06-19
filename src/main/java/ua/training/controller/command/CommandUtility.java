@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 
-public class CommandUtility {
+class CommandUtility {
 
     static void setUserRole(HttpServletRequest request,
                             User.ROLE role) {
@@ -14,7 +14,7 @@ public class CommandUtility {
         session.setAttribute("role", role);
     }
 
-    public static synchronized boolean checkUserIsLogged(HttpServletRequest request, String login) {
+    static synchronized boolean checkUserIsLogged(HttpServletRequest request, String login) {
         @SuppressWarnings("unchecked")
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
                 .getAttribute("loggedUsers");
@@ -27,7 +27,7 @@ public class CommandUtility {
         return false;
     }
 
-    public static synchronized void logOutUser(HttpServletRequest request) {
+    static synchronized void logOutUser(HttpServletRequest request) {
         @SuppressWarnings("unchecked")
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
                 .getAttribute("loggedUsers");

@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>ADMIN PAGE</title>
+    <jsp:include page="/common/windowstyle.jsp"/>
 </head>
 <body>
 <jsp:include page="/common/header2.jsp"/>

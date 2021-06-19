@@ -37,7 +37,7 @@
                     </c:when>
                     <c:when test="${role == 'ADMIN'}">
                         <li><a href="${pageContext.request.contextPath}/admin/adminbasis.jsp" class="nav-link px-2 text-white">Admin Main</a></li>
-                        <li><a href="${pageContext.request.contextPath}/admin/adminClientList.jsp" class="nav-link px-2 text-white">Client List</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/adminClientList" class="nav-link px-2 text-white">Client List</a></li>
                     </c:when>
                 </c:choose>
             </ul>

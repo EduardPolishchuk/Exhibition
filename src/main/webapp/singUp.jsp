@@ -64,7 +64,7 @@
             </div>
         </div>
     </div>
-<footer class="text-muted py-5">
+<footer class="text-muted py-1">
 
     <div class="footer__inner" style="background-color: black; text-align: center; color: aliceblue ">
         &copy; Exhibition Events 2021
