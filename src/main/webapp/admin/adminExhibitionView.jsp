@@ -9,19 +9,37 @@
 
 <html>
 <head>
-    <title>Clients List</title>
+    <title>Exhibition</title>
     <jsp:include page="/common/windowstyle.jsp"/>
 
 </head>
 <body>
 <jsp:include page="/common/header2.jsp"/>
-<h2 class="display-3" style="color: aliceblue"><fmt:message key="loginToSystem"/></h2>
-<div class="container justify-content-center w-75 ">
+<div class="container justify-content-center w-100 ">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
         <div class="col ">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3 class="display-4">Client List</h3>
+                    <h3 class="display-4">${exhibition.theme}</h3>
+
+                    <div class="mb-5">
+                        <img class="card-img-top" src=${exhibition.imageUrl} alt="Picture"
+                             style="max-height: 360px; max-width: 600px">
+                        <label class="form-label">${exhibition.date}</label>
+                        <input type="text" class="form-control w-25" name="email" value="${exhibition.themeUk}" disabled>
+                    </div>
+                    <div class="mb-3 ">
+                        <label class="form-label">${exhibition.date}</label>
+                    </div>
+                    <div class="mb-3 ">
+                        <label class="form-label">${exhibition.halls}</label>
+                    </div>
+                    <div class="mb-3 ">
+                        <c:forEach var="hall" items="${exhibition.halls}">
+                        <label class="form-label">${hall}</label>
+                        </c:forEach>
+                    </div>
+                    <h3 class="display-4">Visitors</h3>
                     <table class="table">
                         <thead>
                         <tr>

@@ -19,7 +19,6 @@ public class Servlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
     public void init(ServletConfig servletConfig){
-
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
         commands.put("logout",
@@ -34,6 +33,8 @@ public class Servlet extends HttpServlet {
         commands.put("search" , new SearchCommand());
         commands.put("user/update" , new UpdateUserCommand(new UserService()));
         commands.put("user/userbuy" , new BuyTicketCommand(new UserService()));
+        commands.put("admin/adminExhibitionView" ,
+                new ExhibitionDetailsCommand(new UserService(),new ExhibitionService()));
     }
 
     public void doGet(HttpServletRequest request,

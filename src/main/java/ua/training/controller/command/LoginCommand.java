@@ -10,7 +10,7 @@ public class LoginCommand implements Command {
     private static final String LOGIN_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{1,19}$";
     private static final String PASSWORD_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії0-9]+";
 
-    UserService userService = new UserService();
+    private final UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request) {

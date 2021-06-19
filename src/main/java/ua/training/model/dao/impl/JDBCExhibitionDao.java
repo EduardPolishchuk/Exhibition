@@ -1,19 +1,18 @@
 package ua.training.model.dao.impl;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.model.dao.ExhibitionDao;
 import ua.training.model.dao.mapper.ExhibitionMapper;
 import ua.training.model.dao.mapper.HallMapper;
 import ua.training.model.entity.Exhibition;
-
-import java.sql.*;
-import java.sql.Date;
-import java.util.*;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ua.training.model.entity.User;
 import ua.training.model.entity.Hall;
+import ua.training.model.entity.User;
+
+import java.sql.Date;
+import java.sql.*;
+import java.util.*;
 
 public class JDBCExhibitionDao implements ExhibitionDao {
 
@@ -59,7 +58,23 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public Optional<Exhibition> findById(int id) {
-        return Optional.empty();
+        Exhibition exhibition = null;
+        ExhibitionMapper expoMapper = new ExhibitionMapper();
+        try (
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition LEFT JOIN exposition_description ed on exposition.id = ed.exposition_id where id=?");) {
+            ps.setInt(1, id);
+            ResultSet expoResultSet = ps.executeQuery();
+            if (expoResultSet.next()) {
+                exhibition = expoMapper.extractFromResultSet(expoResultSet);
+                exhibition.setHalls(getHalls(exhibition));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        } finally {
+            System.out.println("EX ---> "+exhibition);
+            close();
+        }
+        return Optional.of(exhibition);
     }
 
 
@@ -83,7 +98,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         return list;
     }
 
-    public List<Exhibition> findFrom(int sortBy ,int start, int itemsPer) {
+    public List<Exhibition> findFrom(int sortBy, int start, int itemsPer) {
         List<Exhibition> list = new ArrayList<>();
         ExhibitionMapper expoMapper = new ExhibitionMapper();
         try {

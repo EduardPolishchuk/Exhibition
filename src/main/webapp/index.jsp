@@ -127,18 +127,23 @@
                                 </c:otherwise>
                             </c:choose>
                             <div class="d-flex justify-content-between align-items-center">
-                                <input type="hidden" name="exhibitionId" value="${item.id}">
                                 <div class="btn-group">
                                     <c:choose>
-                                        <c:when test="${role !='USER' || userProfile.balance < item.price}">
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                                    disabled><fmt:message
-                                                    key="buy"/></button>
-                                        </c:when>
-                                        <c:otherwise>
+                                        <c:when test="${role =='USER' && userProfile.balance > item.price}">
                                             <button type="button" class="btn btn-sm btn-outline-secondary"
                                                     data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                     data-bs-theme="${item.theme}" data-bs-id="${item.id}"><fmt:message
+                                                    key="buy"/></button>
+                                        </c:when>
+                                        <c:when test="${role =='ADMIN'}">
+                                            <form action="${pageContext.request.contextPath}/admin/adminExhibitionView">
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exId" value="${item.id}"
+                                                >Edit</button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                    disabled><fmt:message
                                                     key="buy"/></button>
                                         </c:otherwise>
                                     </c:choose>
