@@ -1,11 +1,12 @@
 package ua.training.controller.command;
 
+import ua.training.model.entity.Exhibition;
 import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ExhibitionDetailsCommand implements Command{
+public class ExhibitionDetailsCommand implements Command {
     private final UserService userService;
     private final ExhibitionService exhibitionService;
 
@@ -16,15 +17,14 @@ public class ExhibitionDetailsCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request) {
-        System.out.println(request.getParameter("exId"));
-        request.getSession().setAttribute("userList",userService.findAllUsers());
+        Exhibition exhibition;
         try {
-            request.getSession().setAttribute("exhibition",
-                    exhibitionService.findById(Integer.parseInt(request.getParameter("exId"))));
-        }catch (Exception e){
+            exhibition = exhibitionService.findById(Integer.parseInt(request.getParameter("exId")));
+            request.getSession().setAttribute("exhibition", exhibition);
+        } catch (Exception e) {
             return "/WEB-INF/error.jsp";
         }
-        System.out.println("HERE ---> 2");
+        request.getSession().setAttribute("userList", userService.findExhibitionUsers(exhibition));
         return "/admin/adminExhibitionView.jsp";
     }
 }

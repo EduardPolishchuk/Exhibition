@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.dao.UserDao;
 import ua.training.model.dao.mapper.UserMapper;
+import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.User;
 
 import java.math.BigDecimal;
@@ -45,7 +46,7 @@ public class JDBCUserDao implements UserDao {
         User user = null;
         try {
             UserMapper userMapper = new UserMapper();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user JOIN role r on r.id = user.role_id WHERE user.id=?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE user.id=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -63,7 +64,7 @@ public class JDBCUserDao implements UserDao {
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         final String query = "" +
-                " select * from user left join role r on user.role_id = r.id";
+                " select * from user";
         try (Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(query);
             UserMapper userMapper = new UserMapper();
@@ -107,7 +108,7 @@ public class JDBCUserDao implements UserDao {
         Optional<User> result = Optional.empty();
         UserMapper userMapper = new UserMapper();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user join role r on r.id = user.role_id WHERE login=? AND password=?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE login=? AND password=?");
             ps.setString(1, login);
             ps.setString(2, password);
             ResultSet resultSet = ps.executeQuery();
@@ -183,6 +184,22 @@ public class JDBCUserDao implements UserDao {
             logger.log(Level.ERROR, e.getMessage());
         }
         return getUserBalance(user);
+    }
+
+    @Override
+    public List<User> getExhibitionUsers(Exhibition exhibition) {
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement("select * from user left join user_has_exposition uhe on user.id = uhe.user_id where exposition_id=?")){
+            ps.setInt(1,exhibition.getId());
+            ResultSet rs = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            while (rs.next()) {
+                users.add(userMapper.extractFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
+        return users;
     }
 
     @Override

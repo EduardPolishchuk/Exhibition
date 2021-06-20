@@ -1,8 +1,10 @@
 package ua.training.model.dao;
 
+import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.User;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends GenericDao<User> {
@@ -11,4 +13,5 @@ public interface UserDao extends GenericDao<User> {
     public boolean buyTicket(User user, int exhibitionId, int amount);
     public BigDecimal getUserBalance(User user);
     public BigDecimal balanceReplenishment(BigDecimal amount, User user);
+    public List<User> getExhibitionUsers(Exhibition exhibition);
 }

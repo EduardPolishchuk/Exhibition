@@ -2,6 +2,7 @@ package ua.training.model.service;
 
 import ua.training.model.dao.DaoFactory;
 import ua.training.model.dao.UserDao;
+import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.User;
 
 import java.math.BigDecimal;
@@ -20,6 +21,12 @@ public class UserService {
     public List<User> findAllUsers() {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findAll();
+        }
+    }
+
+    public List<User> findExhibitionUsers(Exhibition exhibition) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            return userDao.getExhibitionUsers(exhibition);
         }
     }
 
