@@ -35,6 +35,12 @@ public class UserService {
         }
     }
 
+    public boolean updateUser(User user){
+        try(UserDao userDao = daoFactory.createUserDao()){
+            return userDao.update(user);
+        }
+    }
+
     public boolean buyTicket(User user, int exhibitionId, int amount){
         try(UserDao userDao = daoFactory.createUserDao()){
             return userDao.buyTicket(user,exhibitionId,amount);

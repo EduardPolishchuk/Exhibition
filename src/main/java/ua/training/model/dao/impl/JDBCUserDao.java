@@ -81,7 +81,7 @@ public class JDBCUserDao implements UserDao {
     public boolean update(User user) {
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE user SET login=?,email=?,password=?,first_name=?,last_name=? WHERE id =?");
-            int i = 0;
+            int i = 1;
             ps.setString(i++, user.getLogin());
             ps.setString(i++, user.getEmail());
             ps.setString(i++, user.getPassword());

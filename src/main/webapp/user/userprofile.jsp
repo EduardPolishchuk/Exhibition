@@ -39,7 +39,7 @@
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" class="form-control" id="exampleInputPassword1"
-                                   name="password" ${vari}>
+                                   name="password" value="${userProfile.password}" ${vari}>
                         </div>
                         <c:if test="${error != null}">
                             <c:choose>
