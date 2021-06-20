@@ -32,24 +32,34 @@
                 <li><a href="${pageContext.request.contextPath}/" class="nav-link px-1 text-secondary">Home</a></li>
                 <c:choose>
                     <c:when test="${role == 'USER'}">
-                        <li><a href="${pageContext.request.contextPath}/user/userevents" class="nav-link px-2 text-white">My Events</a></li>
-                        <li><a href="${pageContext.request.contextPath}/user/userprofile.jsp" class="nav-link px-2 text-white">My Profile</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/userevents"
+                               class="nav-link px-2 text-white">My Events</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/userprofile.jsp"
+                               class="nav-link px-2 text-white">My Profile</a></li>
                     </c:when>
                     <c:when test="${role == 'ADMIN'}">
-                        <li><a href="${pageContext.request.contextPath}/admin/adminbasis.jsp" class="nav-link px-2 text-white">Admin Main</a></li>
-                        <li><a href="${pageContext.request.contextPath}/admin/adminClientList" class="nav-link px-2 text-white">Client List</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/adminbasis.jsp"
+                               class="nav-link px-2 text-white">Admin Main</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/adminClientList"
+                               class="nav-link px-2 text-white">Client List</a></li>
                     </c:when>
                 </c:choose>
             </ul>
             <form action="${pageContext.request.contextPath}/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <c:set var="searchLocale" value="${language != 'uk'? 'Search...':'Пошук...'}"/>
-                <input type="search" class="form-control form-control-dark" name="search" placeholder="${searchLocale}" aria-label="Search">
+                <input type="search" class="form-control form-control-dark" name="search" placeholder="${searchLocale}"
+                       aria-label="Search">
             </form>
             <c:choose>
                 <c:when test="${role == 'USER' || role == 'ADMIN'}">
                     <h5 class="display-6" style="color: aliceblue">${userProfile.login}
-                        <a href="">${userProfile.balance}</a>
                     </h5>
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
+
+                        <button type="button" class="btn btn-link "
+                                data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                        >${userProfile.balance} <fmt:message key="uah"/></button>
+                    </form>
                     <br>
                     <form action="${pageContext.request.contextPath}/logout"
                           class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
@@ -71,7 +81,7 @@
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                     <c:if test="${currentPage != null}">
                         <input type="hidden" class="key" name="page" value="${currentPage}">
-<%--                        <input type="hidden" class="key" name="sortBy" value="${sortBy}">--%>
+                        <%--                        <input type="hidden" class="key" name="sortBy" value="${sortBy}">--%>
                     </c:if>
                     <c:if test="${search != null}">
                         <input type="hidden" class="key" name="search" value="${search}">
@@ -84,5 +94,33 @@
     </div>
 </header>
 <hr>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/Exhibition/user/userbuy" class="row g-3 needs-validation" novalidate>
+                    <div class="mb-3">
+                    </div>
+                    <div class="mb-3">
+                        <label for="validationCustom01" class="form-label">First name</label>
+                        <input type="text" class="form-control" id="validationCustom01" name="amount" value="0"
+                               required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Send message</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

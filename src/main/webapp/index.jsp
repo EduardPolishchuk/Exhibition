@@ -36,8 +36,6 @@
                         <label for="validationCustom01" class="form-label">First name</label>
                         <input type="text" class="form-control" id="validationCustom01" name="amount" value="1"
                                required>
-                        <%--                        <label for="message-text" class="col-form-label">Amount:</label>--%>
-                        <%--                        <input type="text" class="form-control" id="message-text" name="amount" value="1">--%>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

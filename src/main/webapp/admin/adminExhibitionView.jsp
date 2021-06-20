@@ -36,9 +36,28 @@
                     </div>
                     <div class="mb-3 ">
                         <c:forEach var="hall" items="${exhibition.halls}">
-                        <label class="form-label">${hall}</label>
+                          <c:set var="${hall.toString}" value="1"/>
                         </c:forEach>
                     </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" ${not empty red? 'checked':''}>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Red
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Blue
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Green
+                        </label>
+                    </div>
+
                     <h3 class="display-4">Visitors</h3>
                     <table class="table">
                         <thead>
