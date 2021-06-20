@@ -20,6 +20,6 @@ public class BalanceReplenishmentCommand implements Command {
         user.setBalance(userService.balanceReplenishment
                 (new BigDecimal(request.getParameter("amount")), user));
         System.out.println("done");
-        return "/";
+        return "redirect:/";
     }
 }

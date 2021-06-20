@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="/common/header2.jsp"/>
 <div class="container justify-content-center w-100 ">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3 mb-6">
         <div class="col ">
             <div class="card shadow-sm">
                 <div class="card-body">
@@ -36,7 +36,7 @@
                     </div>
                     <div class="mb-3 ">
                         <c:forEach var="hall" items="${exhibition.halls}">
-                          <c:set var="${hall.toString}" value="1"/>
+
                         </c:forEach>
                     </div>
                     <div class="form-check">
@@ -58,6 +58,15 @@
                         </label>
                     </div>
 
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
+        <div class="col ">
+            <div class="card shadow-sm">
+                <div class="card-body">
                     <h3 class="display-4">Visitors</h3>
                     <table class="table">
                         <thead>
@@ -77,10 +86,41 @@
                             <td>${user.lastName}</td>
                         </tr>
                         </c:forEach>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+<%--<div class="container justify-content-center w-100 mb-5">--%>
+<%--    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">--%>
+<%--        <div class="col ">--%>
+<%--            <div class="card shadow-sm">--%>
+<%--                <div class="card-body">--%>
+<%--                    <h3 class="display-4">Visitors</h3>--%>
+<%--                    <table class="table">--%>
+<%--                        <thead>--%>
+<%--                        <tr>--%>
+<%--                            <th scope="col">Login</th>--%>
+<%--                            <th scope="col">Email</th>--%>
+<%--                            <th scope="col">First Name</th>--%>
+<%--                            <th scope="col">Last Name</th>--%>
+<%--                        </tr>--%>
+<%--                        </thead>--%>
+<%--                        <tbody>--%>
+<%--                        <c:forEach var="user" items="${userList}">--%>
+<%--                        <tr>--%>
+<%--                            <td><a href="#" style="color: black"><strong>${user.login}</strong></a></td>--%>
+<%--                            <td>${user.email}</td>--%>
+<%--                            <td>${user.firstName}</td>--%>
+<%--                            <td>${user.lastName}</td>--%>
+<%--                        </tr>--%>
+<%--                        </c:forEach>--%>
+
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 </body>
 </html>

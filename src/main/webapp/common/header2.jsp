@@ -23,9 +23,9 @@
 <header class="p-3 bg-black text-white">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <a href="${pageContext.request.contextPath}/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                 <svg class="bi me-2" width="40" height="60" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap"></use>
+                    <use xlink:href="${pageContext.request.contextPath}/"></use>
                 </svg>
             </a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -52,6 +52,9 @@
             </form>
             <c:choose>
                 <c:when test="${role == 'USER' || role == 'ADMIN'}">
+                    <c:if test="${role == 'ADMIN'}">
+                        <h6 class="display-11" style="color: aliceblue">admin</h6><br>
+                    </c:if>
                     <h5 class="display-6" style="color: aliceblue">${userProfile.login}
                     </h5>
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
