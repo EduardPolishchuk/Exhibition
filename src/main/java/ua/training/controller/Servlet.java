@@ -35,6 +35,7 @@ public class Servlet extends HttpServlet {
         commands.put("user/userbuy" , new BuyTicketCommand(new UserService()));
         commands.put("admin/adminExhibitionView" ,
                 new ExhibitionDetailsCommand(new UserService(),new ExhibitionService()));
+        commands.put("changeBalance" , new BalanceReplenishmentCommand(new UserService()));
     }
 
     public void doGet(HttpServletRequest request,

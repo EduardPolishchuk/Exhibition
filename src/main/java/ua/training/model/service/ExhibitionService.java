@@ -18,9 +18,9 @@ public class ExhibitionService {
         }
     }
 
-    public List<Exhibition> getFrom(int sortBy ,int start, int per) {
+    public List<Exhibition> getFrom(int sortBy, int start, int per) {
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
-            return exhibitionDao.findFrom(sortBy,start, per);
+            return exhibitionDao.findFrom(sortBy, start, per);
         }
     }
 
@@ -52,7 +52,7 @@ public class ExhibitionService {
         Optional<Exhibition> result;
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
             result = exhibitionDao.findById(id);
-            return result.orElseThrow(()-> new Exception(id+" not found"));
+            return result.orElseThrow(() -> new Exception(id + " not found"));
         }
     }
 }

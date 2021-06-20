@@ -29,27 +29,33 @@ public class UserService {
         }
     }
 
-    public boolean createUser(User user){
-        try(UserDao userDao = daoFactory.createUserDao()){
+    public boolean createUser(User user) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.create(user);
         }
     }
 
-    public boolean updateUser(User user){
-        try(UserDao userDao = daoFactory.createUserDao()){
+    public boolean updateUser(User user) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.update(user);
         }
     }
 
-    public boolean buyTicket(User user, int exhibitionId, int amount){
-        try(UserDao userDao = daoFactory.createUserDao()){
-            return userDao.buyTicket(user,exhibitionId,amount);
+    public boolean buyTicket(User user, int exhibitionId, int amount) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            return userDao.buyTicket(user, exhibitionId, amount);
         }
     }
 
     public BigDecimal getUserBalance(User user) {
-        try(UserDao userDao = daoFactory.createUserDao()){
+        try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.getUserBalance(user);
+        }
+    }
+
+    public BigDecimal balanceReplenishment(BigDecimal amount, User user) {
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            return userDao.balanceReplenishment(amount, user);
         }
     }
 }

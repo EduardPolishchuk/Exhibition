@@ -10,4 +10,5 @@ public interface UserDao extends GenericDao<User> {
     public Optional<User> isValid(String login, String password);
     public boolean buyTicket(User user, int exhibitionId, int amount);
     public BigDecimal getUserBalance(User user);
+    public BigDecimal balanceReplenishment(BigDecimal amount, User user);
 }

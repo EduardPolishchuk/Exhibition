@@ -4,16 +4,12 @@ import ua.training.model.entity.User;
 import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
 
+import java.math.BigDecimal;
 import java.sql.*;
 
 public class Test {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
-        ExhibitionService exhibitionService = new ExhibitionService();
-        UserService userService = new UserService();
-        User user = userService.findById(1).get();
-        System.out.println(userService.getUserBalance(user));
-        System.out.println(userService.buyTicket(user,1,2));
+        System.out.println(new BigDecimal("2"));
     }
 }

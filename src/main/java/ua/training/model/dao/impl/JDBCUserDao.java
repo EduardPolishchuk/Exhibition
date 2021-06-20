@@ -173,6 +173,19 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
+    public BigDecimal balanceReplenishment(BigDecimal amount, User user) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE user set balance=balance+? where id=?");
+            ps.setBigDecimal(1, amount);
+            ps.setInt(2, user.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage());
+        }
+        return getUserBalance(user);
+    }
+
+    @Override
     public void close() {
         try {
             connection.close();
