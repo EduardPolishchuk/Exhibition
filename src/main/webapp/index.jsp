@@ -128,10 +128,15 @@
                                 <div class="btn-group">
                                     <c:choose>
                                         <c:when test="${role =='USER' && userProfile.balance > item.price}">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                    data-bs-theme="${item.theme}" data-bs-id="${item.id}"><fmt:message
-                                                    key="buy"/></button>
+                                            <form action="${pageContext.request.contextPath}/user/userExhibitionView">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                        data-bs-theme="${item.theme}" data-bs-id="${item.id}"><fmt:message
+                                                        key="buy"/></button>
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                        name="exId" value="${item.id}"><fmt:message key="view"/></button>
+                                            </form>
+
                                         </c:when>
                                         <c:when test="${role =='ADMIN'}">
                                             <form action="${pageContext.request.contextPath}/admin/adminExhibitionView">
@@ -140,9 +145,14 @@
                                             </form>
                                         </c:when>
                                         <c:otherwise>
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                                    disabled><fmt:message
-                                                    key="buy"/></button>
+                                            <form action="">
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                        disabled><fmt:message
+                                                        key="buy"/></button>
+                                                button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                name="exId" value="${item.id}"><fmt:message key="view"/></button>
+                                            </form>
+
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
