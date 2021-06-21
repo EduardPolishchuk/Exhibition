@@ -17,14 +17,13 @@ public class ExhibitionDetailsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Exhibition exhibition;
-        try {
-            exhibition = exhibitionService.findById(Integer.parseInt(request.getParameter("exId")));
-            request.getSession().setAttribute("exhibition", exhibition);
-        } catch (Exception e) {
-            return "/WEB-INF/error.jsp";
-        }
-        request.getSession().setAttribute("userList", userService.findExhibitionUsers(exhibition));
-        return "/admin/adminExhibitionView.jsp";
+            Exhibition exhibition;
+            try {
+                exhibition = exhibitionService.findById(Integer.parseInt(request.getParameter("exId")));
+                request.getSession().setAttribute("exhibition", exhibition);
+            } catch (Exception e) {
+                return "/WEB-INF/error.jsp";
+            }
+             return "/admin/adminExhibitionView.jsp";
     }
 }

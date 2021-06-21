@@ -38,6 +38,10 @@
                 <button type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : ''}">Edit
                 </button>
             </form>
+            <form action="${pageContext.request.contextPath}/admin/adminClientList">
+                <button type="submit" class="btn btn-sm btn-outline-secondary"
+                        name="exId" value="${param.exId}">Visitors</button>
+            </form>
         </div>
         <div class="col">
             <div class="card-body">

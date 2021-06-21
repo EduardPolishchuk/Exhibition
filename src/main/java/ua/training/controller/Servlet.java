@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class Servlet extends HttpServlet {
-    private Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands = new HashMap<>();
 
     public void init(ServletConfig servletConfig){
         servletConfig.getServletContext()
@@ -27,7 +27,8 @@ public class Servlet extends HttpServlet {
                 new LoginCommand());
         commands.put("exception" , new ExceptionCommand());
         commands.put("user/userevents" , new MainCommand());
-        commands.put("admin/adminClientList" , new ClientListCommand());
+        commands.put("admin/adminClientList" , new ClientListCommand(new UserService(),
+                new ExhibitionService()));
         commands.put("start" , new PreLoadCommand(new ExhibitionService()));
         commands.put("singUp" , new SingUpCommand());
         commands.put("search" , new SearchCommand());
@@ -51,9 +52,9 @@ public class Servlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String path = request.getRequestURI();
+        String path = request.getRequestURI().replaceAll(".*/Exhibition/" , "");
         System.out.println(path);
-        path = path.replaceAll(".*/Exhibition/" , "");
+//        path = path.replaceAll(".*/Exhibition/" , "");
         Command command = commands.getOrDefault(path , new PreLoadCommand(new ExhibitionService()));
         System.out.println(path);
         String page = command.execute(request);

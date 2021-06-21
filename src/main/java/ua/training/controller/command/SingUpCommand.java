@@ -30,12 +30,16 @@ public class SingUpCommand implements Command {
         map.put(firstName, FIRST_NAME_REG);
         map.put(lastName, LAST_NAME_REG);
         map.put(password, PASSWORD_REG);
+        System.out.println("WORKS -----> ");
 //todo save user data in fields if one of them incorrect
         for (String str : map.keySet()) {
+//            if(str == null){
+//                return "/singUp.jsp";
+//            }
             if (!str.matches(map.get(str))) {
                 error = str.equals(password) ? "passwordInvalid" : str;
                 request.getSession().setAttribute("error", error);
-                return "/singUp.jsp";
+                return "redirect:/singUp.jsp";
             }
         }
         User user = User.builder()
