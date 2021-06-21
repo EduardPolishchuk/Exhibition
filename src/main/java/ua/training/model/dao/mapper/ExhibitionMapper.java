@@ -27,7 +27,7 @@ public class ExhibitionMapper implements ObjectMapper<Exhibition> {
                 .build();
     }
 
-    public static LocalDate toLocalDate(Date date) {
+    private static LocalDate toLocalDate(Date date) {
         return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
     }
 }

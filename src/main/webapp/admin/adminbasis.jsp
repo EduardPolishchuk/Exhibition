@@ -1,6 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="now" class="java.util.Date" scope="page"/>
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
@@ -20,16 +21,16 @@
         <div class="col ">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form action="">
+                    <form action="${pageContext.request.contextPath}/admin/adminAddExhibition">
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Theme</label>
-                                <input type="text" class="form-control " name="email" value=""
+                                <input type="text" class="form-control " name="theme" value=""
                                 >
                             </div>
                             <div class="col">
                                 <label class="form-label">Theme Uk</label>
-                                <input type="text" class="form-control " name="email" value=""
+                                <input type="text" class="form-control " name="themeUk" value=""
                                 >
                             </div>
                         </div>
@@ -37,12 +38,12 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Date</label>
-                                <input type="date" class="form-control " name="email" value="" min="2020-01-01" max="2022-12-31"
-                                >
+                                <input type="date" class="form-control " name="date" value="" min="2020-01-01" max="2022-12-31"
+                                       pattern="yyyy.MM.dd">
                             </div>
                             <div class="col">
                                 <label class="form-label">Price</label>
-                                <input type="text" class="form-control " name="email" value=""
+                                <input type="text" class="form-control " name="price" value=""
                                 >
                             </div>
                         </div>

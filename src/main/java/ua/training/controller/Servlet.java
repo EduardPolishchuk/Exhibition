@@ -37,6 +37,7 @@ public class Servlet extends HttpServlet {
         commands.put("admin/adminExhibitionView" ,
                 new ExhibitionDetailsCommand(new UserService(),new ExhibitionService()));
         commands.put("changeBalance" , new BalanceReplenishmentCommand(new UserService()));
+        commands.put("admin/adminAddExhibition" , new AddExhibitionCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -53,10 +54,7 @@ public class Servlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI().replaceAll(".*/Exhibition/" , "");
-        System.out.println(path);
-//        path = path.replaceAll(".*/Exhibition/" , "");
         Command command = commands.getOrDefault(path , new PreLoadCommand(new ExhibitionService()));
-        System.out.println(path);
         String page = command.execute(request);
         if(page.contains("redirect:")){
             response.sendRedirect(page.replace("redirect:", "/Exhibition"));

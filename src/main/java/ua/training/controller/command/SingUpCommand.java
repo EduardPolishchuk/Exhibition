@@ -30,7 +30,6 @@ public class SingUpCommand implements Command {
         map.put(firstName, FIRST_NAME_REG);
         map.put(lastName, LAST_NAME_REG);
         map.put(password, PASSWORD_REG);
-        System.out.println("WORKS -----> ");
         for (String str : map.keySet()) {
             if (!str.matches(map.get(str))) {
                 error = str.equals(password) ? "passwordInvalid" : str;

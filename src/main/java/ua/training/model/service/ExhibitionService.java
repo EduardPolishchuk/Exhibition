@@ -10,13 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ExhibitionService {
-    DaoFactory daoFactory = DaoFactory.getInstance();
-
-    public List<Exhibition> getAllExpositions() {
-        try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
-            return exhibitionDao.findAll();
-        }
-    }
+   private final DaoFactory daoFactory = DaoFactory.getInstance();
 
     public List<Exhibition> getFrom(int sortBy, int start, int per) {
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
