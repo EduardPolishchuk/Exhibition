@@ -12,7 +12,7 @@
 <head>
     <title>MyProfile</title>
 </head>
-<body style="background-image: url(https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F97b1c8e4-b31e-42a1-9d93-83fe161f56b2_1920x1075.jpeg)">
+<body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
 <%--<h2 class="display-3" style="color: aliceblue">PROFILE</h2>--%>
 <div class="container justify-content-center w-50 ">
@@ -66,11 +66,6 @@
         </div>
     </div>
 </div>
-<footer class="text-muted py-5">
-
-    <div class="footer__inner" style="background-color: black; text-align: center; color: aliceblue ">
-        &copy; Exhibition Events 2021
-    </div>
-</footer>
+<jsp:include page="/common/footer.jsp"/>
 </body>
 </html>

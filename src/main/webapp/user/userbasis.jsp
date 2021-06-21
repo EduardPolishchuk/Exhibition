@@ -12,7 +12,7 @@
 <head>
     <title>MyEvents</title>
 </head>
-<body style="background-image: url(https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F97b1c8e4-b31e-42a1-9d93-83fe161f56b2_1920x1075.jpeg)">
+<body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
 <h2><strong>
     <fmt:message key="welcomeText"/>

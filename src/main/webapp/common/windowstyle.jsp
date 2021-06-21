@@ -1,12 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <style>
     body{
-        /*background-image: url("/user/back.jpeg");*/
-
-        /*background: rgba(0, 0, 0, 0);*/
-    }
-
-    body{
         min-height: 100vh;
         display: flex;
         flex-direction: column;

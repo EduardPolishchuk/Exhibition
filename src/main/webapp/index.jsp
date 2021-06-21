@@ -2,7 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="/WEB-INF/custom_tag.tld" prefix="custom" %>
-
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
@@ -15,7 +14,7 @@
     <title>Exhibitions&Events</title>
     <jsp:include page="/common/windowstyle.jsp"/>
 </head>
-<body>
+<body style="background-color: black">
 <jsp:include page="common/header2.jsp"/>
 <h2 class="display-3" style="color: aliceblue"><fmt:message key="welcomeText"/></h2>
 
@@ -28,7 +27,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/Exhibition/user/userbuy" class="row g-3 needs-validation" novalidate>
+                <form action="${pageContext.request.contextPath}/user/userbuy" class="row g-3 needs-validation" novalidate>
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
@@ -47,28 +46,27 @@
         </div>
     </div>
 </div>
+<c:if test="${noOfPages > 0}">
+    <form  style="align-self: center">
+        <div class="btn-group justify-content-center" role="group">
+            <input type="submit" class="btn-check" name="sortBy" value="3" id="btnradio1" autocomplete="off" >
+            <label class="btn btn-primary ${param.sortBy == '3'? 'active':''}" for="btnradio1">Theme</label>
 
-<form class="w-25" style="align-self: center">
-    <div class="row">
-        <select class="form-select form-select-sm w-25 p-1" aria-label="Default select example" name="sortBy"
-        >
-            <option selected value="1">Sort by</option>
-            <option value="2">Date</option>
-            <option value="3">Theme</option>
-            <option value="4">Price</option>
+            <input type="submit" class="btn-check active" name="sortBy" value="2" id="btnradio2" autocomplete="off" >
+            <label class="btn btn-primary ${param.sortBy == '2'? 'active':''}" for="btnradio2">Date</label>
 
-        </select>
-        <button type="submit" class="btn btn-light w-25 p-1">Sort</button>
-    </div>
-
-</form>
+            <input type="submit" class="btn-check" name="sortBy" value="4" id="btnradio3" autocomplete="off">
+            <label class="btn btn-primary ${param.sortBy == '4'? 'active':''}" for="btnradio3">Price</label>
+        </div>
+    </form>
+</c:if>
 <div2 class="album py-0 ">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
             <c:forEach var="item" items="${expoList}">
                 <div class="col">
                     <div class="card shadow-sm">
-                        <img class="card-img-top" src=${item.imageUrl} alt="Picture" style="max-height: 240px">
+                        <img class="card-img-top" src=${item.imageUrl} alt="'Picture'" style="min-height: 220px; max-height: 220px">
                         <div class="card-body">
                             <c:choose>
                                 <c:when test="${language != 'uk'}">
@@ -91,7 +89,7 @@
                                                   action="${pageContext.request.contextPath}/user/userExhibitionView"></form>
                                             <button type="button" class="btn btn-sm btn-outline-secondary"
                                                     data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                    data-bs-theme="${item.theme}" data-bs-id="${item.id}">
+                                                    data-bs-theme="${language != 'uk'? item.theme : item.themeUk}" data-bs-id="${item.id}">
                                                 <fmt:message
                                                         key="buy"/></button>
                                             <button form="form1" type="submit" class="btn btn-sm btn-outline-secondary"
@@ -178,8 +176,6 @@
         </ul>
     </nav>
 </c:if>
-<hr>
-
 <footer class="text-muted py-5">
 </footer>
 <jsp:include page="common/footer.jsp"/>
@@ -195,7 +191,7 @@
         var exId = button.getAttribute('data-bs-id')
         var modalTitle = exampleModal.querySelector('.modal-title')
         var modalBodyInput = exampleModal.querySelector('.modal-body input')
-        modalTitle.textContent = 'New message to ' + recipient
+        modalTitle.textContent = recipient
         modalBodyInput.value = exId
     })
 </script>

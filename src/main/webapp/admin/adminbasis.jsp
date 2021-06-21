@@ -13,77 +13,81 @@
     <title>Add New Event</title>
     <jsp:include page="/common/windowstyle.jsp"/>
 </head>
-<body>
+<body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
 <div class="container justify-content-center w-50 ">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
         <div class="col ">
             <div class="card shadow-sm">
                 <div class="card-body">
+                    <form action="">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Theme</label>
+                                <input type="text" class="form-control " name="email" value=""
+                                >
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Theme Uk</label>
+                                <input type="text" class="form-control " name="email" value=""
+                                >
+                            </div>
+                        </div>
 
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">Theme</label>
-                            <input type="text" class="form-control " name="email" value=""
-                                   disabled>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control " name="email" value="" min="2020-01-01" max="2022-12-31"
+                                >
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Price</label>
+                                <input type="text" class="form-control " name="email" value=""
+                                >
+                            </div>
                         </div>
-                        <div class="col">
-                            <label class="form-label">Theme Uk</label>
-                            <input type="text" class="form-control " name="email" value=""
-                                   disabled>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description"
+                                      rows="1">${exhibition.descriptionUk}</textarea>
                         </div>
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description Uk</label>
+                            <textarea class="form-control" name="descriptionUk"
+                                      rows="1">${exhibition.descriptionUk}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Image Url</label>
+                            <input type="text" class="form-control " name="email" value=""
+                            >
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                   value="option1" ${vari}>
+                            <label class="form-check-label" for="inlineCheckbox1">RED</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                   value="option2" ${vari}>
+                            <label class="form-check-label" for="inlineCheckbox2">GREEN</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
+                                   value="option3" ${vari}>
+                            <label class="form-check-label" for="inlineCheckbox3">BLUE</label>
 
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">Date</label>
-                            <input type="text" class="form-control " name="email" value=""
-                                   disabled>
                         </div>
-                        <div class="col">
-                            <label class="form-label">Price</label>
-                            <input type="text" class="form-control " name="email" value=""
-                                   disabled>
+                        <hr>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <input type="text" class="form-control  p-5" name="email" value=""
-                               disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description Uk</label>
-                        <input type="text" class="form-control  p-5" name="email" value=""
-                               disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Image Url</label>
-                        <input type="text" class="form-control " name="email" value=""
-                               disabled>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value=""
-                               id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Red
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Blue
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" checked>
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Green
-                        </label>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

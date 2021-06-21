@@ -13,7 +13,7 @@
     <jsp:include page="/common/windowstyle.jsp"/>
 
 </head>
-<body>
+<body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
 <div class="container justify-content-center w-100 bg-light">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2 g-3 mb-6">

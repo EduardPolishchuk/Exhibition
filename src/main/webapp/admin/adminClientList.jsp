@@ -13,7 +13,7 @@
     <jsp:include page="/common/windowstyle.jsp"/>
 
 </head>
-<body>
+<body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
 <h2 class="display-3" style="color: aliceblue"><fmt:message key="loginToSystem"/></h2>
 <div class="container justify-content-center w-75 ">
