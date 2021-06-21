@@ -18,9 +18,82 @@
 <jsp:include page="/common/header2.jsp"/>
 <div class="container justify-content-center w-100 bg-light">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2 g-3 mb-6">
+
+        <div class="col">
+            <div class="card-body">
+                <form action="/success.jsp">
+                    <div class="row mb-3">
+
+                        <div class="col">
+                            <label class="form-label">Theme</label>
+                            <input type="text" class="form-control " name="theme" value="${exhibition.theme}"
+                            ${vari}>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Theme Uk</label>
+                            <input type="text" class="form-control " name="themeUk" value="${exhibition.themeUk}"
+                            ${vari}>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Date</label>
+                            <input type="text" class="form-control " name="date" value="${exhibition.date}"
+                            ${vari}>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Price</label>
+                            <input type="text" class="form-control " name="price" value="${exhibition.price}"
+                            ${vari}>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" ${vari}
+                                  rows="1">${exhibition.description}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description Uk</label>
+                        <textarea class="form-control" name="descriptionUk" ${vari}
+                                  rows="1">${exhibition.descriptionUk}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Image Url</label>
+                        <input type="text" class="form-control " name="imageUrl" value="${exhibition.imageUrl}"
+                        ${vari}>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" ${vari}>
+                        <label class="form-check-label" for="inlineCheckbox1">RED</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" ${vari}>
+                        <label class="form-check-label" for="inlineCheckbox2">GREEN</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" ${vari}>
+                        <label class="form-check-label" for="inlineCheckbox3">BLUE</label>
+                    </div>
+                    <div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary"
+                        ${vari}>Update</button>
+                    </div>
+                </form>
+                <form action="${pageContext.request.requestURI}">
+                    <c:forEach var="item" items="${param}">
+                        <c:if test="${item.key != 'edit'}">
+                            <input type="hidden" name="${item.key}" value="${item.value}">
+                        </c:if>
+                    </c:forEach>
+                    <button type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : ''}">Edit
+                    </button>
+                </form>
+            </div>
+        </div>
         <div class="col ">
             <div class="card shadow-sm" mb-5>
-                <div class="card-body" >
+                <div class="card-body">
                     <h3 class="display-4">${exhibition.theme}</h3>
                     <div class="">
                         <img class="card-img-top" src=${exhibition.imageUrl} alt="Picture"
@@ -29,75 +102,12 @@
                 </div>
             </div>
             <hr>
-            <form action="${pageContext.request.requestURI}" >
-                <c:forEach var="item" items="${param}">
-                    <c:if test="${item.key != 'edit'}">
-                    <input type="hidden" name="${item.key}" value="${item.value}">
-                    </c:if>
-                </c:forEach>
-                <button type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : ''}">Edit
-                </button>
-            </form>
+
             <form action="${pageContext.request.contextPath}/admin/adminClientList">
                 <button type="submit" class="btn btn-sm btn-outline-secondary"
-                        name="exId" value="${param.exId}">Visitors</button>
+                        name="exId" value="${param.exId}">Visitors
+                </button>
             </form>
-        </div>
-        <div class="col">
-            <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col">
-                        <label class="form-label">Theme</label>
-                        <input type="text" class="form-control " name="email" value="${exhibition.theme}"
-                        ${vari}>
-                    </div>
-                    <div class="col">
-                        <label class="form-label">Theme Uk</label>
-                        <input type="text" class="form-control " name="email" value="${exhibition.themeUk}"
-                        ${vari}>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col">
-                        <label class="form-label">Date</label>
-                        <input type="text" class="form-control " name="email" value="${exhibition.date}"
-                        ${vari}>
-                    </div>
-                    <div class="col">
-                        <label class="form-label">Price</label>
-                        <input type="text" class="form-control " name="email" value="${exhibition.price}"
-                        ${vari}>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <input type="text" class="form-control  p-5" name="email" value="${exhibition.description}"
-                    ${vari}>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Description Uk</label>
-                    <input type="text" class="form-control  p-5" name="email" value="${exhibition.descriptionUk}"
-                    ${vari}>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Image Url</label>
-                    <input type="text" class="form-control " name="email" value="${exhibition.imageUrl}"
-                    ${vari}>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" ${vari}>
-                    <label class="form-check-label" for="inlineCheckbox1">RED</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" ${vari}>
-                    <label class="form-check-label" for="inlineCheckbox2">GREEN</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" ${vari}>
-                    <label class="form-check-label" for="inlineCheckbox3">BLUE</label>
-                </div>
-            </div>
         </div>
     </div>
 

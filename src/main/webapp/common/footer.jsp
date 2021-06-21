@@ -9,6 +9,6 @@
 <footer>
 
     <div class="footer__inner" style="background-color: black; text-align: center; color: aliceblue " >
-        &copy; Exhibitions&Events 2021
+         Exhibitions&Events
     </div>
 </footer>

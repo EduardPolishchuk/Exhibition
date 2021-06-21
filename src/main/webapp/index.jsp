@@ -48,19 +48,94 @@
     </div>
 </div>
 
+<form class="w-25" style="align-self: center">
+    <div class="row">
+        <select class="form-select form-select-sm w-25 p-1" aria-label="Default select example" name="sortBy"
+        >
+            <option selected value="1">Sort by</option>
+            <option value="2">Date</option>
+            <option value="3">Theme</option>
+            <option value="4">Price</option>
+
+        </select>
+        <button type="submit" class="btn btn-light w-25 p-1">Sort</button>
+    </div>
+
+</form>
+<div2 class="album py-0 ">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            <c:forEach var="item" items="${expoList}">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img class="card-img-top" src=${item.imageUrl} alt="Picture" style="max-height: 240px">
+                        <div class="card-body">
+                            <c:choose>
+                                <c:when test="${language != 'uk'}">
+                                    <p class="card-text"><strong>${item.theme}</strong></p>
+                                    <p class="card-text">${item.date}</p>
+                                    <p class="card-text">${item.description}</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="card-text"><strong>${item.themeUk}</strong></p>
+                                    <p class="card-text"><custom:formatDate value="${item.date}"
+                                                                            pattern="dd/MM/yyyy"/></p>
+                                    <p class="card-text">${item.descriptionUk}</p>
+                                </c:otherwise>
+                            </c:choose>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <c:choose>
+                                        <c:when test="${role =='USER' && userProfile.balance > item.price}">
+                                            <form id="form1"
+                                                  action="${pageContext.request.contextPath}/user/userExhibitionView"></form>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                    data-bs-theme="${item.theme}" data-bs-id="${item.id}">
+                                                <fmt:message
+                                                        key="buy"/></button>
+                                            <button form="form1" type="submit" class="btn btn-sm btn-outline-secondary"
+                                                    name="exId" value="${item.id}"><fmt:message
+                                                    key="view"/></button>
+                                        </c:when>
+                                        <c:when test="${role =='ADMIN'}">
+                                            <form id="data"
+                                                  action="${pageContext.request.contextPath}/admin/adminExhibitionView"></form>
+                                            <form id="data2"
+                                                  action="${pageContext.request.contextPath}/admin/adminClientList"></form>
+                                            <button form="data" type="submit" class="btn btn-sm btn-outline-secondary"
+                                                    name="exId" value="${item.id}">Edit
+                                            </button>
+                                            <button form="data2" type="submit" class="btn btn-sm btn-outline-secondary"
+                                                    name="exId" value="${item.id}">Visitors
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form id="form2" action=""></form>
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                    disabled><fmt:message
+                                                    key="buy"/></button>
+                                            <button form="form2" type="submit" class="btn btn-sm btn-outline-secondary"
+                                                    name="exId" value="${item.id}"><fmt:message
+                                                    key="view"/></button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <small class="text-muted">${item.max-item.current} <fmt:message
+                                        key="ticketsLeft"/></small>
+                                <small class="text-muted">${item.price} <fmt:message key="uah"/></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+</div2>
+<hr>
 <c:if test="${noOfPages > 0}">
     <nav aria-label="...">
-        <form class="w-25" style="align-self: center">
-            <select class="form-select form-select-sm w-25 p-1" aria-label="Default select example" name="sortBy"
-            >
-                <option selected value="1">Sort by</option>
-                <option value="2">Date</option>
-                <option value="3">Theme</option>
-                <option value="4">Price</option>
 
-            </select>
-            <button type="submit" class="btn btn-light w-25 p-1">Sort</button>
-        </form>
         <ul class="pagination justify-content-center">
 
             <c:choose>
@@ -103,71 +178,8 @@
         </ul>
     </nav>
 </c:if>
-<div2 class="album py-0 ">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-            <c:forEach var="item" items="${expoList}">
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <img class="card-img-top" src=${item.imageUrl} alt="Picture" style="max-height: 240px">
-                        <div class="card-body">
-                            <c:choose>
-                                <c:when test="${language != 'uk'}">
-                                    <p class="card-text"><strong>${item.theme}</strong></p>
-                                    <p class="card-text">${item.date}</p>
-                                    <p class="card-text">${item.description}</p>
-                                </c:when>
-                                <c:otherwise>
-                                    <p class="card-text"><strong>${item.themeUk}</strong></p>
-                                    <p class="card-text"><custom:formatDate value="${item.date}"
-                                                                            pattern="dd/MM/yyyy"/></p>
-                                    <p class="card-text">${item.descriptionUk}</p>
-                                </c:otherwise>
-                            </c:choose>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <c:choose>
-                                        <c:when test="${role =='USER' && userProfile.balance > item.price}">
-                                            <form action="${pageContext.request.contextPath}/user/userExhibitionView">
-                                                <button type="button" class="btn btn-sm btn-outline-secondary"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                        data-bs-theme="${item.theme}" data-bs-id="${item.id}"><fmt:message
-                                                        key="buy"/></button>
-                                                <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                                        name="exId" value="${item.id}"><fmt:message key="view"/></button>
-                                            </form>
-
-                                        </c:when>
-                                        <c:when test="${role =='ADMIN'}">
-                                            <form action="${pageContext.request.contextPath}/admin/adminExhibitionView">
-                                                <button type="submit" class="btn btn-sm btn-outline-secondary" name="exId" value="${item.id}"
-                                                >Edit</button>
-                                            </form>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <form action="">
-                                                <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                                        disabled><fmt:message
-                                                        key="buy"/></button>
-                                                <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                                name="exId" value="${item.id}"><fmt:message key="view"/></button>
-                                            </form>
-
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                                <small class="text-muted">${item.max-item.current} <fmt:message
-                                        key="ticketsLeft"/></small>
-                                <small class="text-muted">${item.price} <fmt:message key="uah"/></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-</div2>
 <hr>
+
 <footer class="text-muted py-5">
 </footer>
 <jsp:include page="common/footer.jsp"/>
