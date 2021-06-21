@@ -6,6 +6,7 @@
        scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale/resources"/>
+<c:set var="vari" value="${not empty param.edit ? null : 'disabled'}" scope="session"/>
 
 <html>
 <head>
@@ -18,30 +19,38 @@
 <div class="container justify-content-center w-100 bg-light">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2 g-3 mb-6">
         <div class="col ">
-            <div class="card shadow-sm">
-                <div class="card-body">
+            <div class="card shadow-sm" mb-5>
+                <div class="card-body" >
                     <h3 class="display-4">${exhibition.theme}</h3>
-                    <div class="mb-5">
+                    <div class="">
                         <img class="card-img-top" src=${exhibition.imageUrl} alt="Picture"
                              style="max-height: 360px; max-width: 600px">
                     </div>
                 </div>
-
             </div>
+            <hr>
+            <form action="${pageContext.request.requestURI}" >
+                <c:forEach var="item" items="${param}">
+                    <c:if test="${item.key != 'edit'}">
+                    <input type="hidden" name="${item.key}" value="${item.value}">
+                    </c:if>
+                </c:forEach>
+                <button type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : ''}">Edit
+                </button>
+            </form>
         </div>
         <div class="col">
             <div class="card-body">
-
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label">Theme</label>
                         <input type="text" class="form-control " name="email" value="${exhibition.theme}"
-                               disabled>
+                        ${vari}>
                     </div>
                     <div class="col">
                         <label class="form-label">Theme Uk</label>
                         <input type="text" class="form-control " name="email" value="${exhibition.themeUk}"
-                               disabled>
+                        ${vari}>
                     </div>
                 </div>
 
@@ -49,73 +58,73 @@
                     <div class="col">
                         <label class="form-label">Date</label>
                         <input type="text" class="form-control " name="email" value="${exhibition.date}"
-                               disabled>
+                        ${vari}>
                     </div>
                     <div class="col">
                         <label class="form-label">Price</label>
                         <input type="text" class="form-control " name="email" value="${exhibition.price}"
-                               disabled>
+                        ${vari}>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Description</label>
                     <input type="text" class="form-control  p-5" name="email" value="${exhibition.description}"
-                           disabled>
+                    ${vari}>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Description Uk</label>
                     <input type="text" class="form-control  p-5" name="email" value="${exhibition.descriptionUk}"
-                           disabled>
+                    ${vari}>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Image Url</label>
                     <input type="text" class="form-control " name="email" value="${exhibition.imageUrl}"
-                           disabled>
+                    ${vari}>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value=""
-                           id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Red
-                    </label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" ${vari}>
+                    <label class="form-check-label" for="inlineCheckbox1">RED</label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Blue
-                    </label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" ${vari}>
+                    <label class="form-check-label" for="inlineCheckbox2">GREEN</label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" checked>
-                    <label class="form-check-label" for="flexCheckChecked">
-                        Green
-                    </label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" ${vari}>
+                    <label class="form-check-label" for="inlineCheckbox3">BLUE</label>
                 </div>
             </div>
         </div>
     </div>
-    <hr>
-                    <h3 class="display-4">Visitors</h3>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Login</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="user" items="${userList}">
-                        <tr>
-                            <td><a href="#" style="color: black"><strong>${user.login}</strong></a></td>
-                            <td>${user.email}</td>
-                            <td>${user.firstName}</td>
-                            <td>${user.lastName}</td>
-                        </tr>
-                        </c:forEach>
 
+    <%--    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3 mb-6">--%>
+    <%--        <hr>--%>
+    <%--        <div class="col ">--%>
+    <%--            <h3 class="display-4">Visitors</h3>--%>
+    <%--            <table class="table">--%>
+    <%--                <thead>--%>
+    <%--                <tr>--%>
+    <%--                    <th scope="col">Login</th>--%>
+    <%--                    <th scope="col">Email</th>--%>
+    <%--                    <th scope="col">First Name</th>--%>
+    <%--                    <th scope="col">Last Name</th>--%>
+    <%--                </tr>--%>
+    <%--                </thead>--%>
+    <%--                <tbody>--%>
+    <%--                <c:forEach var="user" items="${userList}">--%>
+    <%--                <tr>--%>
+    <%--                    <td><a href="#" style="color: black"><strong>${user.login}</strong></a></td>--%>
+    <%--                    <td>${user.email}</td>--%>
+    <%--                    <td>${user.firstName}</td>--%>
+    <%--                    <td>${user.lastName}</td>--%>
+    <%--                </tr>--%>
+    <%--                </c:forEach>--%>
+
+    <%--        </div>--%>
+
+    <%--    </div>--%>
 </div>
 <hr>
+<jsp:include page="/common/footer.jsp"/>
 </body>
 </html>

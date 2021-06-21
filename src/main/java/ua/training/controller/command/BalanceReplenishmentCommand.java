@@ -15,11 +15,9 @@ public class BalanceReplenishmentCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        System.out.println(request.getParameter("amount"));
         User user = (User) request.getSession().getAttribute("userProfile");
         user.setBalance(userService.balanceReplenishment
                 (new BigDecimal(request.getParameter("amount")), user));
-        System.out.println("done");
-        return "redirect:/";
+        return "redirect:/success.jsp";
     }
 }

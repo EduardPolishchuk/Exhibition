@@ -149,7 +149,7 @@
                                                 <button type="submit" class="btn btn-sm btn-outline-secondary"
                                                         disabled><fmt:message
                                                         key="buy"/></button>
-                                                button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary"
                                                 name="exId" value="${item.id}"><fmt:message key="view"/></button>
                                             </form>
 

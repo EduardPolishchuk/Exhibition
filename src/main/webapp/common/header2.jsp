@@ -82,13 +82,11 @@
             </c:choose>
             <div class="text-end">
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                    <c:if test="${currentPage != null}">
-                        <input type="hidden" class="key" name="page" value="${currentPage}">
-                        <%--                        <input type="hidden" class="key" name="sortBy" value="${sortBy}">--%>
-                    </c:if>
-                    <c:if test="${search != null}">
-                        <input type="hidden" class="key" name="search" value="${search}">
-                    </c:if>
+                    <c:forEach var="item" items="${param}">
+                        <c:if test="${item.key != 'language'}">
+                            <input type="hidden" name="${item.key}" value="${item.value}">
+                        </c:if>
+                    </c:forEach>
                     <button type="submit" class="btn btn-light" name="language" value="en"><strong>EN</strong></button>
                     <button type="submit" class="btn btn-light" name="language" value="uk"><strong>UA</strong></button>
                 </form>
@@ -112,6 +110,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="validationCustom01" class="form-label">First name</label>
+                        <input type="hidden" name="page" value="${pageContext.request.requestURI}">
                         <input type="text" class="form-control" id="validationCustom01" name="amount" value="0"
                                required>
                     </div>

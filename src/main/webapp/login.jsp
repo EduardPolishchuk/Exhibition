@@ -12,8 +12,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>Login to the system</title>
+    <jsp:include page="/common/windowstyle.jsp"/>
 </head>
-<body class="text-center" style="background-image: url(https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F97b1c8e4-b31e-42a1-9d93-83fe161f56b2_1920x1075.jpeg)">
+<body class="text-center">
 <jsp:include page="common/header2.jsp"/>
 <h2 class="display-2" style="color: aliceblue"><fmt:message key="loginToSystem"/></h2>
 <div class="container  w-25  ">
@@ -25,11 +26,11 @@
                     <form method="post" action="${pageContext.request.contextPath}/login">
                         <div class="mb-3 ">
                             <label  class="form-label"><fmt:message key="userName"/></label><br>
-                            <input type="text" name="login" >
+                            <input type="text" name="login" value="qw">
                         </div>
                         <div class="mb-3">
                             <label  class="form-label"><fmt:message key="password"/></label><br>
-                            <input type="password" name="password">
+                            <input type="password" name="password" value="1">
                         </div>
                         <c:if test="${incorrect != null}">
                             <div class="alert alert-danger  p-2 " role="alert">
@@ -44,6 +45,6 @@
         </div>
     </div>
 </div>
-<%--<jsp:include page="common/footer.jsp"/>--%>
+<jsp:include page="common/footer.jsp"/>
 </body>
 </html>

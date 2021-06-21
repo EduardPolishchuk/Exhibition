@@ -24,13 +24,14 @@ public class JDBCUserDao implements UserDao {
     @Override
     public boolean create(User user) {
         try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO user (login,email,password,first_name,last_name,role_id) VALUES (?,?,?,?,?,1)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO user (login,email,password,first_name,last_name,role) VALUES (?,?,?,?,?,?)");
             int i = 1;
             ps.setString(i++, user.getLogin());
             ps.setString(i++, user.getEmail());
             ps.setString(i++, user.getPassword());
             ps.setString(i++, user.getFirstName());
-            ps.setString(i, user.getLastName());
+            ps.setString(i++, user.getLastName());
+            ps.setString(i, user.getRole().toString());
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());

@@ -4,8 +4,7 @@ import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SingUpCommand implements Command {
     private static final String LOGIN_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{1,19}$";
@@ -19,7 +18,7 @@ public class SingUpCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String result = "redirect:/success.jsp";
-        String error = null;
+        String error = "";
         Map<String, String> map = new HashMap<>();
         String login = request.getParameter("login");
         String email = request.getParameter("email");
@@ -35,7 +34,7 @@ public class SingUpCommand implements Command {
         for (String str : map.keySet()) {
             if (!str.matches(map.get(str))) {
                 error = str.equals(password) ? "passwordInvalid" : str;
-                request.getSession().setAttribute("error",error);
+                request.getSession().setAttribute("error", error);
                 return "/singUp.jsp";
             }
         }
@@ -46,11 +45,11 @@ public class SingUpCommand implements Command {
                 .firstName(firstName)
                 .email(email)
                 .build();
-        if(!userService.createUser(user)){
-            error="loginInvalid";
+        if (!userService.createUser(user)) {
+            error = "loginInvalid";
             result = "/singUp.jsp";
         }
-        request.getSession().setAttribute("error",error);
+        request.getSession().setAttribute("error", error);
         return result;
     }
 }
