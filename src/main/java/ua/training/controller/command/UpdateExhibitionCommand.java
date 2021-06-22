@@ -53,13 +53,14 @@ public class UpdateExhibitionCommand implements Command {
             }
         }
         ld = LocalDate.parse(date);
-        System.out.println(date);
         if (ld.isBefore(LocalDate.now())) {
             System.out.println("DATE");
             error = "invalidDate";
             request.getSession().setAttribute("error", error);
             return ifError;
         }
+        System.out.println(description);
+        System.out.println(descriptionUk);
         Exhibition exhibition = Exhibition.builder()
                 .id(id)
                 .themeUk(themeUk)

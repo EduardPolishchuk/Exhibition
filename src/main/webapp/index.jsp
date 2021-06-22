@@ -32,13 +32,13 @@
                     </div>
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="exId-name" name="exEx">
-                        <label for="validationCustom01" class="form-label">First name</label>
+                        <label for="validationCustom01" class="form-label">Tickets</label>
                         <input type="text" class="form-control" id="validationCustom01" name="amount" value="1"
                                required>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Send message</button>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
                     </div>
                 </form>
             </div>

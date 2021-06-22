@@ -130,7 +130,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public boolean update(Exhibition exhibition) {
         try {
             connection.setAutoCommit(false);
-            PreparedStatement ps = connection.prepareStatement("UPDATE exposition SET date=?,theme=?,theme_uk=?,price=?,description=?,description=?," +
+            PreparedStatement ps = connection.prepareStatement("UPDATE exposition SET date=?,theme=?,theme_uk=?,price=?,description=?,description_uk=?," +
                     "image_url=? where id=?");
             int k = 1;
             ps.setDate(k++, Date.valueOf(exhibition.getDate()));
