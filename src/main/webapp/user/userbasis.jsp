@@ -26,7 +26,7 @@
                 <c:set var="tickets" value="${userExhib.get(item)}"/>
                 <div class="col">
                     <div class="card shadow-sm">
-                        <img class="card-img-top" src=${item.imageUrl} alt="Picture" style="max-height: 240px">
+                        <img class="card-img-top" src=${item.imageUrl} alt="Picture" style="min-height: 220px; max-height: 220px">
                         <div class="card-body">
                             <c:choose>
                                 <c:when test="${language != 'uk'}">
@@ -42,7 +42,10 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-secondary disabled">Tickets: ${tickets}</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    <form id="form2" action="${pageContext.request.contextPath}/exhibitionView"></form>
+                                    <button form="form2" type="submit" class="btn btn-sm btn-outline-secondary"
+                                            name="exId" value="${item.id}"><fmt:message
+                                            key="view"/></button>
                                 </div>
                                 <small class="text-muted">${item.max-item.current} <fmt:message
                                         key="ticketsLeft"/></small>

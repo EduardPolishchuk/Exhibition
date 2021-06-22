@@ -55,7 +55,7 @@
                         <div class="mb-3">
                             <label class="form-label">Description Uk</label>
                             <textarea class="form-control" name="descriptionUk"
-                                      rows="1" >${param.description}</textarea>
+                                      rows="1" >${param.descriptionUk}</textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Image Url</label>
@@ -79,20 +79,10 @@
                         </div>
                         <hr>
                         <c:if test="${error != null}">
-                            <c:choose>
-                                <c:when test="${error eq 'passwordInvalid' || error eq 'loginInvalid'}">
-                                    <div class="alert alert-danger  p-1 w-75" role="alert">
-                                        <fmt:message key="${error}"/>
-                                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="alert alert-danger  p-1 w-75" role="alert">
+                                    <div class="alert alert-danger  p-1 w-auto" role="alert">
                                         <fmt:message key="incorrectInput"/>: "${error}"
                                         <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
-                                </c:otherwise>
-                            </c:choose>
                         </c:if>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Add</button>

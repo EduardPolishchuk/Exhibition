@@ -130,29 +130,18 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public boolean update(Exhibition exhibition) {
         try {
             connection.setAutoCommit(false);
-            PreparedStatement ps = connection.prepareStatement("UPDATE exposition SET date=?,theme=?,theme_uk=?,price=?,max_places=?,description=?,description=?," +
+            PreparedStatement ps = connection.prepareStatement("UPDATE exposition SET date=?,theme=?,theme_uk=?,price=?,description=?,description=?," +
                     "image_url=? where id=?");
             int k = 1;
             ps.setDate(k++, Date.valueOf(exhibition.getDate()));
             ps.setString(k++, exhibition.getTheme());
             ps.setString(k++, exhibition.getThemeUk());
             ps.setInt(k++, exhibition.getPrice());
-            ps.setInt(k++, exhibition.getMax());
             ps.setString(k++, exhibition.getDescription());
             ps.setString(k++, exhibition.getDescriptionUk());
             ps.setString(k++, exhibition.getImageUrl());
             ps.setInt(k, exhibition.getId());
             ps.executeUpdate();
-            ps = connection.prepareStatement("DELETE FROM exposition_has_hall WHERE exposition_id=?");
-            ps.setInt(1, exhibition.getId());
-            ps.executeUpdate();
-            for (Hall hall : exhibition.getHalls()) {
-                ps = connection.prepareStatement("INSERT INTO exposition_has_hall (exposition_id, hall_id, date) VALUES (?,?,?)");
-                ps.setInt(1, exhibition.getId());
-                ps.setInt(2, hall.getId());
-                ps.setDate(3, Date.valueOf(exhibition.getDate()));
-                ps.executeUpdate();
-            }
             connection.commit();
         } catch (SQLException ex) {
             logger.log(Level.ERROR, ex.getMessage());

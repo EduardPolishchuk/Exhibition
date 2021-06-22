@@ -24,6 +24,7 @@ public class Exhibition {
     private int id;
     private int current;
     private int max;
+    private boolean canceled;
 
     public void updateMax() {
         max = 0;

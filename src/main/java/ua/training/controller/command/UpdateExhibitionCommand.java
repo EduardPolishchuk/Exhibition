@@ -11,19 +11,20 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class AddExhibitionCommand implements Command {
+public class UpdateExhibitionCommand implements Command {
     private final ExhibitionService exhibitionService = new ExhibitionService();
     private static final String EN_REGEX = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{2,}$";
     private static final String UA_REGEX = "[А-ЩЬЮЯЫҐЄІЇа-щьюяыґєії0-9\\']{2,}";
     private static final String URL_REGEX = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)";
     public static final String DATE_REGEX = "^(19|20)\\d\\d[- .](0[1-9]|1[012])[- .](0[1-9]|[12][0-9]|3[01])$";
 
-
     @Override
+
     public String execute(HttpServletRequest request) {
-        String result;
+        String ifError = "/admin/adminExhibitionView.jsp";
         String error = "";
         int price;
+        int id = Integer.parseInt(request.getParameter("exId"));
         Map<String, String> map = new HashMap<>();
         String theme = request.getParameter("theme");
         String themeUk = request.getParameter("themeUk");
@@ -32,26 +33,12 @@ public class AddExhibitionCommand implements Command {
         String imageUrl = request.getParameter("imageUrl");
         String date = request.getParameter("date");
         LocalDate ld;
-        Set<Hall> exhibitionHalls = new HashSet<>();
-        Hall[] allHalls = Hall.values();
-        for (Hall h : allHalls) {
-            System.out.println(h);
-            if (request.getParameter(h.toString()) != null) {
-                exhibitionHalls.add(Hall.valueOf(request.getParameter(h.toString())));
-                System.out.println(exhibitionHalls);
-            }
-        }
-        if (exhibitionHalls.size() < 1) {
-            error = "At least one hall should be selected!";
-            request.getSession().setAttribute("error", error);
-            return "/admin/adminbasis.jsp";
-        }
         try {
             price = Integer.parseInt(request.getParameter("price"));
         } catch (NumberFormatException e) {
             error = "invalidPrice";
             request.getSession().setAttribute("error", error);
-            return "/admin/adminbasis.jsp";
+            return ifError;
         }
         map.put(theme, EN_REGEX);
         map.put(themeUk, UA_REGEX);
@@ -62,16 +49,19 @@ public class AddExhibitionCommand implements Command {
         for (String str : map.keySet()) {
             if (str == null || !str.matches(map.get(str))) {
                 request.getSession().setAttribute("error", error);
-                return "/admin/adminbasis.jsp";
+                return ifError;
             }
         }
         ld = LocalDate.parse(date);
+        System.out.println(date);
         if (ld.isBefore(LocalDate.now())) {
+            System.out.println("DATE");
             error = "invalidDate";
             request.getSession().setAttribute("error", error);
-            return "/admin/adminbasis.jsp";
+            return ifError;
         }
         Exhibition exhibition = Exhibition.builder()
+                .id(id)
                 .themeUk(themeUk)
                 .descriptionUk(descriptionUk)
                 .description(description)
@@ -80,14 +70,14 @@ public class AddExhibitionCommand implements Command {
                 .price(price)
                 .imageUrl(imageUrl)
                 .build();
-        exhibition.setHalls(exhibitionHalls);
-        if (!exhibitionService.create(exhibition)) {
-            result = "/admin/adminbasis.jsp";
+        if (!exhibitionService.update(exhibition)) {
+            System.out.println("NOT DATE");
+            ifError = "/admin/adminbasis.jsp";
             error = "invalidDate";
             request.getSession().setAttribute("error", error);
-            return result;
+            return ifError;
         }
-        return "redirect:/success.jsp";
+        return "redirect:/admin/adminExhibitionView?exId="+id;
     }
 
 }
