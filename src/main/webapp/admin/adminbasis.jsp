@@ -63,20 +63,19 @@
                             >
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                   value="option1" ${vari}>
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="RED"
+                                   value="RED" ${vari}>
                             <label class="form-check-label" for="inlineCheckbox1">RED</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                   value="option2" ${vari}>
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="GREEN"
+                                   value="GREEN" ${vari}>
                             <label class="form-check-label" for="inlineCheckbox2">GREEN</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
-                                   value="option3" ${vari}>
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="BLUE"
+                                   value="BLUE" ${vari}>
                             <label class="form-check-label" for="inlineCheckbox3">BLUE</label>
-
                         </div>
                         <hr>
                         <c:if test="${error != null}">

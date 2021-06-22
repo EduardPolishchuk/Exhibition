@@ -1,12 +1,15 @@
 package ua.training.controller.command;
 
 import ua.training.model.entity.Exhibition;
+import ua.training.model.entity.Hall;
 import ua.training.model.service.ExhibitionService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class AddExhibitionCommand implements Command {
     private final ExhibitionService exhibitionService = new ExhibitionService();
@@ -16,6 +19,15 @@ public class AddExhibitionCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        Set<Hall> exhibitionHalls = new HashSet<>();
+        Hall[] allHalls = Hall.values();
+        for (Hall h : allHalls) {
+            System.out.println(h);
+            if (request.getParameter(h.toString()) != null) {
+                exhibitionHalls.add(Hall.valueOf(request.getParameter(h.toString())));
+                System.out.println(exhibitionHalls);
+            }
+        }
         String result;
         String error = "";
         int price;
@@ -53,11 +65,13 @@ public class AddExhibitionCommand implements Command {
         Exhibition exhibition = Exhibition.builder()
                 .themeUk(themeUk)
                 .descriptionUk(descriptionUk)
+                .description(description)
                 .theme(theme)
                 .date(ld)
                 .price(price)
                 .imageUrl(imageUrl)
                 .build();
+        exhibition.setHalls(exhibitionHalls);
         if (!exhibitionService.create(exhibition)) {
             result = "/admin/adminbasis.jsp";
             error = "invalidDate";
