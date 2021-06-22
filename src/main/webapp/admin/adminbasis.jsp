@@ -59,7 +59,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Image Url</label>
-                            <input type="text" class="form-control " name="email" value=""
+                            <input type="text" class="form-control " name="imageUrl" value=""
                             >
                         </div>
                         <div class="form-check form-check-inline">
@@ -79,6 +79,20 @@
 
                         </div>
                         <hr>
+                        <c:if test="${error != null}">
+                            <c:choose>
+                                <c:when test="${error eq 'passwordInvalid' || error eq 'loginInvalid'}">
+                                    <div class="alert alert-danger  p-1 " role="alert">
+                                        <fmt:message key="${error}"/>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="alert alert-danger  p-1 " role="alert">
+                                        <fmt:message key="incorrectInput"/>: "${error}"
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Add</button>
                             <button type="reset" class="btn btn-secondary">Reset</button>
