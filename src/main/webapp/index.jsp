@@ -86,7 +86,7 @@
                                     <c:choose>
                                         <c:when test="${role =='USER' && userProfile.balance > item.price}">
                                             <form id="form1"
-                                                  action="${pageContext.request.contextPath}/user/userExhibitionView"></form>
+                                                  action="${pageContext.request.contextPath}/exhibitionView"></form>
                                             <button type="button" class="btn btn-sm btn-outline-secondary"
                                                     data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                     data-bs-theme="${language != 'uk'? item.theme : item.themeUk}" data-bs-id="${item.id}">
@@ -109,7 +109,7 @@
                                             </button>
                                         </c:when>
                                         <c:otherwise>
-                                            <form id="form2" action=""></form>
+                                            <form id="form2" action="${pageContext.request.contextPath}/exhibitionView"></form>
                                             <button type="submit" class="btn btn-sm btn-outline-secondary"
                                                     disabled><fmt:message
                                                     key="buy"/></button>

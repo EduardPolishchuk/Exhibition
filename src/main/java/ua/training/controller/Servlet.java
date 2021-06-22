@@ -35,7 +35,9 @@ public class Servlet extends HttpServlet {
         commands.put("user/userupdate" , new UpdateUserCommand(new UserService()));
         commands.put("user/userbuy" , new BuyTicketCommand(new UserService()));
         commands.put("admin/adminExhibitionView" ,
-                new ExhibitionDetailsCommand(new UserService(),new ExhibitionService()));
+                new ExhibitionDetailsCommand(new ExhibitionService()));
+        commands.put("exhibitionView" ,
+                new ExhibitionDetailsCommand(new ExhibitionService()));
         commands.put("changeBalance" , new BalanceReplenishmentCommand(new UserService()));
         commands.put("admin/adminAddExhibition" , new AddExhibitionCommand());
     }

@@ -24,6 +24,12 @@ public class ExhibitionService {
         }
     }
 
+    public boolean update(Exhibition exhibition) {
+        try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
+            return exhibitionDao.update(exhibition);
+        }
+    }
+
     public Optional<Map<Exhibition, Integer>> getUserExhibitions(User user) {
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
             return exhibitionDao.getUserExhibitions(user);

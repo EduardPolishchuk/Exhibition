@@ -39,7 +39,7 @@
                     </c:when>
                     <c:when test="${role == 'ADMIN'}">
                         <li><a href="${pageContext.request.contextPath}/admin/adminbasis.jsp"
-                               class="nav-link px-2 text-white">Admin Main</a></li>
+                               class="nav-link px-2 text-white">Add New Exhibition</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/adminClientList"
                                class="nav-link px-2 text-white">Client List</a></li>
                     </c:when>
@@ -57,12 +57,13 @@
                     </c:if>
                     <h5 class="display-6" style="color: aliceblue">${userProfile.login}
                     </h5>
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
-
-                        <button type="button" class="btn btn-link "
-                                data-bs-toggle="modal" data-bs-target="#exampleModal2"
-                        >${userProfile.balance} <fmt:message key="uah"/></button>
-                    </form>
+                    <c:if test="${role == 'USER'}">
+                        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
+                            <button type="button" class="btn btn-link "
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                            >${userProfile.balance} <fmt:message key="uah"/></button>
+                        </form>
+                    </c:if>
                     <br>
                     <form action="${pageContext.request.contextPath}/logout"
                           class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-0">
@@ -101,7 +102,7 @@
 
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Change Balance</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -109,7 +110,7 @@
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
-                        <label for="validationCustom01" class="form-label">First name</label>
+                        <label for="validationCustom01" class="form-label">Amount</label>
                         <input type="hidden" name="page" value="${pageContext.request.requestURI}">
                         <input type="text" class="form-control" id="validationCustom01" name="amount" value="0"
                                required>

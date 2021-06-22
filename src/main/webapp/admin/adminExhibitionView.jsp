@@ -62,17 +62,10 @@
                         <input type="text" class="form-control " name="imageUrl" value="${exhibition.imageUrl}"
                         ${vari}>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" ${vari}>
-                        <label class="form-check-label" for="inlineCheckbox1">RED</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" ${vari}>
-                        <label class="form-check-label" for="inlineCheckbox2">GREEN</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" ${vari}>
-                        <label class="form-check-label" for="inlineCheckbox3">BLUE</label>
+                    <div class="mb-3">
+                        <label class="form-label">Halls</label>
+                        <input type="text" class="form-control " name="imageUrl" value="${exhibition.halls}"
+                        disabled>
                     </div>
                     <div>
                         <hr>
