@@ -24,7 +24,7 @@ public class AuthFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-        request.getRequestDispatcher("/error/noAccess.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/error/noAccess.jsp").forward(request, response);
     }
 
     @Override

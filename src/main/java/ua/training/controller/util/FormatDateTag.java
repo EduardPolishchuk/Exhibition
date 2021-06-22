@@ -16,7 +16,6 @@ public class FormatDateTag extends TagSupport {
     private String var;
     private int scope;
 
-
     public FormatDateTag() {
         super();
         init();
@@ -29,7 +28,6 @@ public class FormatDateTag extends TagSupport {
         this.scope = PageContext.PAGE_SCOPE;
     }
 
-
     public void setVar(final String var) {
         this.var = var;
     }
@@ -38,16 +36,13 @@ public class FormatDateTag extends TagSupport {
         this.scope = Util.getScope(scope);
     }
 
-
     public void setValue(final Temporal value) {
         this.value = value;
     }
 
-
     public void setPattern(final String pattern) {
         this.pattern = pattern;
     }
-
 
     @Override
     public int doEndTag() throws JspException {
@@ -84,5 +79,4 @@ public class FormatDateTag extends TagSupport {
     public void release() {
         init();
     }
-
 }
