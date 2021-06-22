@@ -38,7 +38,8 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label">Date</label>
-                            <input type="date" class="form-control " name="date" value="${exhibition.date}" min="2020-01-01"
+                            <input type="date" class="form-control " name="date" value="${exhibition.date}"
+                                   min="2020-01-01"
                                    pattern="yyyy.MM.dd" ${vari}>
                         </div>
                         <div class="col">
@@ -66,12 +67,12 @@
                         <div class="col">
                             <label class="form-label">Tickets Sold</label>
                             <input type="text" class="form-control " name="date" value="${exhibition.current}"
-                            disabled>
+                                   disabled>
                         </div>
                         <div class="col">
                             <label class="form-label">Places</label>
                             <input type="text" class="form-control " name="price" value="${exhibition.max}"
-                            disabled>
+                                   disabled>
                         </div>
                     </div>
                     <div>
@@ -80,12 +81,15 @@
                         <c:if test="${error != null}">
                             <div class="alert alert-danger  p-1 w-auto" role="alert">
                                 <fmt:message key="incorrectInput"/>: "${error}"
-                                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
                             </div>
                         </c:if>
                         <button type="submit" class="btn btn-primary"
-                        ${vari}>Update</button>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        ${vari}>Update
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
                                 data-bs-theme="${language != 'uk'? exhibition.theme : exhibition.themeUk}"
                                 data-bs-id="${exhibition.id}">Cancel
                         </button>
@@ -131,14 +135,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="${pageContext.request.contextPath}/user/userbuy" class="row g-3 needs-validation" novalidate>
+                <form action="${pageContext.request.contextPath}/user/userbuy" class="row g-3 needs-validation"
+                      novalidate>
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="exId-name" name="exEx">
-                        <label for="validationCustom01" class="form-label">First name</label>
-                        <input type="text" class="form-control" id="validationCustom01" name="amount" value="1"
-                               required>
+                        <label class="form-label">Please confirm to cancel the exhibition</label>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -16,12 +16,16 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         request.getSession().setAttribute("incorrect", null);
         User user;
+        User.ROLE role = (User.ROLE) request.getSession().getAttribute("role");
         Optional<User> result;
         String userName = request.getParameter("login");
         String password = request.getParameter("password");
         boolean loginValid = userName.matches(LOGIN_REG);
         boolean passwordValid = password.matches(PASSWORD_REG);
-//        boolean userLoggedIn = request.getSession().getAttribute("userLoggedIn") == null;
+
+        if(User.ROLE.ADMIN.equals(role) || User.ROLE.USER.equals(role)){
+            CommandUtility.logOutUser(request);
+        }
 
         if (!loginValid || !passwordValid) {
             request.getSession().setAttribute("incorrect", "passError");
@@ -31,7 +35,6 @@ public class LoginCommand implements Command {
         if (result.isPresent() && !CommandUtility.checkUserIsLogged(request,userName)) {//todo isPresent in model & exception
             user = result.get();
             request.getSession().setAttribute("userProfile", user);
-//            request.getSession().setAttribute("userLoggedIn", true);
             request.getSession().setAttribute("role", user.getRole());
             return "redirect:/";
         } else {

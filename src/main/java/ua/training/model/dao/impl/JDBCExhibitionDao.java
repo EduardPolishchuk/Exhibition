@@ -181,7 +181,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         ExhibitionMapper exhibitionMapper = new ExhibitionMapper();
         Map<Exhibition, Integer> map = new HashMap<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition join exposition e on user_has_exposition.exposition_id = e.id WHERE user_id=?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition left join exposition e on user_has_exposition.exposition_id = e.id left join canceled_exposition ce on e.current_places = ce.current_places WHERE user_id=?");
             ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

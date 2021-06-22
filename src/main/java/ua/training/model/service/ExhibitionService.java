@@ -30,6 +30,12 @@ public class ExhibitionService {
         }
     }
 
+    public boolean cancel(int id) {
+        try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
+            return exhibitionDao.delete(id);
+        }
+    }
+
     public Optional<Map<Exhibition, Integer>> getUserExhibitions(User user) {
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
             return exhibitionDao.getUserExhibitions(user);
