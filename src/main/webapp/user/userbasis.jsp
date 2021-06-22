@@ -14,10 +14,8 @@
 </head>
 <body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
-<h2><strong>
-    <fmt:message key="welcomeText"/>
-</strong>
-</h2>
+<h2 class="display-3" style="color: aliceblue">My events</h2>
+
 <hr/>
 <hr>
 <div2 class="album py-5 bg-light">
@@ -58,6 +56,9 @@
     </div>
 </div2>
 <hr>
+<footer>
+    <jsp:include page="/common/footer.jsp"/>
+</footer>
 </body>
 </html>
 

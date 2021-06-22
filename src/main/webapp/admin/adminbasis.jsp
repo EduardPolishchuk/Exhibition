@@ -25,12 +25,12 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Theme</label>
-                                <input type="text" class="form-control " name="theme" value=""
+                                <input type="text" class="form-control " name="theme" value="${param.theme}"
                                 >
                             </div>
                             <div class="col">
                                 <label class="form-label">Theme Uk</label>
-                                <input type="text" class="form-control " name="themeUk" value=""
+                                <input type="text" class="form-control " name="themeUk" value="${param.themeUk}"
                                 >
                             </div>
                         </div>
@@ -38,56 +38,58 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Date</label>
-                                <input type="date" class="form-control " name="date" value="" min="2020-01-01" max="2022-12-31"
+                                <input type="date" class="form-control " name="date" value="${param.date}" min="2020-01-01" max="2022-12-31"
                                        pattern="yyyy.MM.dd">
                             </div>
                             <div class="col">
                                 <label class="form-label">Price</label>
-                                <input type="text" class="form-control " name="price" value=""
+                                <input type="text" class="form-control " name="price" value="${param.price}"
                                 >
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
                             <textarea class="form-control" name="description"
-                                      rows="1">${exhibition.descriptionUk}</textarea>
+                                      rows="1" >${param.description}</textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description Uk</label>
                             <textarea class="form-control" name="descriptionUk"
-                                      rows="1">${exhibition.descriptionUk}</textarea>
+                                      rows="1" >${param.description}</textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Image Url</label>
-                            <input type="text" class="form-control " name="imageUrl" value=""
+                            <input type="text" class="form-control " name="imageUrl" value="${param.imageUrl}"
                             >
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="RED"
-                                   value="RED" ${vari}>
+                                   value="RED"  ${not empty param.RED?'checked':''}>
                             <label class="form-check-label" for="inlineCheckbox1">RED</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="GREEN"
-                                   value="GREEN" ${vari}>
+                                   value="GREEN"  ${not empty param.GREEN?'checked':''}>
                             <label class="form-check-label" for="inlineCheckbox2">GREEN</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="BLUE"
-                                   value="BLUE" ${vari}>
+                                   value="BLUE"  ${not empty param.BLUE?'checked':''}>
                             <label class="form-check-label" for="inlineCheckbox3">BLUE</label>
                         </div>
                         <hr>
                         <c:if test="${error != null}">
                             <c:choose>
                                 <c:when test="${error eq 'passwordInvalid' || error eq 'loginInvalid'}">
-                                    <div class="alert alert-danger  p-1 " role="alert">
+                                    <div class="alert alert-danger  p-1 w-75" role="alert">
                                         <fmt:message key="${error}"/>
+                                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <div class="alert alert-danger  p-1 " role="alert">
+                                    <div class="alert alert-danger  p-1 w-75" role="alert">
                                         <fmt:message key="incorrectInput"/>: "${error}"
+                                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
                                 </c:otherwise>
                             </c:choose>

@@ -19,15 +19,6 @@ public class AddExhibitionCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Set<Hall> exhibitionHalls = new HashSet<>();
-        Hall[] allHalls = Hall.values();
-        for (Hall h : allHalls) {
-            System.out.println(h);
-            if (request.getParameter(h.toString()) != null) {
-                exhibitionHalls.add(Hall.valueOf(request.getParameter(h.toString())));
-                System.out.println(exhibitionHalls);
-            }
-        }
         String result;
         String error = "";
         int price;
@@ -39,6 +30,20 @@ public class AddExhibitionCommand implements Command {
         String imageUrl = request.getParameter("imageUrl");
         String date = request.getParameter("date");
         LocalDate ld = LocalDate.parse(date);
+        Set<Hall> exhibitionHalls = new HashSet<>();
+        Hall[] allHalls = Hall.values();
+        for (Hall h : allHalls) {
+            System.out.println(h);
+            if (request.getParameter(h.toString()) != null) {
+                exhibitionHalls.add(Hall.valueOf(request.getParameter(h.toString())));
+                System.out.println(exhibitionHalls);
+            }
+        }
+        if (exhibitionHalls.size() < 1) {
+            error = "At least one hall should be selected!";
+            request.getSession().setAttribute("error", error);
+            return "/admin/adminbasis.jsp";
+        }
         try {
             price = Integer.parseInt(request.getParameter("price"));
         } catch (NumberFormatException e) {
@@ -57,7 +62,7 @@ public class AddExhibitionCommand implements Command {
         map.put(descriptionUk, UA_REGEX);
         map.put(imageUrl, URL_REGEX);
         for (String str : map.keySet()) {
-            if (str != null & !str.matches(map.get(str))) {
+            if (str == null | !str.matches(map.get(str))) {
                 request.getSession().setAttribute("error", error);
                 return "/admin/adminbasis.jsp";
             }

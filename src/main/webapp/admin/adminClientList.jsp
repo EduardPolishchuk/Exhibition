@@ -15,7 +15,7 @@
 </head>
 <body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
-<h2 class="display-3" style="color: aliceblue"><fmt:message key="loginToSystem"/></h2>
+
 <div class="container justify-content-center w-75 ">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
         <div class="col ">
