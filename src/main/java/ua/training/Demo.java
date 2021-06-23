@@ -20,12 +20,6 @@ public class Demo {
         halls.add(Hall.BLUE);
         halls.add(Hall.RED);
         ExhibitionService exhibitionService = new ExhibitionService();
-//        List<Exhibition> list = exhibitionService.getFrom(1, 1, 13);
-//        for (Exhibition ex : list) {
-//            System.out.println(ex);
-//            ex.setHalls(halls);
-//            exhibitionService.update(ex);
-//        }
-        exhibitionService.cancel(6);
+        System.out.println(exhibitionService.findById(6).get());
     }
 }

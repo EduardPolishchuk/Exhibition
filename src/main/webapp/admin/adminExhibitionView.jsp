@@ -66,12 +66,12 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label class="form-label">Tickets Sold</label>
-                            <input type="text" class="form-control " name="date" value="${exhibition.current}"
+                            <input type="text" class="form-control " name="date" value="${exhibition.currentPlaces}"
                                    disabled>
                         </div>
                         <div class="col">
                             <label class="form-label">Places</label>
-                            <input type="text" class="form-control " name="price" value="${exhibition.max}"
+                            <input type="text" class="form-control " name="price" value="${exhibition.maxPlaces}"
                                    disabled>
                         </div>
                     </div>

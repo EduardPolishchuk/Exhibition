@@ -50,7 +50,7 @@
                     <div class="mb-3">
                         <label class="form-label">Tickets Left</label>
                         <input type="text" class="form-control " name="imageUrl"
-                               value="${exhibition.max - exhibition.current}"
+                               value="${exhibition.maxPlaces - exhibition.currentPlaces}"
                                disabled>
                     </div>
                     <div>

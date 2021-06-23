@@ -43,7 +43,6 @@ public class JDBCExhibitionDao implements ExhibitionDao {
             ResultSet resultSet = ps1.getGeneratedKeys();
             resultSet.next();
             genExpositionID = resultSet.getInt(1);
-
             for (Hall hall : exhibition.getHalls()) {
                 ps1 = connection.prepareCall("INSERT INTO exposition_has_hall (exposition_id, hall_id,`date`) VALUES (?,?,?)");
                 ps1.setInt(1, genExpositionID);
@@ -79,7 +78,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         } finally {
             close();
         }
-        return Optional.of(exhibition);
+        return Optional.ofNullable(exhibition);
     }
 
 
