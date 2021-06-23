@@ -38,8 +38,8 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Date</label>
-                                <input type="date" class="form-control " name="date" value="${param.date}" min="2020-01-01" max="2022-12-31"
-                                       pattern="yyyy.MM.dd">
+                                <input type="date" class="form-control " name="date" value="${param.date}"
+                                       min="${currentDate}" pattern="yyyy.MM.dd">
                             </div>
                             <div class="col">
                                 <label class="form-label">Price</label>
@@ -50,12 +50,12 @@
                         <div class="mb-3">
                             <label class="form-label">Description</label>
                             <textarea class="form-control" name="description"
-                                      rows="1" >${param.description}</textarea>
+                                      rows="1">${param.description}</textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description Uk</label>
                             <textarea class="form-control" name="descriptionUk"
-                                      rows="1" >${param.descriptionUk}</textarea>
+                                      rows="1">${param.descriptionUk}</textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Image Url</label>
@@ -79,10 +79,11 @@
                         </div>
                         <hr>
                         <c:if test="${error != null}">
-                                    <div class="alert alert-danger  p-1 w-auto" role="alert">
-                                        <fmt:message key="incorrectInput"/>: "${error}"
-                                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
+                            <div class="alert alert-danger  p-1 w-auto" role="alert">
+                                <fmt:message key="incorrectInput"/>: "${error}"
+                                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
                         </c:if>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Add</button>

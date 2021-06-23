@@ -1,17 +1,8 @@
 package ua.training.model.entity;
 
-import lombok.Getter;
-import lombok.Builder;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.math.BigDecimal;
 import java.util.Map;
 
-@Getter
-@Setter
-@ToString()
-@Builder
 public class User {
     private int id;
     private String login;
@@ -93,6 +84,67 @@ public class User {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public static UserBuilder builder(){
+        return new UserBuilder();
+    }
+
+    public static class UserBuilder {
+       private User newUser;
+
+        public UserBuilder() {
+            newUser = new User();
+        }
+
+        public UserBuilder id(int id){
+            newUser.id = id;
+            return this;
+        }
+
+        public UserBuilder login(String login){
+            newUser.login = login;
+            return this;
+        }
+
+        public UserBuilder email(String email){
+            newUser.email = email;
+            return this;
+        }
+
+        public UserBuilder password(String password){
+            newUser.password = password;
+            return this;
+        }
+
+        public UserBuilder balance(BigDecimal balance){
+            newUser.balance = balance;
+            return this;
+        }
+
+        public UserBuilder exhibitionsTickets(Map<Exhibition, Integer> exhibitionsTickets){
+            newUser.exhibitionsTickets = exhibitionsTickets;
+            return this;
+        }
+
+        public UserBuilder firstName(String firstName){
+            newUser.firstName = firstName;
+            return this;
+        }
+
+        public UserBuilder lastName(String lastName){
+            newUser.lastName = lastName;
+            return this;
+        }
+
+        public UserBuilder role(ROLE role){
+            newUser.role = role;
+            return this;
+        }
+
+        public User build(){
+            return newUser;
+        }
     }
 
     public enum ROLE {
