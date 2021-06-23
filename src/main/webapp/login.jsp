@@ -37,6 +37,7 @@
                                 <fmt:message key="${incorrect}"/>
                                 <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
+                            ${pageContext.session.removeAttribute('incorrect')}
                         </c:if>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

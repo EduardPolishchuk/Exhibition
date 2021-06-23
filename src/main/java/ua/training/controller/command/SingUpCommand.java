@@ -27,9 +27,9 @@ public class SingUpCommand implements Command {
         String password = request.getParameter("password");
         map.put(login, LOGIN_REG);
         map.put(email, EMAIL_REG);
+        map.put(password, PASSWORD_REG);
         map.put(firstName, FIRST_NAME_REG);
         map.put(lastName, LAST_NAME_REG);
-        map.put(password, PASSWORD_REG);
         for (String str : map.keySet()) {
             if (!str.matches(map.get(str))) {
                 error = str.equals(password) ? "passwordInvalid" : str;

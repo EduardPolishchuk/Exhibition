@@ -24,7 +24,7 @@ public class ClientListCommand implements Command{
                 optional = exhibitionService.findById(Integer.parseInt(request.getParameter("exId")));
                 request.getSession().setAttribute("exhibition", optional.orElseThrow(()->new Exception("Not found")));
             } catch (Exception e) {
-                return "/WEB-INF/error.jsp";
+                return "/WEB-INF/error/error.jsp";
             }
             request.getSession().setAttribute("userList", userService.findExhibitionUsers(optional.get()));
         }else {

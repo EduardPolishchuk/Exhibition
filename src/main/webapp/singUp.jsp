@@ -25,19 +25,19 @@
                         <form method="post"  action="${pageContext.request.contextPath}/singUp">
                             <div class="mb-3 ">
                                 <label  class="form-label">Login</label>
-                                <input type="text" class="form-control" name="login" value=" ${param.login}">
+                                <input type="text" class="form-control" name="login" value="${param.login}">
                             </div>
                             <div class="mb-3 ">
                                 <label  class="form-label">Email address</label>
-                                <input type="text" class="form-control" name="email" value=" ${param.email}">
+                                <input type="text" class="form-control" name="email" value="${param.email}">
                             </div>
                             <div class="mb-3 ">
                                 <label  class="form-label">First Name</label>
-                                <input type="text" class="form-control" name="firstName" value=" ${param.firstName}">
+                                <input type="text" class="form-control" name="firstName" value="${param.firstName}">
                             </div>
                             <div class="mb-3 ">
                                 <label  class="form-label">Last Name</label>
-                                <input type="text" class="form-control" name="lastName" value=" ${param.lastName}">
+                                <input type="text" class="form-control" name="lastName" value="${param.lastName}">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -56,6 +56,7 @@
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
+                                ${pageContext.session.removeAttribute('error')}
                             </c:if>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

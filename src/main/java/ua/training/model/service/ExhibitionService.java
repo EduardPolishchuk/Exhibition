@@ -12,9 +12,9 @@ import java.util.Optional;
 public class ExhibitionService {
    private final DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public List<Exhibition> getFrom(int sortBy, int start, int per) {
+    public List<Exhibition> getFrom(int sortBy, int start, int per, boolean canceled) {
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
-            return exhibitionDao.findFrom(sortBy, start, per);
+            return exhibitionDao.findFrom(sortBy, start, per, canceled);
         }
     }
 
@@ -32,7 +32,7 @@ public class ExhibitionService {
 
     public boolean cancel(int id) {
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
-            return exhibitionDao.delete(id);
+            return exhibitionDao.cancel(id);
         }
     }
 
@@ -42,9 +42,9 @@ public class ExhibitionService {
         }
     }
 
-    public int getRowsNumber() {
+    public int getRowsNumber(boolean canceled) {
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
-            return exhibitionDao.getRowsNumber();
+            return exhibitionDao.getRowsNumber(canceled);
         }
     }
 

@@ -20,6 +20,8 @@ public class Demo {
         halls.add(Hall.BLUE);
         halls.add(Hall.RED);
         ExhibitionService exhibitionService = new ExhibitionService();
-        System.out.println(exhibitionService.findById(6).get());
+        List<Exhibition> list = exhibitionService.getFrom(1,0,3,true);
+        list.forEach(System.out::println);
+//        System.out.println(exhibitionService.findById(6).get());
     }
 }

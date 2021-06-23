@@ -100,11 +100,6 @@ public class JDBCUserDao implements UserDao {
         return true;
     }
 
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
-
     public Optional<User> isValid(String login, String password) {
         Optional<User> result = Optional.empty();
         UserMapper userMapper = new UserMapper();

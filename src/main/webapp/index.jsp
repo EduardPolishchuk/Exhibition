@@ -27,11 +27,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="${pageContext.request.contextPath}/user/userbuy" class="row g-3 needs-validation" novalidate>
+                <form action="${pageContext.request.contextPath}/user/userbuy" class="row g-3 needs-validation"
+                      novalidate>
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="exId-name" name="exEx">
+                        <input type="hidden" class="form-control" id="exId-name" name="exID">
                         <label for="validationCustom01" class="form-label">Tickets</label>
                         <input type="text" class="form-control" id="validationCustom01" name="amount" value="1"
                                required>
@@ -47,18 +48,39 @@
     </div>
 </div>
 <c:if test="${noOfPages > 0}">
-    <form  style="align-self: center">
-        <div class="btn-group justify-content-center" role="group">
-            <input type="submit" class="btn-check" name="sortBy" value="3" id="btnradio1" autocomplete="off" >
-            <label class="btn btn-primary ${param.sortBy == '3'? 'active':''}" for="btnradio1">Theme</label>
+    <div class="row " style="align-self: center">
+        <div class="col">
+            <form>
+                <div class="btn-group justify-content-center" role="group">
+                    <input type="submit" class="btn-check" name="sortBy" value="${param.sortBy eq 3? '': 3}" id="btnradio1" autocomplete="off">
+                    <label class="btn btn-primary ${param.sortBy == '3'? 'active':''}" for="btnradio1">Theme</label>
 
-            <input type="submit" class="btn-check active" name="sortBy" value="2" id="btnradio2" autocomplete="off" >
-            <label class="btn btn-primary ${param.sortBy == '2'? 'active':''}" for="btnradio2">Date</label>
+                    <input type="submit" class="btn-check active" name="sortBy" value="${param.sortBy eq 2? '': 2}" id="btnradio2"
+                           autocomplete="off">
+                    <label class="btn btn-primary ${param.sortBy == '2'? 'active':''}" for="btnradio2">Date</label>
 
-            <input type="submit" class="btn-check" name="sortBy" value="4" id="btnradio3" autocomplete="off">
-            <label class="btn btn-primary ${param.sortBy == '4'? 'active':''}" for="btnradio3">Price</label>
+                    <input type="submit" class="btn-check" name="sortBy" value="${param.sortBy eq 4? '': 4}" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-primary ${param.sortBy == '4'? 'active':''}" for="btnradio3">Price</label>
+                </div>
+                <c:if test="${not empty param.canceled}">
+                    <input type="hidden" name="canceled" value="${param.canceled}">
+                </c:if>
+            </form>
         </div>
-    </form>
+        <c:if test="${role == 'ADMIN'}">
+            <div class="col">
+                <form action="">
+                    <c:if test="${not empty param.sortBy}">
+                        <input type="hidden" name="sortBy" value="${param.sortBy}">
+                    </c:if>
+                    <input type="submit" class="btn-check" name="canceled" value="${not empty param.canceled? '': '1'}"
+                           id="btncanceled">
+                    <label class="btn btn-primary ${not empty param.canceled ? 'active':''}"
+                           for="btncanceled">Canceled</label>
+                </form>
+            </div>
+        </c:if>
+    </div>
 </c:if>
 <div2 class="album py-0 ">
     <div class="container">
@@ -66,19 +88,20 @@
             <c:forEach var="item" items="${expoList}">
                 <div class="col">
                     <div class="card shadow-sm">
-                        <img class="card-img-top" src=${item.imageUrl} alt="'Picture'" style="min-height: 220px; max-height: 220px">
+                        <img class="card-img-top" src=${item.imageUrl} alt="'Picture'"
+                             style="min-height: 220px; max-height: 220px">
                         <div class="card-body">
                             <c:choose>
                                 <c:when test="${language != 'uk'}">
                                     <p class="card-text"><strong>${item.theme}</strong></p>
                                     <p class="card-text">${item.date}</p>
-<%--                                    <p class="card-text">${item.description}</p>--%>
+                                    <%--                                    <p class="card-text">${item.description}</p>--%>
                                 </c:when>
                                 <c:otherwise>
                                     <p class="card-text"><strong>${item.themeUk}</strong></p>
                                     <p class="card-text"><custom:formatDate value="${item.date}"
                                                                             pattern="dd/MM/yyyy"/></p>
-<%--                                    <p class="card-text">${item.descriptionUk}</p>--%>
+                                    <%--                                    <p class="card-text">${item.descriptionUk}</p>--%>
                                 </c:otherwise>
                             </c:choose>
                             <div class="d-flex justify-content-between align-items-center">
@@ -89,7 +112,8 @@
                                                   action="${pageContext.request.contextPath}/exhibitionView"></form>
                                             <button type="button" class="btn btn-sm btn-outline-secondary"
                                                     data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                    data-bs-theme="${language != 'uk'? item.theme : item.themeUk}" data-bs-id="${item.id}">
+                                                    data-bs-theme="${language != 'uk'? item.theme : item.themeUk}"
+                                                    data-bs-id="${item.id}">
                                                 <fmt:message
                                                         key="buy"/></button>
                                             <button form="form1" type="submit" class="btn btn-sm btn-outline-secondary"
@@ -109,7 +133,8 @@
                                             </button>
                                         </c:when>
                                         <c:otherwise>
-                                            <form id="form2" action="${pageContext.request.contextPath}/exhibitionView"></form>
+                                            <form id="form2"
+                                                  action="${pageContext.request.contextPath}/exhibitionView"></form>
                                             <button type="submit" class="btn btn-sm btn-outline-secondary"
                                                     disabled><fmt:message
                                                     key="buy"/></button>
@@ -119,8 +144,8 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
-<%--                                <small class="text-muted">${item.max-item.current} <fmt:message--%>
-<%--                                        key="ticketsLeft"/></small>--%>
+                                    <%--                                <small class="text-muted">${item.max-item.current} <fmt:message--%>
+                                    <%--                                        key="ticketsLeft"/></small>--%>
                                 <small class="text-muted">${item.price} <fmt:message key="uah"/></small>
                             </div>
                         </div>
@@ -133,9 +158,8 @@
 <hr>
 <c:if test="${noOfPages > 0}">
     <nav aria-label="...">
-
         <ul class="pagination justify-content-center">
-
+            <c:set var="cnl" value="${not empty param.canceled? '&canceled=1':''}"/>
             <c:choose>
                 <c:when test="${currentPage <= 1}">
                     <li class="page-item disabled">
@@ -144,7 +168,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item">
-                        <a class="page-link" href="/Exhibition/?page=${currentPage - 1}&sortBy=${sortBy}">Previous</a>
+                        <a class="page-link" href="/Exhibition/?page=${currentPage - 1}&sortBy=${sortBy}${cnl}">Previous</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -157,7 +181,7 @@
                     </c:when>
                     <c:otherwise>
                         <li class="page-item"><a class="page-link"
-                                                 href="/Exhibition/?page=${i}&sortBy=${sortBy}">${i}</a></li>
+                                                 href="/Exhibition/?page=${i}&sortBy=${sortBy}${cnl}">${i}</a></li>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
@@ -169,7 +193,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item">
-                        <a class="page-link" href="/Exhibition/?page=${currentPage + 1}&sortBy=${sortBy}">Next</a>
+                        <a class="page-link" href="/Exhibition/?page=${currentPage + 1}&sortBy=${sortBy}${cnl}">Next</a>
                     </li>
                 </c:otherwise>
             </c:choose>

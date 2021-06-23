@@ -135,12 +135,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="${pageContext.request.contextPath}/user/userbuy" class="row g-3 needs-validation"
+                <form action="${pageContext.request.contextPath}/admin/adminCancelExhibition" class="row g-3 needs-validation"
                       novalidate>
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="exId-name" name="exEx">
+                        <input type="hidden" class="form-control" id="exId-name" name="exID">
                         <label class="form-label">Please confirm to cancel the exhibition</label>
                     </div>
                     <div class="modal-footer">

@@ -14,7 +14,7 @@ public class BuyTicketCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        int exId = Integer.parseInt(request.getParameter("exEx"));
+        int exId = Integer.parseInt(request.getParameter("exID"));
         int amount =Integer.parseInt(request.getParameter("amount"));
         User user = (User) request.getSession().getAttribute("userProfile");
         if (userService.buyTicket(user,exId,amount)){

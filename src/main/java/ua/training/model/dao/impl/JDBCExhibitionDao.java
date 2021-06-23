@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.dao.ExhibitionDao;
+import ua.training.model.dao.PropertyReader;
 import ua.training.model.dao.mapper.ExhibitionMapper;
 import ua.training.model.dao.mapper.HallMapper;
 import ua.training.model.entity.Exhibition;
@@ -16,6 +17,7 @@ import java.util.*;
 
 public class JDBCExhibitionDao implements ExhibitionDao {
 
+    private final Properties properties = PropertyReader.getProperties();
     private static final Logger logger = LogManager.getLogger();
     private final Connection connection;
 
@@ -25,10 +27,9 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public boolean create(Exhibition exhibition) {
-        try {
+        try (PreparedStatement ps1 = connection.prepareCall(properties.getProperty("createExhibition"));) {
             connection.setAutoCommit(false);
             int genExpositionID;
-            PreparedStatement ps1 = connection.prepareCall("INSERT INTO exposition (theme,theme_uk,`date`,price,current_places,max_places,description,description_uk,image_url) VALUES (?,?,?,?,?,?,?,?,?)");
             int k = 1;
             ps1.setString(k++, exhibition.getTheme());
             ps1.setString(k++, exhibition.getThemeUk());
@@ -44,11 +45,11 @@ public class JDBCExhibitionDao implements ExhibitionDao {
             resultSet.next();
             genExpositionID = resultSet.getInt(1);
             for (Hall hall : exhibition.getHalls()) {
-                ps1 = connection.prepareCall("INSERT INTO exposition_has_hall (exposition_id, hall_id,`date`) VALUES (?,?,?)");
-                ps1.setInt(1, genExpositionID);
-                ps1.setInt(2, hall.getId());
-                ps1.setDate(3, Date.valueOf(exhibition.getDate()));
-                ps1.executeUpdate();
+                PreparedStatement ps2 = connection.prepareCall(properties.getProperty("addExhibitionHall"));
+                ps2.setInt(1, genExpositionID);
+                ps2.setInt(2, hall.getId());
+                ps2.setDate(3, Date.valueOf(exhibition.getDate()));
+                ps2.executeUpdate();
             }
             connection.commit();
         } catch (SQLException ex) {
@@ -65,8 +66,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public Optional<Exhibition> findById(int id) {
         Exhibition exhibition = null;
         ExhibitionMapper expoMapper = new ExhibitionMapper();
-        try (
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition where id=?")) {
+        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty("findByIdExhibition"))) {
             ps.setInt(1, id);
             ResultSet expoResultSet = ps.executeQuery();
             if (expoResultSet.next()) {
@@ -86,9 +86,8 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public List<Exhibition> findAll() {
         List<Exhibition> list = new ArrayList<>();
         ExhibitionMapper expoMapper = new ExhibitionMapper();
-        try (
-                Statement statement = connection.createStatement();
-                ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition ")) {
+        try (Statement statement = connection.createStatement();
+             ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition ")) {
             while (expoResultSet.next()) {
                 Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
                 ex.setHalls(getHalls(ex));
@@ -102,14 +101,15 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         return list;
     }
 
-    public List<Exhibition> findFrom(int sortBy, int start, int itemsPer) {
+    public List<Exhibition> findFrom(int sortBy, int start, int itemsPer, boolean findCanceled) {
         List<Exhibition> list = new ArrayList<>();
         ExhibitionMapper expoMapper = new ExhibitionMapper();
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition ORDER BY ? LIMIT ? offset ?");
-            ps.setInt(1, sortBy);
-            ps.setInt(2, itemsPer);
-            ps.setInt(3, start);
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition WHERE is_canceled = ? ORDER BY ? LIMIT ? offset ? ")) {
+            int k = 1;
+            ps.setBoolean(k++, findCanceled);
+            ps.setInt(k++, sortBy);
+            ps.setInt(k++, itemsPer);
+            ps.setInt(k, start);
             ResultSet expoResultSet = ps.executeQuery();
             while (expoResultSet.next()) {
                 Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
@@ -126,10 +126,9 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public boolean update(Exhibition exhibition) {
-        try {
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE exposition SET date=?,theme=?,theme_uk=?,price=?,description=?,description_uk=?," +
+                "image_url=? where id=?")) {
             connection.setAutoCommit(false);
-            PreparedStatement ps = connection.prepareStatement("UPDATE exposition SET date=?,theme=?,theme_uk=?,price=?,description=?,description_uk=?," +
-                    "image_url=? where id=?");
             int k = 1;
             ps.setDate(k++, Date.valueOf(exhibition.getDate()));
             ps.setString(k++, exhibition.getTheme());
@@ -152,19 +151,10 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     }
 
     @Override
-    public boolean delete(int id) {
-        try {
-            connection.setAutoCommit(false);
-//            PreparedStatement ps = connection.prepareCall("INSERT INTO canceled_exposition SELECT * FROM exposition WHERE id =?");
-//            ps.setInt(1, id);
-//            ps.executeUpdate();
-//            ps = connection.prepareCall("DELETE FROM exposition WHERE id=?");
-//            ps.setInt(1, id);
-//            ps.executeUpdate();
-//            ps = connection.prepareCall("UPDATE exposition_has_hall SET date = null WHERE exposition_id=?");
-//            ps.setInt(1, id);
-//            ps.executeUpdate();
-            connection.commit();
+    public boolean cancel(int id) {
+        try (PreparedStatement ps = connection.prepareCall("UPDATE exposition SET is_canceled=true WHERE id =?")) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
             rollback(connection);
@@ -178,8 +168,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public Optional<Map<Exhibition, Integer>> getUserExhibitions(User user) {
         ExhibitionMapper exhibitionMapper = new ExhibitionMapper();
         Map<Exhibition, Integer> map = new HashMap<>();
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition left join exposition e on user_has_exposition.exposition_id = e.id left join canceled_exposition ce on e.current_places = ce.current_places WHERE user_id=?");
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition left join exposition e on user_has_exposition.exposition_id = e.id left join canceled_exposition ce on e.current_places = ce.current_places WHERE user_id=?")) {
             ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -224,11 +213,11 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         return result;
     }
 
-    public int getRowsNumber() {
+    public int getRowsNumber(boolean canceled) {
         int rows = 0;
-        try (
-                Statement statement = connection.createStatement();
-                ResultSet rs = statement.executeQuery("SELECT COUNT(1) from exposition")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT COUNT(1) from exposition where is_canceled=?");) {
+           ps.setBoolean(1,canceled);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 rows = rs.getInt(1);
             }
