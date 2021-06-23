@@ -1,4 +1,4 @@
-package ua.training.controller.command;
+package ua.training.controller.util;
 
 import ua.training.model.entity.User;
 
@@ -6,15 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 
-class CommandUtility {
+public class ContextUtility {
 
-    static void setUserRole(HttpServletRequest request,
-                            User.ROLE role) {
-        HttpSession session = request.getSession();
-        session.setAttribute("role", role);
-    }
-
-    static synchronized boolean checkUserIsLogged(HttpServletRequest request, String login) {
+   public static synchronized boolean checkUserIsLogged(HttpServletRequest request, String login) {
         @SuppressWarnings("unchecked")
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
                 .getAttribute("loggedUsers");
@@ -27,15 +21,16 @@ class CommandUtility {
         return false;
     }
 
-    static synchronized void logOutUser(HttpServletRequest request) {
+    public static synchronized void logOutUser(HttpSession session) {
         @SuppressWarnings("unchecked")
-        HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
+        HashSet<String> loggedUsers = (HashSet<String>) session.getServletContext()
                 .getAttribute("loggedUsers");
-        User user = (User) request.getSession()
-                .getAttribute("userProfile");
+        User user = (User) session.getAttribute("userProfile");
         loggedUsers.remove(user.getLogin());
-        setUserRole(request, User.ROLE.UNKNOWN);
-        request.getSession().getServletContext()
+        session.removeAttribute("error");
+        session.removeAttribute("userProfile");
+        session.setAttribute("role", User.ROLE.UNKNOWN);
+        session.getServletContext()
                 .setAttribute("loggedUsers", loggedUsers);
     }
 }

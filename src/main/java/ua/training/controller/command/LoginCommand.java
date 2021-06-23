@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.controller.util.ContextUtility;
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
 
@@ -24,7 +25,7 @@ public class LoginCommand implements Command {
         boolean passwordValid = password.matches(PASSWORD_REG);
 
         if(User.ROLE.ADMIN.equals(role) || User.ROLE.USER.equals(role)){
-            CommandUtility.logOutUser(request);
+            ContextUtility.logOutUser(request.getSession());
         }
 
         if (!loginValid || !passwordValid) {
@@ -32,7 +33,7 @@ public class LoginCommand implements Command {
             return "redirect:/login.jsp";
         }
         result = userService.isValid(userName, password);
-        if (result.isPresent() && !CommandUtility.checkUserIsLogged(request,userName)) {//todo isPresent in model
+        if (result.isPresent() && !ContextUtility.checkUserIsLogged(request,userName)) {//todo isPresent in model
             user = result.get();
             request.getSession().setAttribute("userProfile", user);
             request.getSession().setAttribute("role", user.getRole());

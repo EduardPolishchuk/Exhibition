@@ -4,6 +4,7 @@ import ua.training.model.entity.Exhibition;
 import ua.training.model.service.ExhibitionService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PreLoadCommand implements Command {
