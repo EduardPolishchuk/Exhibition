@@ -21,7 +21,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h3 class="display-4">Enter your data</h3>
-                    <form method="post" action="${pageContext.request.contextPath}/user/update">
+                    <form method="post" action="${pageContext.request.contextPath}/user/userupdate">
                         <div class="mb-3 ">
                             <label class="form-label">Email address</label>
                             <input type="text" class="form-control" name="email" value="${userProfile.email}" ${vari}>

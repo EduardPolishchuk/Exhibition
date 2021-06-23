@@ -26,7 +26,7 @@
                     <form method="post" action="${pageContext.request.contextPath}/login">
                         <div class="mb-3 ">
                             <label  class="form-label"><fmt:message key="userName"/></label><br>
-                            <input type="text" name="login" value="qw">
+                            <input type="text" name="login" >
                         </div>
                         <div class="mb-3">
                             <label  class="form-label"><fmt:message key="password"/></label><br>

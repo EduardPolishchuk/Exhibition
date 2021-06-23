@@ -54,11 +54,9 @@ public class ExhibitionService {
         }
     }
 
-    public Exhibition findById(int id) throws Exception {
-        Optional<Exhibition> result;
+    public Optional<Exhibition> findById(int id) {
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
-            result = exhibitionDao.findById(id);
-            return result.orElseThrow(() -> new Exception(id + " not found"));
+            return exhibitionDao.findById(id);
         }
     }
 }

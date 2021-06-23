@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Test {
+public class Demo {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Set<Hall> halls = new HashSet<>();

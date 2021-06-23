@@ -47,9 +47,9 @@
                                             name="exId" value="${item.id}"><fmt:message
                                             key="view"/></button>
                                 </div>
-                                <small class="text-muted">${item.max-item.current} <fmt:message
-                                        key="ticketsLeft"/></small>
-                                <small class="text-muted">${item.price} <fmt:message key="uah"/></small>
+<%--                                <small class="text-muted">${item.max-item.current} <fmt:message--%>
+<%--                                        key="ticketsLeft"/></small>--%>
+<%--                                <small class="text-muted">${item.price} <fmt:message key="uah"/></small>--%>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
 </div2>
 <hr>
 <footer>
-    <jsp:include page="/common/footer.jsp"/>
+<%--    <jsp:include page="/common/footer.jsp"/>--%>
 </footer>
 </body>
 </html>

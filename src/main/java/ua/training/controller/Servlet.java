@@ -25,7 +25,6 @@ public class Servlet extends HttpServlet {
                 new LogOutCommand());
         commands.put("login",
                 new LoginCommand());
-        commands.put("exception" , new ExceptionCommand());
         commands.put("user/userevents" , new MainCommand());
         commands.put("admin/adminClientList" , new ClientListCommand(new UserService(),
                 new ExhibitionService()));

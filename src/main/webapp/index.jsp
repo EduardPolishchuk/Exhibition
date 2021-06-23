@@ -72,13 +72,13 @@
                                 <c:when test="${language != 'uk'}">
                                     <p class="card-text"><strong>${item.theme}</strong></p>
                                     <p class="card-text">${item.date}</p>
-                                    <p class="card-text">${item.description}</p>
+<%--                                    <p class="card-text">${item.description}</p>--%>
                                 </c:when>
                                 <c:otherwise>
                                     <p class="card-text"><strong>${item.themeUk}</strong></p>
                                     <p class="card-text"><custom:formatDate value="${item.date}"
                                                                             pattern="dd/MM/yyyy"/></p>
-                                    <p class="card-text">${item.descriptionUk}</p>
+<%--                                    <p class="card-text">${item.descriptionUk}</p>--%>
                                 </c:otherwise>
                             </c:choose>
                             <div class="d-flex justify-content-between align-items-center">
@@ -119,8 +119,8 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
-                                <small class="text-muted">${item.max-item.current} <fmt:message
-                                        key="ticketsLeft"/></small>
+<%--                                <small class="text-muted">${item.max-item.current} <fmt:message--%>
+<%--                                        key="ticketsLeft"/></small>--%>
                                 <small class="text-muted">${item.price} <fmt:message key="uah"/></small>
                             </div>
                         </div>

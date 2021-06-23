@@ -21,39 +21,26 @@
         <div class="col">
             <div class="card-body">
                 <form action="/success.jsp">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">Theme</label>
-                            <input type="text" class="form-control " name="theme" value="${exhibition.theme}"
-                                   disabled>
-                        </div>
-                        <div class="col">
-                            <label class="form-label">Theme Uk</label>
-                            <input type="text" class="form-control " name="themeUk" value="${exhibition.themeUk}"
-                                   disabled>
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label">Theme</label>
+                        <input type="text" class="form-control " name="theme" value="${exhibition.theme}"
+                               disabled>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">Date</label>
-                            <input type="text" class="form-control " name="date" value="${exhibition.date}"
-                                   disabled>
-                        </div>
-                        <div class="col">
-                            <label class="form-label">Price (<fmt:message key="uah"/>)</label>
-                            <input type="text" class="form-control " name="price" value="${exhibition.price}"
-                                   disabled>
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="text" class="form-control " name="date" value="${exhibition.date}"
+                               disabled>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Price (<fmt:message key="uah"/>)</label>
+                        <input type="text" class="form-control " name="price" value="${exhibition.price}"
+                               disabled>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">Description</label>
                         <textarea class="form-control" name="description" disabled
-                                  rows="2">${exhibition.description}</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description Uk</label>
-                        <textarea class="form-control" name="descriptionUk" disabled
-                                  rows="2">${exhibition.descriptionUk}</textarea>
+                                  rows="1">${exhibition.description}</textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Halls</label>
@@ -62,7 +49,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tickets Left</label>
-                        <input type="text" class="form-control " name="imageUrl" value="${exhibition.max - exhibition.current}"
+                        <input type="text" class="form-control " name="imageUrl"
+                               value="${exhibition.max - exhibition.current}"
                                disabled>
                     </div>
                     <div>

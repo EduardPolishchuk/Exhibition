@@ -5,6 +5,7 @@ import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 public class ClientListCommand implements Command{
     private UserService userService ;
@@ -18,14 +19,14 @@ public class ClientListCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
         if (request.getParameter("exId") != null){
-            Exhibition exhibition;
+            Optional<Exhibition> optional;
             try {
-                exhibition = exhibitionService.findById(Integer.parseInt(request.getParameter("exId")));
-                request.getSession().setAttribute("exhibition", exhibition);
+                optional = exhibitionService.findById(Integer.parseInt(request.getParameter("exId")));
+                request.getSession().setAttribute("exhibition", optional.orElseThrow(()->new Exception("Not found")));
             } catch (Exception e) {
                 return "/WEB-INF/error.jsp";
             }
-            request.getSession().setAttribute("userList", userService.findExhibitionUsers(exhibition));
+            request.getSession().setAttribute("userList", userService.findExhibitionUsers(optional.get()));
         }else {
             request.getSession().setAttribute("userList", userService.findAllUsers());
         }

@@ -27,6 +27,9 @@ public class PreLoadCommand implements Command {
         }
         List<Exhibition> list = exhibitionService.getFrom(sortBy, (page - 1) * RECORDS_PER_PAGE,
                 RECORDS_PER_PAGE);
+        if(list.isEmpty()){
+            return "/index.jsp";
+        }
         int noOfRecords = exhibitionService.getRowsNumber();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
         request.setAttribute("expoList", list);

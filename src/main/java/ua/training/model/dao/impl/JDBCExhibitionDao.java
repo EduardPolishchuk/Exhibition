@@ -67,7 +67,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         Exhibition exhibition = null;
         ExhibitionMapper expoMapper = new ExhibitionMapper();
         try (
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition where id=?");) {
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition where id=?")) {
             ps.setInt(1, id);
             ResultSet expoResultSet = ps.executeQuery();
             if (expoResultSet.next()) {
@@ -77,7 +77,6 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
         } finally {
-            System.out.println("EX ---> " + exhibition);
             close();
         }
         return Optional.of(exhibition);
@@ -157,15 +156,15 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public boolean delete(int id) {
         try {
             connection.setAutoCommit(false);
-            PreparedStatement ps = connection.prepareCall("INSERT INTO canceled_exposition SELECT * FROM exposition WHERE id =?");
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            ps = connection.prepareCall("DELETE FROM exposition WHERE id=?");
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            ps = connection.prepareCall("UPDATE exposition_has_hall SET date = null WHERE exposition_id=?");
-            ps.setInt(1, id);
-            ps.executeUpdate();
+//            PreparedStatement ps = connection.prepareCall("INSERT INTO canceled_exposition SELECT * FROM exposition WHERE id =?");
+//            ps.setInt(1, id);
+//            ps.executeUpdate();
+//            ps = connection.prepareCall("DELETE FROM exposition WHERE id=?");
+//            ps.setInt(1, id);
+//            ps.executeUpdate();
+//            ps = connection.prepareCall("UPDATE exposition_has_hall SET date = null WHERE exposition_id=?");
+//            ps.setInt(1, id);
+//            ps.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
@@ -256,5 +255,4 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         }
         return halls;
     }
-
 }

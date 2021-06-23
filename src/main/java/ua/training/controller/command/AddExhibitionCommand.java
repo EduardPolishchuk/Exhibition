@@ -35,10 +35,8 @@ public class AddExhibitionCommand implements Command {
         Set<Hall> exhibitionHalls = new HashSet<>();
         Hall[] allHalls = Hall.values();
         for (Hall h : allHalls) {
-            System.out.println(h);
             if (request.getParameter(h.toString()) != null) {
                 exhibitionHalls.add(Hall.valueOf(request.getParameter(h.toString())));
-                System.out.println(exhibitionHalls);
             }
         }
         if (exhibitionHalls.size() < 1) {
