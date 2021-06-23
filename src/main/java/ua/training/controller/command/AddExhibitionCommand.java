@@ -69,7 +69,7 @@ public class AddExhibitionCommand implements Command {
             request.getSession().setAttribute("error", error);
             return "/admin/adminbasis.jsp";
         }
-        Exhibition exhibition = Exhibition.builder()
+        Exhibition exhibition = new Exhibition.Builder()
                 .themeUk(themeUk)
                 .descriptionUk(descriptionUk)
                 .description(description)
