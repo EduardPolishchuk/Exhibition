@@ -5,6 +5,7 @@ import ua.training.model.entity.Hall;
 import ua.training.model.service.ExhibitionService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -75,7 +76,7 @@ public class AddExhibitionCommand implements Command {
                 .description(description)
                 .theme(theme)
                 .date(ld)
-                .price(price)
+                .price(BigDecimal.valueOf(price))
                 .imageUrl(imageUrl)
                 .build();
         exhibition.setHalls(exhibitionHalls);

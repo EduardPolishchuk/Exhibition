@@ -95,32 +95,43 @@
                                 <c:when test="${language != 'uk'}">
                                     <p class="card-text"><strong>${item.theme}</strong></p>
                                     <p class="card-text">${item.date}</p>
-                                    <%--                                    <p class="card-text">${item.description}</p>--%>
                                 </c:when>
                                 <c:otherwise>
                                     <p class="card-text"><strong>${item.themeUk}</strong></p>
                                     <p class="card-text"><custom:formatDate value="${item.date}"
                                                                             pattern="dd/MM/yyyy"/></p>
-                                    <%--                                    <p class="card-text">${item.descriptionUk}</p>--%>
                                 </c:otherwise>
                             </c:choose>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <c:choose>
                                         <c:when test="${role =='USER' && userProfile.balance > item.price}">
+                                            <c:choose>
+                                                <c:when test="${item.isCanceled}">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                            disabled>Canceled</button>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                            data-bs-theme="${language != 'uk'? item.theme : item.themeUk}"
+                                                            data-bs-id="${item.id}">
+                                                        <fmt:message
+                                                                key="buy"/></button>
+                                                </c:otherwise>
+                                            </c:choose>
                                             <form id="form1"
                                                   action="${pageContext.request.contextPath}/exhibitionView"></form>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                    data-bs-theme="${language != 'uk'? item.theme : item.themeUk}"
-                                                    data-bs-id="${item.id}">
-                                                <fmt:message
-                                                        key="buy"/></button>
+
                                             <button form="form1" type="submit" class="btn btn-sm btn-outline-secondary"
                                                     name="exId" value="${item.id}"><fmt:message
                                                     key="view"/></button>
                                         </c:when>
                                         <c:when test="${role =='ADMIN'}">
+                                            <c:if test="${item.isCanceled}">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                        disabled>Canceled</button>
+                                            </c:if>
                                             <form id="data"
                                                   action="${pageContext.request.contextPath}/admin/adminExhibitionView"></form>
                                             <form id="data2"
@@ -144,8 +155,6 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
-                                    <%--                                <small class="text-muted">${item.max-item.current} <fmt:message--%>
-                                    <%--                                        key="ticketsLeft"/></small>--%>
                                 <small class="text-muted">${item.price} <fmt:message key="uah"/></small>
                             </div>
                         </div>

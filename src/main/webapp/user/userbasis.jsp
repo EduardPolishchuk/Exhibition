@@ -21,7 +21,6 @@
 <div2 class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-
             <c:forEach var="item" items="${userExhib.keySet()}">
                 <c:set var="tickets" value="${userExhib.get(item)}"/>
                 <div class="col">
@@ -41,15 +40,17 @@
                             </c:choose>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
+                                    <c:if test="${item.isCanceled}">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                disabled>Canceled</button>
+                                    </c:if>
                                     <button type="button" class="btn btn-sm btn-outline-secondary disabled">Tickets: ${tickets}</button>
                                     <form id="form2" action="${pageContext.request.contextPath}/exhibitionView"></form>
                                     <button form="form2" type="submit" class="btn btn-sm btn-outline-secondary"
                                             name="exId" value="${item.id}"><fmt:message
                                             key="view"/></button>
                                 </div>
-<%--                                <small class="text-muted">${item.max-item.current} <fmt:message--%>
-<%--                                        key="ticketsLeft"/></small>--%>
-<%--                                <small class="text-muted">${item.price} <fmt:message key="uah"/></small>--%>
+                                <small class="text-muted">${item.price} <fmt:message key="uah"/></small>
                             </div>
                         </div>
                     </div>
