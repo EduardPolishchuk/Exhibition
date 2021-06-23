@@ -58,7 +58,7 @@ public class UpdateExhibitionCommand implements Command {
             request.getSession().setAttribute("error", error);
             return ifError;
         }
-        Exhibition exhibition = new  Exhibition.Builder()
+        Exhibition exhibition = Exhibition.builder()
                 .id(id)
                 .themeUk(themeUk)
                 .descriptionUk(descriptionUk)
