@@ -15,7 +15,7 @@
 </head>
 <body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
-<h2 class="display-3" style="color: aliceblue">My events</h2>
+<h2 class="display-3" style="color: aliceblue"><fmt:message key="myEvents"/></h2>
 <div2 class="album py-5 ">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
@@ -40,9 +40,9 @@
                                 <div class="btn-group">
                                     <c:if test="${item.isCanceled}">
                                         <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                disabled>Canceled</button>
+                                                disabled><fmt:message key="canceled"/></button>
                                     </c:if>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary disabled">Tickets: ${tickets}</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary disabled"><fmt:message key="tickets"/>: ${tickets}</button>
                                     <form id="form2" action="${pageContext.request.contextPath}/exhibitionView"></form>
                                     <button form="form2" type="submit" class="btn btn-sm btn-outline-secondary"
                                             name="exId" value="${item.id}"><fmt:message
@@ -59,7 +59,6 @@
 </div2>
 <hr>
 <footer>
-<%--    <jsp:include page="/common/footer.jsp"/>--%>
 </footer>
 </body>
 </html>

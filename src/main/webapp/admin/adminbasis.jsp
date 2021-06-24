@@ -24,12 +24,12 @@
                     <form action="${pageContext.request.contextPath}/admin/adminAddExhibition">
                         <div class="row mb-3">
                             <div class="col">
-                                <label class="form-label">Theme</label>
+                                <label class="form-label"><fmt:message key="theme"/></label>
                                 <input type="text" class="form-control " name="theme" value="${param.theme}"
                                 >
                             </div>
                             <div class="col">
-                                <label class="form-label">Theme Uk</label>
+                                <label class="form-label"><fmt:message key="themeUk"/></label>
                                 <input type="text" class="form-control " name="themeUk" value="${param.themeUk}"
                                 >
                             </div>
@@ -37,32 +37,32 @@
 
                         <div class="row mb-3">
                             <div class="col">
-                                <label class="form-label">Date</label>
+                                <label class="form-label"><fmt:message key="date"/> </label>
                                 <input type="date" class="form-control " name="date" value="${param.date}"
                                        min="${currentDate}" pattern="yyyy.MM.dd">
                             </div>
                             <div class="col">
-                                <label class="form-label">Price</label>
+                                <label class="form-label"><fmt:message key="price"/></label>
                                 <input type="number" class="form-control " min="1" name="price" value="${param.price}"
                                 >
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Description</label>
+                            <label class="form-label"><fmt:message key="description"/></label>
                             <textarea class="form-control" name="description"
                                       rows="1">${param.description}</textarea>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Description Uk</label>
+                            <label class="form-label"><fmt:message key="descriptionUk"/> </label>
                             <textarea class="form-control" name="descriptionUk"
                                       rows="1">${param.descriptionUk}</textarea>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Image Url</label>
+                            <label class="form-label"><fmt:message key="imageUrl"/> </label>
                             <input type="text" class="form-control " name="imageUrl" value="${param.imageUrl}"
                             >
                         </div>
-                        <label class="form-label">Halls: </label>
+                        <label class="form-label"><fmt:message key="halls"/> : </label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="RED"
                                    value="RED"  ${not empty param.RED?'checked':''}>
@@ -88,8 +88,8 @@
                             ${pageContext.session.removeAttribute('error')}
                         </c:if>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Add</button>
-                            <button type="reset" class="btn btn-secondary">Reset</button>
+                            <button type="submit" class="btn btn-primary"><fmt:message key="add"/></button>
+                            <button type="reset" class="btn btn-secondary"><fmt:message key="reset"/></button>
                         </div>
                     </form>
                 </div>
