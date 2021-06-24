@@ -22,6 +22,6 @@ public class BuyTicketCommand implements Command {
             request.getSession().setAttribute("userProfile",user);
             return "redirect:/success.jsp";
         }
-        return "/WEB-INF/error.jsp";
+        return "/WEB-INF/error/error.jsp";
     }
 }

@@ -34,12 +34,12 @@
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="exId-name" name="exID">
                         <label for="validationCustom01" class="form-label">Tickets</label>
-                        <input type="text" class="form-control" id="validationCustom01" name="amount" value="1"
+                        <input type="number" class="week-number-cell" id="validationCustom01" name="amount" min="1" value="1"
                                required>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>
