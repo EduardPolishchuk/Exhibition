@@ -25,52 +25,52 @@
                     <div class="row mb-3">
 
                         <div class="col">
-                            <label class="form-label">Theme</label>
+                            <label class="form-label"><fmt:message key="theme"/> </label>
                             <input type="text" class="form-control " name="theme" value="${exhibition.theme}"
                             ${vari}>
                         </div>
                         <div class="col">
-                            <label class="form-label">Theme Uk</label>
+                            <label class="form-label"><fmt:message key="themeUk"/></label>
                             <input type="text" class="form-control " name="themeUk" value="${exhibition.themeUk}"
                             ${vari}>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <label class="form-label">Date</label>
+                            <label class="form-label"><fmt:message key="date"/></label>
                             <input type="date" class="form-control " name="date" value="${exhibition.date}"
                                    min="${currentDate}"
                                    pattern="yyyy.MM.dd" ${vari}>
                         </div>
                         <div class="col">
-                            <label class="form-label">Price</label>
+                            <label class="form-label"><fmt:message key="price"/></label>
                             <input type="number" class="form-control " min="1" name="price" value="${exhibition.price}"
                             ${vari}>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Description</label>
+                        <label class="form-label"><fmt:message key="description"/></label>
                         <textarea class="form-control" name="description" ${vari}
                                   rows="1">${exhibition.description}</textarea>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Description Uk</label>
+                        <label class="form-label"><fmt:message key="descriptionUk"/></label>
                         <textarea class="form-control" name="descriptionUk" ${vari}
                                   rows="1">${exhibition.descriptionUk}</textarea>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Image Url</label>
+                        <label class="form-label"><fmt:message key="imageUrl"/></label>
                         <input type="text" class="form-control " name="imageUrl" value="${exhibition.imageUrl}"
                         ${vari}>
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <label class="form-label">Tickets Sold</label>
+                            <label class="form-label"><fmt:message key="ticketsSold"/> </label>
                             <input type="text" class="form-control " name="date" value="${exhibition.currentPlaces}"
                                    disabled>
                         </div>
                         <div class="col">
-                            <label class="form-label">Places</label>
+                            <label class="form-label"><fmt:message key="places"/> </label>
                             <input type="text" class="form-control " name="price" value="${exhibition.maxPlaces}"
                                    disabled>
                         </div>
@@ -87,14 +87,14 @@
                         </c:if>
                         <c:if test="${!exhibition.isCanceled}">
                             <button type="submit" class="btn btn-primary"
-                                ${vari}>Update
+                                ${vari}><fmt:message key="update"/>
                             </button>
-                            <button form="form2" type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : ''}">Edit
+                            <button form="form2" type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : ''}"><fmt:message key="edit"/>
                             </button>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
                                     data-bs-theme="${language != 'uk'? exhibition.theme : exhibition.themeUk}"
-                                    data-bs-id="${exhibition.id}">Cancel
+                                    data-bs-id="${exhibition.id}"><fmt:message key="cancel"/>
                             </button>
                         </c:if>
                     </div>
@@ -122,7 +122,7 @@
             <hr>
             <form action="${pageContext.request.contextPath}/admin/adminClientList">
                 <button type="submit" class="btn btn-sm btn-outline-secondary"
-                        name="exId" value="${param.exId}">Visitors
+                        name="exId" value="${param.exId}"><fmt:message key="visitors"/>
                 </button>
             </form>
         </div>
@@ -142,11 +142,11 @@
                     </div>
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="exId-name" name="exID">
-                        <label class="form-label">Please confirm to cancel the exhibition</label>
+                        <label class="form-label"><fmt:message key="confirmToCancel"/></label>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><fmt:message key="confirm"/> </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><fmt:message key="close"/></button>
                     </div>
                 </form>
             </div>

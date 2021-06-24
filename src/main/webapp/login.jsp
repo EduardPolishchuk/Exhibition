@@ -22,7 +22,7 @@
         <div class="col ">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h4 class="display-5" style="text-align: center">Enter your data</h4>
+                    <h4 class="display-5" style="text-align: center"><fmt:message key="enterYourData"/> </h4>
                     <form method="post" action="${pageContext.request.contextPath}/login">
                         <div class="mb-3 ">
                             <label  class="form-label"><fmt:message key="userName"/></label><br>

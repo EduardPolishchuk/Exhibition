@@ -21,14 +21,14 @@
         <div class="col ">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3 class="display-4">Client List</h3>
+                    <h3 class="display-4"><fmt:message key="visitorsList"/></h3>
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Login</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
+                            <th scope="col"><fmt:message key="userName"/> </th>
+                            <th scope="col"><fmt:message key="email"/></th>
+                            <th scope="col"><fmt:message key="firstName"/></th>
+                            <th scope="col"><fmt:message key="lastName"/></th>
                         </tr>
                         </thead>
                         <tbody>

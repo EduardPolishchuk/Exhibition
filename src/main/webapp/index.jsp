@@ -118,7 +118,7 @@
                                             <c:choose>
                                                 <c:when test="${item.isCanceled}">
                                                     <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                            disabled>Canceled
+                                                            disabled><fmt:message key="canceled"/>
                                                     </button>
                                                 </c:when>
                                                 <c:otherwise>
@@ -141,7 +141,7 @@
                                         <c:when test="${role =='ADMIN'}">
                                             <c:if test="${item.isCanceled}">
                                                 <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                        disabled>Canceled
+                                                        disabled><fmt:message key="canceled"/>
                                                 </button>
                                             </c:if>
                                             <form id="data"
@@ -149,10 +149,10 @@
                                             <form id="data2"
                                                   action="${pageContext.request.contextPath}/admin/adminClientList"></form>
                                             <button form="data" type="submit" class="btn btn-sm btn-outline-secondary"
-                                                    name="exId" value="${item.id}">Edit
+                                                    name="exId" value="${item.id}"><fmt:message key="edit"/>
                                             </button>
                                             <button form="data2" type="submit" class="btn btn-sm btn-outline-secondary"
-                                                    name="exId" value="${item.id}">Visitors
+                                                    name="exId" value="${item.id}"><fmt:message key="visitors"/>
                                             </button>
                                         </c:when>
                                         <c:otherwise>
