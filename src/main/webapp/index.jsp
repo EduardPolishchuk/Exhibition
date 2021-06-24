@@ -34,14 +34,15 @@
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="exId-name" name="exID">
                         <input type="hidden" class="form-control" id="maxAmount" name="maxAmount">
-                        <label for="validationCustom01" class="form-label">Tickets</label>
+                        <label for="validationCustom01" class="form-label"><fmt:message key="tickets"/></label>
                         <input type="number" class="form-control" id="validationCustom01" min="1"
                                name="amount"
                                value="1" required>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><fmt:message key="confirm"/></button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><fmt:message
+                                key="close"/></button>
                     </div>
                 </form>
             </div>
@@ -54,15 +55,21 @@
         <div class="col">
             <form>
                 <div class="btn-group justify-content-center" role="group">
-                    <input type="submit" class="btn-check" name="sortBy" value="${param.sortBy eq 3? '': 3}" id="btnradio1" autocomplete="off">
-                    <label class="btn btn-primary ${param.sortBy == '3'? 'active':''}" for="btnradio1">Theme</label>
+                    <input type="submit" class="btn-check" name="sortBy" value="${param.sortBy eq 3? '': 3}"
+                           id="btnradio1" autocomplete="off">
+                    <label class="btn btn-primary ${param.sortBy == '3'? 'active':''}" for="btnradio1"><fmt:message
+                            key="theme"/> </label>
 
-                    <input type="submit" class="btn-check active" name="sortBy" value="${param.sortBy eq 2? '': 2}" id="btnradio2"
+                    <input type="submit" class="btn-check active" name="sortBy" value="${param.sortBy eq 2? '': 2}"
+                           id="btnradio2"
                            autocomplete="off">
-                    <label class="btn btn-primary ${param.sortBy == '2'? 'active':''}" for="btnradio2">Date</label>
+                    <label class="btn btn-primary ${param.sortBy == '2'? 'active':''}" for="btnradio2"><fmt:message
+                            key="date"/></label>
 
-                    <input type="submit" class="btn-check" name="sortBy" value="${param.sortBy eq 4? '': 4}" id="btnradio3" autocomplete="off">
-                    <label class="btn btn-primary ${param.sortBy == '4'? 'active':''}" for="btnradio3">Price</label>
+                    <input type="submit" class="btn-check" name="sortBy" value="${param.sortBy eq 4? '': 4}"
+                           id="btnradio3" autocomplete="off">
+                    <label class="btn btn-primary ${param.sortBy == '4'? 'active':''}" for="btnradio3"><fmt:message
+                            key="price"/></label>
                 </div>
                 <c:if test="${not empty param.canceled}">
                     <input type="hidden" name="canceled" value="${param.canceled}">
@@ -78,7 +85,7 @@
                     <input type="submit" class="btn-check" name="canceled" value="${not empty param.canceled? '': '1'}"
                            id="btncanceled">
                     <label class="btn btn-outline-light ${not empty param.canceled ? 'active':''}"
-                           for="btncanceled">Canceled</label>
+                           for="btncanceled"><fmt:message key="canceled"/></label>
                 </form>
             </div>
         </c:if>
@@ -111,7 +118,8 @@
                                             <c:choose>
                                                 <c:when test="${item.isCanceled}">
                                                     <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                            disabled>Canceled</button>
+                                                            disabled>Canceled
+                                                    </button>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <button type="button" class="btn btn-sm btn-outline-secondary"
@@ -133,7 +141,8 @@
                                         <c:when test="${role =='ADMIN'}">
                                             <c:if test="${item.isCanceled}">
                                                 <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                        disabled>Canceled</button>
+                                                        disabled>Canceled
+                                                </button>
                                             </c:if>
                                             <form id="data"
                                                   action="${pageContext.request.contextPath}/admin/adminExhibitionView"></form>
@@ -175,12 +184,13 @@
             <c:choose>
                 <c:when test="${currentPage <= 1}">
                     <li class="page-item disabled">
-                        <span class="page-link">Previous</span>
+                        <span class="page-link"><fmt:message key="previous"/></span>
                     </li>
                 </c:when>
                 <c:otherwise>
                     <li class="page-item">
-                        <a class="page-link" href="/Exhibition/?page=${currentPage - 1}&sortBy=${sortBy}${cnl}">Previous</a>
+                        <a class="page-link"
+                           href="/Exhibition/?page=${currentPage - 1}&sortBy=${sortBy}${cnl}"><fmt:message key="previous"/></a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -200,12 +210,12 @@
             <c:choose>
                 <c:when test="${currentPage >= noOfPages}">
                     <li class="page-item disabled">
-                        <span class="page-link">Next</span>
+                        <span class="page-link"><fmt:message key="next"/></span>
                     </li>
                 </c:when>
                 <c:otherwise>
                     <li class="page-item">
-                        <a class="page-link" href="/Exhibition/?page=${currentPage + 1}&sortBy=${sortBy}${cnl}">Next</a>
+                        <a class="page-link" href="/Exhibition/?page=${currentPage + 1}&sortBy=${sortBy}${cnl}"><fmt:message key="next"/></a>
                     </li>
                 </c:otherwise>
             </c:choose>
