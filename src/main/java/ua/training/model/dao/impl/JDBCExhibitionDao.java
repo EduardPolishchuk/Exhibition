@@ -34,9 +34,9 @@ public class JDBCExhibitionDao implements ExhibitionDao {
             ps1.setString(k++, exhibition.getTheme());
             ps1.setString(k++, exhibition.getThemeUk());
             ps1.setDate(k++, Date.valueOf(exhibition.getDate()));
-            ps1.setInt(k++, exhibition.getPrice());
-            ps1.setInt(k++, exhibition.getCurrent());
-            ps1.setInt(k++, exhibition.getMax());
+            ps1.setBigDecimal(k++, exhibition.getPrice());
+            ps1.setInt(k++, exhibition.getCurrentPlaces());
+            ps1.setInt(k++, exhibition.getMaxPlaces());
             ps1.setString(k++, exhibition.getDescription());
             ps1.setString(k++, exhibition.getDescriptionUk());
             ps1.setString(k, exhibition.getImageUrl());
