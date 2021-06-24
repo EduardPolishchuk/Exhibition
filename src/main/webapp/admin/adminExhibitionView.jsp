@@ -39,12 +39,12 @@
                         <div class="col">
                             <label class="form-label">Date</label>
                             <input type="date" class="form-control " name="date" value="${exhibition.date}"
-                                   min="2020-01-01"
+                                   min="${currentDate}"
                                    pattern="yyyy.MM.dd" ${vari}>
                         </div>
                         <div class="col">
                             <label class="form-label">Price</label>
-                            <input type="text" class="form-control " name="price" value="${exhibition.price}"
+                            <input type="number" class="form-control " min="1" name="price" value="${exhibition.price}"
                             ${vari}>
                         </div>
                     </div>
@@ -85,24 +85,26 @@
                                         aria-label="Close"></button>
                             </div>
                         </c:if>
-                        <button type="submit" class="btn btn-primary"
-                        ${vari}>Update
-                        </button>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                data-bs-theme="${language != 'uk'? exhibition.theme : exhibition.themeUk}"
-                                data-bs-id="${exhibition.id}">Cancel
-                        </button>
+                        <c:if test="${!exhibition.isCanceled}">
+                            <button type="submit" class="btn btn-primary"
+                                ${vari}>Update
+                            </button>
+                            <button form="form2" type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : ''}">Edit
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
+                                    data-bs-theme="${language != 'uk'? exhibition.theme : exhibition.themeUk}"
+                                    data-bs-id="${exhibition.id}">Cancel
+                            </button>
+                        </c:if>
                     </div>
                 </form>
-                <form action="${pageContext.request.requestURI}">
+                <form id="form2" action="${pageContext.request.requestURI}">
                     <c:forEach var="item" items="${param}">
                         <c:if test="${item.key != 'edit'}">
                             <input type="hidden" name="${item.key}" value="${item.value}">
                         </c:if>
                     </c:forEach>
-                    <button type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : ''}">Edit
-                    </button>
                 </form>
 
             </div>

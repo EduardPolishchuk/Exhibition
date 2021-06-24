@@ -97,10 +97,10 @@
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="exId-name" name="exID">
-                        <input type="text" class="form-control" id="maxCount" name="maxCount">
-                        <label for="exId" class="form-label">Tickets</label>
-                        <input type="number" class="form-control" id="exId" min="1" max="${userProfile.balance / exhibition.price}"
+                        <input type="hidden" class="form-control" id="maxAmount" name="maxAmount">
+                        <input type="hidden" class="form-control" id="exId" name="exID">
+                        <label for="amountInput" class="form-label">Tickets</label>
+                        <input type="number" class="form-control" id="amountInput" min="1" max="${userProfile.balance / exhibition.price}"
                                name="amount"
                                value="1" required>
                     </div>
@@ -124,7 +124,7 @@
         var balance = button.getAttribute('data-bs-balance')
         var modalTitle = exampleModal.querySelector('.modal-title')
         var modalBodyInput = exampleModal.querySelector('.modal-body #exId')
-        var modalBodyInput2 = exampleModal.querySelector('.modal-body #maxCount')
+        var modalBodyInput2 = exampleModal.querySelector('.modal-body #maxAmount')
         modalTitle.textContent = recipient
         modalBodyInput.value = exId
         modalBodyInput2.value = balance / price

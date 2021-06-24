@@ -1,21 +1,23 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="/WEB-INF/custom_tag.tld" prefix="custom" %>
-
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale/resources"/>
+<c:set var="vari" value="${not empty param.edit ? null : 'disabled'}" scope="session"/>
+
 <html>
 <head>
-    <title>MyEvents</title>
+    <title>User Exhibitions</title>
     <jsp:include page="/common/windowstyle.jsp"/>
 </head>
 <body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
-<h2 class="display-3" style="color: aliceblue">My events</h2>
+<h2 class="display-3" style="color: aliceblue">${exUserName}</h2>
+<hr/>
+<hr>
 <div2 class="album py-5 ">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
@@ -43,10 +45,9 @@
                                                 disabled>Canceled</button>
                                     </c:if>
                                     <button type="button" class="btn btn-sm btn-outline-secondary disabled">Tickets: ${tickets}</button>
-                                    <form id="form2" action="${pageContext.request.contextPath}/exhibitionView"></form>
+                                    <form id="form2" action="${pageContext.request.contextPath}/admin/adminExhibitionView"></form>
                                     <button form="form2" type="submit" class="btn btn-sm btn-outline-secondary"
-                                            name="exId" value="${item.id}"><fmt:message
-                                            key="view"/></button>
+                                            name="exId" value="${item.id}">Edit</button>
                                 </div>
                                 <small class="text-muted">${item.price} <fmt:message key="uah"/></small>
                             </div>
@@ -59,10 +60,7 @@
 </div2>
 <hr>
 <footer>
-<%--    <jsp:include page="/common/footer.jsp"/>--%>
+    <%--    <jsp:include page="/common/footer.jsp"/>--%>
 </footer>
 </body>
 </html>
-
-
-

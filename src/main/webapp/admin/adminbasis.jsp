@@ -43,7 +43,7 @@
                             </div>
                             <div class="col">
                                 <label class="form-label">Price</label>
-                                <input type="text" class="form-control " name="price" value="${param.price}"
+                                <input type="number" class="form-control " min="1" name="price" value="${param.price}"
                                 >
                             </div>
                         </div>

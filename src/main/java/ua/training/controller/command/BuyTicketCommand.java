@@ -16,6 +16,10 @@ public class BuyTicketCommand implements Command {
     public String execute(HttpServletRequest request) {
         int exId = Integer.parseInt(request.getParameter("exID"));
         int amount =Integer.parseInt(request.getParameter("amount"));
+        double maxAmount =Double.parseDouble(request.getParameter("maxAmount"));
+        if(amount > maxAmount){
+            return "/WEB-INF/error/insufficientFundsError.jsp";
+        }
         User user = (User) request.getSession().getAttribute("userProfile");
         if (userService.buyTicket(user,exId,amount)){
             user.setBalance(userService.getUserBalance(user));

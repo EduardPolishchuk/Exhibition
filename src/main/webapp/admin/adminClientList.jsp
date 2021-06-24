@@ -34,7 +34,7 @@
                         <tbody>
                         <c:forEach var="user" items="${userList}">
                         <tr>
-                            <td><a href="#" style="color: black"><strong>${user.login}</strong></a></td>
+                            <td><a href="${pageContext.request.contextPath}/admin/adminUserExhibitions?userID=${user.id}" style="color: black"><strong>${user.login}</strong></a></td>
                             <td>${user.email}</td>
                             <td>${user.firstName}</td>
                             <td>${user.lastName}</td>

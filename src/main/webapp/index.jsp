@@ -33,9 +33,11 @@
                     </div>
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="exId-name" name="exID">
+                        <input type="hidden" class="form-control" id="maxAmount" name="maxAmount">
                         <label for="validationCustom01" class="form-label">Tickets</label>
-                        <input type="number" class="week-number-cell" id="validationCustom01" name="amount" min="1" value="1"
-                               required>
+                        <input type="number" class="form-control" id="validationCustom01" min="1"
+                               name="amount"
+                               value="1" required>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Confirm</button>
@@ -75,7 +77,7 @@
                     </c:if>
                     <input type="submit" class="btn-check" name="canceled" value="${not empty param.canceled? '': '1'}"
                            id="btncanceled">
-                    <label class="btn btn-primary ${not empty param.canceled ? 'active':''}"
+                    <label class="btn btn-outline-light ${not empty param.canceled ? 'active':''}"
                            for="btncanceled">Canceled</label>
                 </form>
             </div>
@@ -115,7 +117,8 @@
                                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                                             data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                             data-bs-theme="${language != 'uk'? item.theme : item.themeUk}"
-                                                            data-bs-id="${item.id}">
+                                                            data-bs-id="${item.id}" data-bs-price="${item.price}"
+                                                            data-bs-balance="${userProfile.balance}">
                                                         <fmt:message
                                                                 key="buy"/></button>
                                                 </c:otherwise>
@@ -222,10 +225,14 @@
         var button = event.relatedTarget
         var recipient = button.getAttribute('data-bs-theme')
         var exId = button.getAttribute('data-bs-id')
+        var price = button.getAttribute('data-bs-price')
+        var balance = button.getAttribute('data-bs-balance')
         var modalTitle = exampleModal.querySelector('.modal-title')
         var modalBodyInput = exampleModal.querySelector('.modal-body input')
+        var modalBodyInput2 = exampleModal.querySelector('.modal-body #maxAmount')
         modalTitle.textContent = recipient
         modalBodyInput.value = exId
+        modalBodyInput2.value = balance / price
     })
 </script>
 </body>
