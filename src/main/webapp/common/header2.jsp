@@ -23,25 +23,27 @@
 <header class="p-3 bg-black text-white">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="${pageContext.request.contextPath}/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <a href="${pageContext.request.contextPath}/"
+               class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                 <svg class="bi me-2" width="40" height="60" role="img" aria-label="Bootstrap">
                     <use xlink:href="${pageContext.request.contextPath}/"></use>
                 </svg>
             </a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="${pageContext.request.contextPath}/" class="nav-link px-1 text-secondary"><strong>Home</strong></a></li>
+                <li><a href="${pageContext.request.contextPath}/"
+                       class="nav-link px-1 text-secondary"><strong><fmt:message key="home"/> </strong></a></li>
                 <c:choose>
                     <c:when test="${role == 'USER'}">
                         <li><a href="${pageContext.request.contextPath}/user/userevents"
-                               class="nav-link px-2 text-white">My Events</a></li>
+                               class="nav-link px-2 text-white"><fmt:message key="myEvents"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/user/userprofile.jsp"
-                               class="nav-link px-2 text-white">My Profile</a></li>
+                               class="nav-link px-2 text-white"><fmt:message key="myProfile"/></a></li>
                     </c:when>
                     <c:when test="${role == 'ADMIN'}">
                         <li><a href="${pageContext.request.contextPath}/admin/adminbasis.jsp"
-                               class="nav-link px-2 text-white">Add New Exhibition</a></li>
+                               class="nav-link px-2 text-white"><fmt:message key="addExhibition"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/adminClientList"
-                               class="nav-link px-2 text-white">Client List</a></li>
+                               class="nav-link px-2 text-white"><fmt:message key="visitorsList"/></a></li>
                     </c:when>
                 </c:choose>
             </ul>
@@ -53,7 +55,7 @@
             <c:choose>
                 <c:when test="${role == 'USER' || role == 'ADMIN'}">
                     <c:if test="${role == 'ADMIN'}">
-                        <h6 class="display-11" style="color: aliceblue">admin</h6><br>
+                        <h6 class="display-11" style="color: aliceblue"><fmt:message key="admin"/></h6><br>
                     </c:if>
                     <h5 class="display-6" style="color: aliceblue">${userProfile.login}
                     </h5>
@@ -95,14 +97,12 @@
         </div>
     </div>
 </header>
-<%--<hr>--%>
-
 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
 
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Change Balance</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="changeBalance"/></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -110,18 +110,17 @@
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
-                        <label for="validationCustom01" class="form-label">Amount</label>
+                        <label for="validationCustom01" class="form-label"><fmt:message key="amount"/></label>
                         <input type="hidden" name="page" value="${pageContext.request.requestURI}">
                         <input type="text" class="form-control" id="validationCustom01" name="amount" value="0"
                                required>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Send message</button>
+                        <button type="submit" class="btn btn-primary"><fmt:message key="confirm"/> </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><fmt:message key="close"/></button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>

@@ -62,6 +62,7 @@
                             <input type="text" class="form-control " name="imageUrl" value="${param.imageUrl}"
                             >
                         </div>
+                        <label class="form-label">Halls: </label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="RED"
                                    value="RED"  ${not empty param.RED?'checked':''}>

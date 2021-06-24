@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.dao.ExhibitionDao;
-import ua.training.model.dao.PropertyReader;
+import ua.training.model.dao.DBPropertyReader;
 import ua.training.model.dao.mapper.ExhibitionMapper;
 import ua.training.model.dao.mapper.HallMapper;
 import ua.training.model.entity.Exhibition;
@@ -17,7 +17,7 @@ import java.util.*;
 
 public class JDBCExhibitionDao implements ExhibitionDao {
 
-    private final Properties properties = PropertyReader.getProperties();
+    private final Properties properties = DBPropertyReader.getProperties();
     private static final Logger logger = LogManager.getLogger();
     private final Connection connection;
 

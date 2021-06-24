@@ -1,16 +1,9 @@
 package ua.training.model.dao.impl;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ua.training.model.dao.PropertyReader;
+import ua.training.model.dao.DBPropertyReader;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 public class ConnectionPoolHolder {
@@ -26,7 +19,7 @@ public class ConnectionPoolHolder {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
-                    Properties properties = PropertyReader.getProperties();
+                    Properties properties = DBPropertyReader.getProperties();
                     ds.setDriverClassName(properties.getProperty(DRIVER));
                     ds.setUrl(properties.getProperty(CONNECTION_URL));
                     ds.setUsername(properties.getProperty(USERNAME));

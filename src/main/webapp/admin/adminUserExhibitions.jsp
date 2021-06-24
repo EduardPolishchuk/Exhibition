@@ -16,8 +16,6 @@
 <body style="background-color: black">
 <jsp:include page="/common/header2.jsp"/>
 <h2 class="display-3" style="color: aliceblue">${exUserName}</h2>
-<hr/>
-<hr>
 <div2 class="album py-5 ">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">

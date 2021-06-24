@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class PropertyReader {
+public class DBPropertyReader {
     private static final Logger logger = LogManager.getLogger();
     private static final String PROPERTIES = "db/db.properties";
 
