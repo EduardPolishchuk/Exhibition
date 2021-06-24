@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="/WEB-INF/custom_tag.tld" prefix="custom" %>
+<%@ taglib uri="http://custom.com" prefix="custom" %>
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
@@ -28,7 +28,7 @@
             </div>
             <div class="modal-body">
                 <form action="${pageContext.request.contextPath}/user/userbuy" class="row g-3 needs-validation"
-                      novalidate>
+                      >
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
@@ -107,7 +107,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <p class="card-text"><strong>${item.themeUk}</strong></p>
-                                    <p class="card-text"><custom:formatDate value="${item.date}"
+                                    <p  class="card-text"><custom:formatDate value="${item.date}"
                                                                             pattern="dd/MM/yyyy"/></p>
                                 </c:otherwise>
                             </c:choose>

@@ -1,5 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="custom" uri="http://custom.com" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
@@ -22,33 +23,29 @@
             <div class="card-body">
                 <form action="/success.jsp">
                     <div class="mb-3">
-                        <label class="form-label">Theme</label>
-                        <input type="text" class="form-control " name="theme" value="${exhibition.theme}"
+                        <label class="form-label"><fmt:message key="theme"/> </label>
+                        <input type="text" class="form-control " name="theme"
+                               value="${language != 'uk'? exhibition.theme : exhibition.themeUk}"
                                disabled>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Date</label>
-                        <input type="text" class="form-control " name="date" value="${exhibition.date}"
-                               disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Price (<fmt:message key="uah"/>)</label>
+                        <label class="form-label"><fmt:message key="price"/> (<fmt:message key="uah"/>)</label>
                         <input type="text" class="form-control " name="price" value="${exhibition.price}"
                                disabled>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Description</label>
+                        <label class="form-label"><fmt:message key="description"/></label>
                         <textarea class="form-control" name="description" disabled
-                                  rows="1">${exhibition.description}</textarea>
+                                  rows="1">${language != 'uk'? exhibition.description : exhibition.descriptionUk}</textarea>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Halls</label>
+                        <label class="form-label"><fmt:message key="halls"/></label>
                         <input type="text" class="form-control " name="imageUrl" value="${exhibition.halls}"
                                disabled>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Tickets Left</label>
+                        <label class="form-label"><fmt:message key="ticketsLeft"/> </label>
                         <input type="text" class="form-control " name="imageUrl"
                                value="${exhibition.maxPlaces - exhibition.currentPlaces}"
                                disabled>
@@ -56,13 +53,29 @@
                     <div>
                         <hr>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label"><fmt:message key="date"/></label>
+                        <c:choose>
+                            <c:when test="${language != 'uk'}">
+                                <ins>
+                                    <p class="form-label">${exhibition.date}</p>
+                                </ins>
+                            </c:when>
+                            <c:otherwise>
+                                <p class="form-label"><ins>
+                                    <custom:formatDate value="${exhibition.date}"
+                                                       pattern="dd/MM/yyyy"/>
+                                </ins></p>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
                 </form>
             </div>
         </div>
         <div class="col ">
             <div class="card shadow-sm" mb-5>
                 <div class="card-body">
-                    <h3 class="display-4">${exhibition.theme}</h3>
+                    <h3 class="display-4">${language != 'uk'? exhibition.theme : exhibition.themeUk}</h3>
                     <div class="">
                         <img class="card-img-top" src=${exhibition.imageUrl} alt="Picture"
                              style="max-height: 360px; max-width: 600px">
@@ -93,24 +106,24 @@
             </div>
             <div class="modal-body">
                 <form action="${pageContext.request.contextPath}/user/userbuy" class="row g-3 needs-validation"
-                      novalidate>
+                >
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="maxAmount" name="maxAmount">
                         <input type="hidden" class="form-control" id="exId" name="exID">
-                        <label for="amountInput" class="form-label">Tickets</label>
-                        <input type="number" class="form-control" id="amountInput" min="1" max="${userProfile.balance / exhibition.price}"
+                        <label for="amountInput" class="form-label"><fmt:message key="tickets"/> </label>
+                        <input type="number" class="form-control" id="amountInput" min="1"
+                               max="${userProfile.balance / exhibition.price}"
                                name="amount"
                                value="1" required>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><fmt:message key="confirm"/> </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><fmt:message key="close"/></button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
