@@ -21,30 +21,31 @@
         <div class="col ">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3 class="display-4">Enter your data</h3>
+                    <h3 class="display-4"><fmt:message key="enterYourData"/></h3>
                     <form method="post" action="${pageContext.request.contextPath}/user/userupdate">
                         <div class="mb-3 ">
-                            <label class="form-label">Email address</label>
-                            <input type="text" class="form-control" name="email" value="${userProfile.email}" ${vari} required>
+                            <label class="form-label"><fmt:message key="email"/></label>
+                            <input type="text" class="form-control" name="email" value="${userProfile.email}" ${vari}
+                                   required>
                         </div>
                         <div class="mb-3 ">
-                            <label class="form-label">First Name</label>
+                            <label class="form-label"><fmt:message key="firstName"/></label>
                             <input type="text" class="form-control" name="firstName" value="${userProfile.firstName}"
                             ${vari} required>
                         </div>
                         <div class="mb-3 ">
-                            <label class="form-label">Last Name</label>
+                            <label class="form-label"><fmt:message key="lastName"/></label>
                             <input type="text" class="form-control" name="lastName"
                                    value="${userProfile.lastName}" ${vari} required>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <label for="exampleInputPassword1" class="form-label"><fmt:message key="password"/></label>
                             <input type="password" class="form-control" id="exampleInputPassword1"
                                    name="password" value="${userProfile.password}" ${vari} required>
                         </div>
                         <c:if test="${error != null}">
                             <c:choose>
-                                <c:when test="${error eq 'passwordInvalid' || error eq 'loginInvalid'}" >
+                                <c:when test="${error eq 'passwordInvalid' || error eq 'loginInvalid'}">
                                     <div class="alert alert-danger  p-1 " role="alert">
                                         <fmt:message key="${error}"/>
                                     </div>
@@ -56,11 +57,11 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
-                        <button type="submit" class="btn btn-primary"  ${vari}>Update</button>
+                        <button type="submit" class="btn btn-primary"  ${vari}><fmt:message key="update"/></button>
                     </form>
                     <form action="">
-                        <button type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : null}">Edit
-                        </button>
+                        <button type="submit" class="btn btn-dark" name="edit" value="${vari != null  ? '1' : null}">
+                            <fmt:message key="edit"/></button>
                     </form>
                 </div>
             </div>
