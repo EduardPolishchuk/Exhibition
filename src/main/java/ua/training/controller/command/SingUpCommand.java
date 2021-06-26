@@ -13,7 +13,11 @@ public class SingUpCommand implements Command {
     private static final String LAST_NAME_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії\\']{2,}";
     private static final String PASSWORD_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії0-9]{1,}";
 
-    private final UserService userService = new UserService();
+    private final UserService userService ;
+
+    public SingUpCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

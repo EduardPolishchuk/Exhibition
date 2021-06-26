@@ -23,7 +23,7 @@ public class AddExhibitionCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String result;
-        String error = "";
+        String error;
         int price;
         Map<String, String> map = new HashMap<>();
         String theme = request.getParameter("theme");
@@ -60,6 +60,7 @@ public class AddExhibitionCommand implements Command {
         map.put(date, DATE_REGEX);
         for (String str : map.keySet()) {
             if (str == null || !str.matches(map.get(str))) {
+                error = str;
                 request.getSession().setAttribute("error", error);
                 return "/admin/adminbasis.jsp";
             }
@@ -75,11 +76,11 @@ public class AddExhibitionCommand implements Command {
                 .descriptionUk(descriptionUk)
                 .description(description)
                 .theme(theme)
+                .halls(exhibitionHalls)
                 .date(ld)
                 .price(BigDecimal.valueOf(price))
                 .imageUrl(imageUrl)
                 .build();
-        exhibition.setHalls(exhibitionHalls);
         if (!exhibitionService.create(exhibition)) {
             result = "/admin/adminbasis.jsp";
             error = "invalidDate";

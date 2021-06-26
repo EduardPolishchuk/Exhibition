@@ -13,14 +13,17 @@ import java.util.Map;
 import java.util.Set;
 
 public class UpdateExhibitionCommand implements Command {
-    private final ExhibitionService exhibitionService = new ExhibitionService();
+    private final ExhibitionService exhibitionService ;
     private static final String EN_REGEX = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{2,}$";
     private static final String UA_REGEX = "[А-ЩЬЮЯЫҐЄІЇа-щьюяыґєії0-9\\']{2,}";
     private static final String URL_REGEX = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)";
     public static final String DATE_REGEX = "^(19|20)\\d\\d[- .](0[1-9]|1[012])[- .](0[1-9]|[12][0-9]|3[01])$";
 
-    @Override
+    public UpdateExhibitionCommand(ExhibitionService exhibitionService) {
+        this.exhibitionService = exhibitionService;
+    }
 
+    @Override
     public String execute(HttpServletRequest request) {
         String ifError = "/admin/adminExhibitionView.jsp";
         String error = "";

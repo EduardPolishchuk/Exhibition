@@ -9,8 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 public class UserExhibitionsCheckCommand implements Command{
-    private final UserService userService = new UserService();
-    private final ExhibitionService exhibitionService = new ExhibitionService();
+    private final UserService userService;
+    private final ExhibitionService exhibitionService ;
+
+    public UserExhibitionsCheckCommand(UserService userService, ExhibitionService exhibitionService) {
+        this.userService = userService;
+        this.exhibitionService = exhibitionService;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

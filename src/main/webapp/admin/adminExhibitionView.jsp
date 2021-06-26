@@ -112,7 +112,7 @@
         <div class="col ">
             <div class="card shadow-sm" mb-5>
                 <div class="card-body">
-                    <h3 class="display-4">${exhibition.theme}</h3>
+                    <h3 class="display-4">${language != 'uk'? exhibition.theme : exhibition.themeUk}</h3>
                     <div class="">
                         <img class="card-img-top" src=${exhibition.imageUrl} alt="Picture"
                              style="max-height: 360px; max-width: 600px">

@@ -24,26 +24,27 @@ public class Servlet extends HttpServlet {
         commands.put("logout",
                 new LogOutCommand());
         commands.put("login",
-                new LoginCommand());
+                new LoginCommand(new UserService()));
         commands.put("user/userevents" , new MainCommand());
         commands.put("admin/adminClientList" , new ClientListCommand(new UserService(),
                 new ExhibitionService()));
         commands.put("start" , new PreLoadCommand(new ExhibitionService()));
-        commands.put("singUp" , new SingUpCommand());
-        commands.put("search" , new SearchCommand());
+        commands.put("singUp" , new SingUpCommand(new UserService()));
+        commands.put("search" , new SearchCommand(new ExhibitionService()));
         commands.put("user/userupdate" , new UpdateUserCommand(new UserService()));
         commands.put("user/userbuy" , new BuyTicketCommand(new UserService()));
         commands.put("admin/adminExhibitionView" ,
                 new ExhibitionDetailsCommand(new ExhibitionService()));
         commands.put("admin/adminExhibitionUpdate" ,
-                new UpdateExhibitionCommand());
+                new UpdateExhibitionCommand(new ExhibitionService()));
         commands.put("admin/adminCancelExhibition" ,
-                new CancelExhibitionCommand());
+                new CancelExhibitionCommand(new ExhibitionService()));
         commands.put("exhibitionView" ,
                 new ExhibitionDetailsCommand(new ExhibitionService()));
         commands.put("changeBalance" , new BalanceReplenishmentCommand(new UserService()));
         commands.put("admin/adminAddExhibition" , new AddExhibitionCommand());
-        commands.put("admin/adminUserExhibitions" , new UserExhibitionsCheckCommand());
+        commands.put("admin/adminUserExhibitions" ,
+                new UserExhibitionsCheckCommand(new UserService(),new ExhibitionService()));
     }
 
     public void doGet(HttpServletRequest request,

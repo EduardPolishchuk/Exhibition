@@ -101,15 +101,15 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         return list;
     }
 
-    public List<Exhibition> findFrom(int sortBy, int start, int itemsPer, boolean findCanceled) {
+    public List<Exhibition> findFrom(int sortBy, int startIndex, int rowsCount, boolean findCanceled) {
         List<Exhibition> list = new ArrayList<>();
         ExhibitionMapper expoMapper = new ExhibitionMapper();
         try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition WHERE is_canceled = ? ORDER BY ? LIMIT ? offset ? ")) {
             int k = 1;
             ps.setBoolean(k++, findCanceled);
             ps.setInt(k++, sortBy);
-            ps.setInt(k++, itemsPer);
-            ps.setInt(k, start);
+            ps.setInt(k++, rowsCount);
+            ps.setInt(k, startIndex);
             ResultSet expoResultSet = ps.executeQuery();
             while (expoResultSet.next()) {
                 Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);

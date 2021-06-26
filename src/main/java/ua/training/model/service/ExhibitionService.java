@@ -12,9 +12,9 @@ import java.util.Optional;
 public class ExhibitionService {
    private final DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public List<Exhibition> getFrom(int sortBy, int start, int per, boolean canceled) {
+    public List<Exhibition> getFrom(int sortBy, int startIndex, int rowsCount, boolean canceled) {
         try (ExhibitionDao exhibitionDao = daoFactory.createExpositionDao()) {
-            return exhibitionDao.findFrom(sortBy, start, per, canceled);
+            return exhibitionDao.findFrom(sortBy, startIndex, rowsCount, canceled);
         }
     }
 

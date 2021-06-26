@@ -56,6 +56,7 @@
                                     </div>
                                 </c:otherwise>
                             </c:choose>
+                            ${pageContext.session.removeAttribute('error')}
                         </c:if>
                         <button type="submit" class="btn btn-primary"  ${vari}><fmt:message key="update"/></button>
                     </form>

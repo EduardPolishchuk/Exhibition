@@ -40,12 +40,12 @@
                                 <div class="btn-group">
                                     <c:if test="${item.isCanceled}">
                                         <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                disabled>Canceled</button>
+                                                disabled><fmt:message key="canceled"/></button>
                                     </c:if>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary disabled">Tickets: ${tickets}</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary disabled"><fmt:message key="tickets"/>: ${tickets}</button>
                                     <form id="form2" action="${pageContext.request.contextPath}/admin/adminExhibitionView"></form>
                                     <button form="form2" type="submit" class="btn btn-sm btn-outline-secondary"
-                                            name="exId" value="${item.id}">Edit</button>
+                                            name="exId" value="${item.id}"><fmt:message key="edit"/></button>
                                 </div>
                                 <small class="text-muted">${item.price} <fmt:message key="uah"/></small>
                             </div>
