@@ -23,7 +23,7 @@
         <div class="col " style="text-align:center">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h4 class="display-5" style="text-align: center">Oops, something went wrong...</h4>
+                    <h4 class="display-5" style="text-align: center">Oops, something went wrong... <%= exception %></h4>
                     <form method="post" action="${pageContext.request.contextPath}/">
                         <button type="submit" class="btn btn-primary"><fmt:message key="home"/></button>
                     </form>

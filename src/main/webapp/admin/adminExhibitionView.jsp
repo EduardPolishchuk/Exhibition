@@ -74,6 +74,11 @@
                             <input type="text" class="form-control " name="price" value="${exhibition.maxPlaces}"
                                    disabled>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label"><fmt:message key="halls"/></label>
+                            <input type="text" class="form-control " name="imageUrl" value="${exhibition.halls}"
+                                   disabled>
+                        </div>
                     </div>
                     <div>
                         <input type="hidden" name="exId" value="${param.exId}">
@@ -84,6 +89,7 @@
                                 <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"
                                         aria-label="Close"></button>
                             </div>
+                            ${pageContext.session.removeAttribute('error')}
                         </c:if>
                         <c:if test="${!exhibition.isCanceled}">
                             <button type="submit" class="btn btn-primary"

@@ -2,6 +2,7 @@ package ua.training.controller;
 
 
 import ua.training.controller.command.*;
+import ua.training.controller.validator.ExhibitionValidator;
 import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
 
@@ -36,13 +37,14 @@ public class Servlet extends HttpServlet {
         commands.put("admin/adminExhibitionView" ,
                 new ExhibitionDetailsCommand(new ExhibitionService()));
         commands.put("admin/adminExhibitionUpdate" ,
-                new UpdateExhibitionCommand(new ExhibitionService()));
+                new UpdateExhibitionCommand(new ExhibitionService(), new ExhibitionValidator()));
         commands.put("admin/adminCancelExhibition" ,
                 new CancelExhibitionCommand(new ExhibitionService()));
         commands.put("exhibitionView" ,
                 new ExhibitionDetailsCommand(new ExhibitionService()));
         commands.put("changeBalance" , new BalanceReplenishmentCommand(new UserService()));
-        commands.put("admin/adminAddExhibition" , new AddExhibitionCommand());
+        commands.put("admin/adminAddExhibition" ,
+                new AddExhibitionCommand(new ExhibitionService(), new ExhibitionValidator()));
         commands.put("admin/adminUserExhibitions" ,
                 new UserExhibitionsCheckCommand(new UserService(),new ExhibitionService()));
     }

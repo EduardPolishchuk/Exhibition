@@ -27,7 +27,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public boolean create(Exhibition exhibition) {
-        try (PreparedStatement ps1 = connection.prepareCall(properties.getProperty("createExhibition"));) {
+        try (PreparedStatement ps1 = connection.prepareCall(properties.getProperty("createExhibition"))) {
             connection.setAutoCommit(false);
             int genExpositionID;
             int k = 1;
@@ -126,8 +126,8 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public boolean update(Exhibition exhibition) {
-        try (PreparedStatement ps = connection.prepareStatement("UPDATE exposition SET date=?,theme=?,theme_uk=?,price=?,description=?,description_uk=?," +
-                "image_url=? where id=?")) {
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE exposition, exposition_has_hall SET exposition.date=?,theme=?,theme_uk=?,price=?,description=?,description_uk=?," +
+                "image_url=?, exposition_has_hall.date=? where exposition.id=exposition_has_hall.exposition_id and exposition.id =?")) {
             connection.setAutoCommit(false);
             int k = 1;
             ps.setDate(k++, Date.valueOf(exhibition.getDate()));
@@ -137,6 +137,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
             ps.setString(k++, exhibition.getDescription());
             ps.setString(k++, exhibition.getDescriptionUk());
             ps.setString(k++, exhibition.getImageUrl());
+            ps.setDate(k++, Date.valueOf(exhibition.getDate()));
             ps.setInt(k, exhibition.getId());
             ps.executeUpdate();
             connection.commit();
@@ -152,9 +153,11 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public boolean cancel(int id) {
-        try (PreparedStatement ps = connection.prepareCall("UPDATE exposition SET is_canceled=true WHERE id =?")) {
+        try (PreparedStatement ps = connection.prepareCall("UPDATE exposition,exposition_has_hall SET is_canceled=true, exposition_has_hall.date=null where exposition.id=exposition_has_hall.exposition_id and exposition.id =?")) {
+            connection.setAutoCommit(false);
             ps.setInt(1, id);
             ps.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
             rollback(connection);
@@ -215,8 +218,8 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     public int getRowsNumber(boolean canceled) {
         int rows = 0;
-        try (PreparedStatement ps = connection.prepareStatement("SELECT COUNT(1) from exposition where is_canceled=?");) {
-           ps.setBoolean(1,canceled);
+        try (PreparedStatement ps = connection.prepareStatement("SELECT COUNT(1) from exposition where is_canceled=?")) {
+            ps.setBoolean(1, canceled);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 rows = rs.getInt(1);
