@@ -14,6 +14,10 @@ public class User {
     private ROLE role;
     private BigDecimal balance;
 
+    private User(){
+
+    }
+
     public int getId() {
         return id;
     }

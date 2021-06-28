@@ -126,7 +126,7 @@
                                                             data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                             data-bs-theme="${language != 'uk'? item.theme : item.themeUk}"
                                                             data-bs-id="${item.id}" data-bs-price="${item.price}"
-                                                            data-bs-balance="${userProfile.balance}">
+                                                            data-bs-balance="${userProfile.balance}" ${currentDate.isAfter(item.date)? 'disabled':''}>
                                                         <fmt:message
                                                                 key="buy"/></button>
                                                 </c:otherwise>
