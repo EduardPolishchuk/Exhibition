@@ -8,17 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 public class SingUpCommand implements Command {
-
     private final UserService userService;
+    private final UserValidator validator;
 
-    public SingUpCommand(UserService userService) {
+    public SingUpCommand(UserService userService, UserValidator validator) {
         this.userService = userService;
+        this.validator = validator;
     }
 
     @Override
     public String execute(HttpServletRequest request) {
         String result = "redirect:/success.jsp";
-        UserValidator validator = new UserValidator();
         Optional<User> optional = validator.singUpValidation(request);
         if (!optional.isPresent()) {
             return "redirect:/user/userprofile.jsp";

@@ -3,6 +3,7 @@ package ua.training.controller;
 
 import ua.training.controller.command.*;
 import ua.training.controller.validator.ExhibitionValidator;
+import ua.training.controller.validator.UserValidator;
 import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
 
@@ -30,7 +31,7 @@ public class Servlet extends HttpServlet {
         commands.put("admin/adminClientList" , new ClientListCommand(new UserService(),
                 new ExhibitionService()));
         commands.put("start" , new PreLoadCommand(new ExhibitionService()));
-        commands.put("singUp" , new SingUpCommand(new UserService()));
+        commands.put("singUp" , new SingUpCommand(new UserService(), new UserValidator()));
         commands.put("search" , new SearchCommand(new ExhibitionService()));
         commands.put("user/userupdate" , new UpdateUserCommand(new UserService()));
         commands.put("user/userbuy" , new BuyTicketCommand(new UserService()));

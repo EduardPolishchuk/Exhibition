@@ -21,8 +21,8 @@ public class UserValidator {
     }
 
     public Optional<User> singUpValidation(HttpServletRequest request){
-        User user = validate(request);
         String login = request.getParameter("login");
+        User user = validate(request);
         if(user == null){
             return Optional.empty();
         }else if (login == null || !login.matches(LOGIN_REG)){
