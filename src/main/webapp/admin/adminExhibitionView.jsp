@@ -147,7 +147,7 @@
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="exId-name" name="exID">
+                        <input type="hidden" class="form-control" id="exId-name" name="exId">
                         <label class="form-label"><fmt:message key="confirmToCancel"/></label>
                     </div>
                     <div class="modal-footer">

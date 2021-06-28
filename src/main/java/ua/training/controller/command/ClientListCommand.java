@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
+import static ua.training.constants.Constants.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -18,18 +19,18 @@ public class ClientListCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request) {
-        if (request.getParameter("exId") != null){
+        if (request.getParameter(EX_ID) != null){
             Optional<Exhibition> optional;
             try {
-                optional = exhibitionService.findById(Integer.parseInt(request.getParameter("exId")));
-                request.getSession().setAttribute("exhibition", optional.orElseThrow(()->new Exception("Not found")));
+                optional = exhibitionService.findById(Integer.parseInt(request.getParameter(EX_ID)));
+                request.getSession().setAttribute(EXHIBITION, optional.orElseThrow(()->new Exception(NOT_FOUND)));
             } catch (Exception e) {
-                return "/WEB-INF/error/error.jsp";
+                return ERROR_JSP;
             }
-            request.getSession().setAttribute("userList", userService.findExhibitionUsers(optional.get()));
+            request.getSession().setAttribute(USER_LIST, userService.findExhibitionUsers(optional.get()));
         }else {
-            request.getSession().setAttribute("userList", userService.findAllUsers());
+            request.getSession().setAttribute(USER_LIST, userService.findAllUsers());
         }
-        return "/admin/adminClientList.jsp";
+        return CLIENT_LIST_JSP;
     }
 }

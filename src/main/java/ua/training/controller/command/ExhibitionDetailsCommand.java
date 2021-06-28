@@ -27,7 +27,7 @@ public class ExhibitionDetailsCommand implements Command {
         } catch (Exception e) {
             return WEB_INF_ERROR_JSP;
         }
-        page = User.ROLE.ADMIN.equals(request.getSession().getAttribute("role")) ?
+        page = User.ROLE.ADMIN.equals(request.getSession().getAttribute(ROLE)) ?
                 ADMIN_ADMIN_EXHIBITION_VIEW_JSP : WEB_INF_EXHIBITION_VIEW_JSP;
         return page;
     }

@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.constants.Constants;
 import ua.training.controller.validator.ExhibitionValidator;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.Hall;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import static ua.training.constants.Constants.*;
 
 public class AddExhibitionCommand implements Command {
     private final ExhibitionService exhibitionService;
@@ -21,7 +24,7 @@ public class AddExhibitionCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String result = "/admin/adminbasis.jsp";
+        String result = Constants.ADMIN_ADMINBASIS_JSP;
         String error;
         Set<Hall> exhibitionHalls = getHallsFromRequest(request);
         Optional<Exhibition> optional = validator.validate(request);
@@ -30,18 +33,18 @@ public class AddExhibitionCommand implements Command {
             return result;
         }
         if (exhibitionHalls.size() < 1) {
-            error = "invalidHalls";
-            request.getSession().setAttribute("error", error);
+            error = INVALID_HALLS;
+            request.getSession().setAttribute(ERROR, error);
             return result;
         }
         exhibition = optional.get();
         exhibition.setHalls(exhibitionHalls);
         if (!exhibitionService.create(exhibition)) {
-            error = "invalidDate";
-            request.getSession().setAttribute("error", error);
+            error = INVALID_DATE;
+            request.getSession().setAttribute(ERROR, error);
             return result;
         }
-        result = "redirect:/success.jsp";
+        result = REDIRECT_SUCCESS_JSP;
         return result;
     }
 

@@ -32,7 +32,7 @@
                     <div class="mb-3">
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="exId-name" name="exID">
+                        <input type="hidden" class="form-control" id="exId-name" name="exId">
                         <input type="hidden" class="form-control" id="maxAmount" name="maxAmount">
                         <label for="validationCustom01" class="form-label"><fmt:message key="tickets"/></label>
                         <input type="number" class="form-control" id="validationCustom01" min="1"

@@ -83,12 +83,12 @@
                 </div>
             </div>
             <hr>
-            <c:if test="${!exhibition.isCanceled && userProfile.balance > exhibition.price && role == 'USER'}">
+            <c:if test="${!exhibition.isCanceled &&  role == 'USER'}">
                 <button type="button" class="btn btn-sm btn-outline-secondary"
                         data-bs-toggle="modal" data-bs-target="#exampleModal"
                         data-bs-theme="${language != 'uk'? exhibition.theme : exhibition.themeUk}"
                         data-bs-id="${exhibition.id}" data-bs-price="${exhibition.price}"
-                        data-bs-balance="${userProfile.balance}">
+                        data-bs-balance="${userProfile.balance}" ${userProfile.balance < exhibition.price?'disabled':''}>
                     <fmt:message
                             key="buy"/></button>
             </c:if>

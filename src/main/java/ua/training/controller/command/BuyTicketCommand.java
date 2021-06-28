@@ -2,7 +2,7 @@ package ua.training.controller.command;
 
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
-
+import static ua.training.constants.Constants.*;
 import javax.servlet.http.HttpServletRequest;
 
 public class BuyTicketCommand implements Command {
@@ -14,18 +14,18 @@ public class BuyTicketCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        int exId = Integer.parseInt(request.getParameter("exID"));
-        int amount =Integer.parseInt(request.getParameter("amount"));
-        double maxAmount =Double.parseDouble(request.getParameter("maxAmount"));
+        int exId = Integer.parseInt(request.getParameter(EX_ID));
+        int amount =Integer.parseInt(request.getParameter(AMOUNT));
+        double maxAmount =Double.parseDouble(request.getParameter(MAX_AMOUNT));
         if(amount > maxAmount){
-            return "/WEB-INF/error/insufficientFundsError.jsp";
+            return INSUFFICIENT_FUNDS_ERROR_JSP;
         }
-        User user = (User) request.getSession().getAttribute("userProfile");
+        User user = (User) request.getSession().getAttribute(USER_PROFILE);
         if (userService.buyTicket(user,exId,amount)){
             user.setBalance(userService.getUserBalance(user));
-            request.getSession().setAttribute("userProfile",user);
-            return "redirect:/success.jsp";
+            request.getSession().setAttribute(USER_PROFILE,user);
+            return REDIRECT_SUCCESS_JSP;
         }
-        return "/WEB-INF/error/error.jsp";
+        return ERROR_JSP;
     }
 }
