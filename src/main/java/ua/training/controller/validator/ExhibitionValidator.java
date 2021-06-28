@@ -33,7 +33,11 @@ public class ExhibitionValidator {
         map.put(price, PRICE_REGEX);
         for (String str : map.keySet()) {
             if (str == null || !str.matches(map.get(str))) {
-                error = str;
+                if (str == date) {
+                    error = "invalidDate";
+                } else {
+                    error = str;
+                }
                 request.getSession().setAttribute("error", error);
                 return Optional.empty();
             }

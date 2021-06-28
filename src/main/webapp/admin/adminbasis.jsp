@@ -80,11 +80,22 @@
                         </div>
                         <hr>
                         <c:if test="${error != null}">
-                            <div class="alert alert-danger  p-1 w-auto" role="alert">
-                                <fmt:message key="incorrectInput"/>: "${error}"
-                                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
-                            </div>
+                            <c:choose>
+                                <c:when test="${error eq 'invalidHalls' || error eq 'invalidDate'}">
+                                    <div class="alert alert-danger  p-1 w-auto" role="alert">
+                                        <fmt:message key="${error}"/>
+                                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="alert alert-danger  p-1 w-auto" role="alert">
+                                        <fmt:message key="incorrectInput"/>: "${error}"
+                                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                             ${pageContext.session.removeAttribute('error')}
                         </c:if>
                         <div class="mb-3">

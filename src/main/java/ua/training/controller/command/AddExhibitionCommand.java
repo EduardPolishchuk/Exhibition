@@ -30,14 +30,14 @@ public class AddExhibitionCommand implements Command {
             return result;
         }
         if (exhibitionHalls.size() < 1) {
-            error = "At least one hall should be selected!";
+            error = "invalidHalls";
             request.getSession().setAttribute("error", error);
             return result;
         }
         exhibition = optional.get();
         exhibition.setHalls(exhibitionHalls);
         if (!exhibitionService.create(exhibition)) {
-            error = "Date is not available!";
+            error = "invalidDate";
             request.getSession().setAttribute("error", error);
             return result;
         }
