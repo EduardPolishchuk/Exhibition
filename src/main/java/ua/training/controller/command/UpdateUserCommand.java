@@ -3,7 +3,7 @@ package ua.training.controller.command;
 import ua.training.controller.validator.UserValidator;
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
-
+import static ua.training.constants.Constants.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
@@ -19,17 +19,17 @@ public class UpdateUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         Optional<User> optional = validator.updateValidation(request);
-        User user = (User) request.getSession().getAttribute("userProfile");
+        User user = (User) request.getSession().getAttribute(USER_PROFILE);
         if (!optional.isPresent()) {
-            return "redirect:/user/userprofile.jsp";
+            return REDIRECT_USERPROFILE_JSP;
         }
         user.setFirstName(optional.get().getFirstName());
         user.setLastName(optional.get().getLastName());
         user.setPassword(optional.get().getPassword());
         user.setEmail(optional.get().getEmail());
         if (!userService.updateUser(user)) {
-            request.getSession().setAttribute("error", "loginInvalid");
+            request.getSession().setAttribute(ERROR, LOGIN_INVALID);
         }
-        return "redirect:/user/userprofile.jsp";
+        return REDIRECT_USERPROFILE_JSP;
     }
 }

@@ -37,4 +37,12 @@ public class Constants {
     public static final String INDEX_JSP = "/index.jsp";
     public static final String EXPO_LIST = "expoList";
     public static final String NO_OF_PAGES = "noOfPages";
+    public static final String SEARCH = "search";
+    public static final String ADMIN_EXHIBITION_VIEW_JSP = "/admin/adminExhibitionView.jsp";
+    public static final String REDIRECT_USERPROFILE_JSP = "redirect:/user/userprofile.jsp";
+    public static final String USER_USERBASIS_JSP = "/user/userbasis.jsp";
+    public static final String USER_EXHIBITIONS = "userExhib";
+    public static final String USER_ID = "userID";
+    public static final String EX_USER_NAME = "exUserName";
+    public static final String ADMIN_USER_EXHIBITIONS_JSP = "/admin/adminUserExhibitions.jsp";
 }

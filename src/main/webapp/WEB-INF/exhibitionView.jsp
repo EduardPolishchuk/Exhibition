@@ -111,7 +111,7 @@
                     </div>
                     <div class="mb-3">
                         <input type="hidden" class="form-control" id="maxAmount" name="maxAmount">
-                        <input type="hidden" class="form-control" id="exId" name="exID">
+                        <input type="hidden" class="form-control" id="exId" name="exId">
                         <label for="amountInput" class="form-label"><fmt:message key="tickets"/> </label>
                         <input type="number" class="form-control" id="amountInput" min="1"
                                max="${userProfile.balance / exhibition.price}"
