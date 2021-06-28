@@ -64,8 +64,8 @@ public class ExhibitionServiceTest {
         Exhibition ex = Exhibition.builder().build();
         MockitoAnnotations.initMocks(this);
         Mockito.when(daoFactoryMock.createExpositionDao()).thenReturn(exhibitionDaoMock);
-        Mockito.when(exhibitionDaoMock.create(ex)).thenReturn(false);
-        Assertions.assertFalse(exhibitionServiceInstance.create(ex));
+        Mockito.when(exhibitionDaoMock.update(ex)).thenReturn(false);
+        Assertions.assertFalse(exhibitionServiceInstance.update(ex));
     }
 
     @Test
