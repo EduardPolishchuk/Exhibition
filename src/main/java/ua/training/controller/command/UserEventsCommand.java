@@ -8,8 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Optional;
 
-public class MainCommand implements Command {
-    private ExhibitionService exhibitionService = new ExhibitionService();
+public class UserEventsCommand implements Command {
+    private final ExhibitionService exhibitionService ;
+
+    public UserEventsCommand(ExhibitionService exhibitionService) {
+        this.exhibitionService = exhibitionService;
+    }
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.controller.validator.UserValidator;
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
 
@@ -7,13 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 public class SingUpCommand implements Command {
-    private static final String LOGIN_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{1,19}$";
-    private static final String EMAIL_REG = "^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$";
-    private static final String FIRST_NAME_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії\\']{2,}";
-    private static final String LAST_NAME_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії\\']{2,}";
-    private static final String PASSWORD_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії0-9]{1,}";
 
-    private final UserService userService ;
+    private final UserService userService;
 
     public SingUpCommand(UserService userService) {
         this.userService = userService;
@@ -22,37 +18,16 @@ public class SingUpCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String result = "redirect:/success.jsp";
-        String error = "";
-        Map<String, String> map = new HashMap<>();
-        String login = request.getParameter("login");
-        String email = request.getParameter("email");
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String password = request.getParameter("password");
-        map.put(login, LOGIN_REG);
-        map.put(email, EMAIL_REG);
-        map.put(password, PASSWORD_REG);
-        map.put(firstName, FIRST_NAME_REG);
-        map.put(lastName, LAST_NAME_REG);
-        for (String str : map.keySet()) {
-            if (!str.matches(map.get(str))) {
-                error = str.equals(password) ? "passwordInvalid" : str;
-                request.getSession().setAttribute("error", error);
-                return "/singUp.jsp";
-            }
+        UserValidator validator = new UserValidator();
+        Optional<User> optional = validator.singUpValidation(request);
+        if (!optional.isPresent()) {
+            return "redirect:/user/userprofile.jsp";
         }
-        User user = User.builder()
-                .login(login)
-                .lastName(lastName)
-                .password(password)
-                .firstName(firstName)
-                .email(email)
-                .build();
-        if (!userService.createUser(user)) {
-            error = "loginInvalid";
+        System.out.println(optional.get());
+        if (!userService.createUser(optional.get())) {
             result = "/singUp.jsp";
+            request.getSession().setAttribute("error", "loginInvalid");
         }
-        request.getSession().setAttribute("error", error);
         return result;
     }
 }

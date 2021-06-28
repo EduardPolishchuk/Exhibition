@@ -90,6 +90,21 @@ public class User {
         return new UserBuilder();
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", exhibitionsTickets=" + exhibitionsTickets +
+                ", role=" + role +
+                ", balance=" + balance +
+                '}';
+    }
+
     public static class UserBuilder {
        private User newUser;
 
