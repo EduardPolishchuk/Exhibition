@@ -7,11 +7,11 @@ import ua.training.model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
+import static ua.training.constants.Constants.*;
+import static ua.training.constants.RegularExpressions.LOGIN_REG;
+import static ua.training.constants.RegularExpressions.PASSWORD_REG;
+
 public class LoginCommand implements Command {
-    private static final String LOGIN_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{1,19}$";
-    private static final String PASSWORD_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії0-9]+";
-    public static final String REDIRECT = "redirect:/";
-    public static final String REDIRECT_LOGIN_JSP = "redirect:/login.jsp";
 
     private final UserService userService;
 

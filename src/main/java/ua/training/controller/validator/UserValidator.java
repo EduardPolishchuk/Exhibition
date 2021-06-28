@@ -7,13 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class UserValidator {
-    private static final String LOGIN_REG = "^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\\d.-]{1,19}$";
-    private static final String EMAIL_REG = "^[^\\s@]+@([^\\s@.,]+\\.)+[^\\s@.,]{2,}$";
-    private static final String FIRST_NAME_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії\\']{2,}";
-    private static final String LAST_NAME_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії\\']{2,}";
-    private static final String PASSWORD_REG = "[A-Za-zА-ЩЬЮЯЫҐЄІЇа-щьюяыґєії0-9]{1,}";
+import static ua.training.constants.RegularExpressions.*;
 
+public class UserValidator {
 
     public Optional<User> updateValidation(HttpServletRequest request){
         return Optional.ofNullable(validate(request));

@@ -7,8 +7,10 @@ import ua.training.model.service.ExhibitionService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
+import static ua.training.constants.Constants.*;
+
 public class ExhibitionDetailsCommand implements Command {
-    private final String NOT_FOUND = " Exhibition not found";
+
     private final ExhibitionService exhibitionService;
 
     public ExhibitionDetailsCommand(ExhibitionService exhibitionService) {
@@ -20,13 +22,13 @@ public class ExhibitionDetailsCommand implements Command {
         Optional<Exhibition> optional;
         String page;
         try {
-            optional = exhibitionService.findById(Integer.parseInt(request.getParameter("exId")));
-            request.getSession().setAttribute("exhibition", optional.orElseThrow(()->new Exception(NOT_FOUND)));
+            optional = exhibitionService.findById(Integer.parseInt(request.getParameter(EX_ID)));
+            request.getSession().setAttribute(EXHIBITION, optional.orElseThrow(()->new Exception(NOT_FOUND)));
         } catch (Exception e) {
-            return "/WEB-INF/error.jsp";
+            return WEB_INF_ERROR_JSP;
         }
         page = User.ROLE.ADMIN.equals(request.getSession().getAttribute("role")) ?
-                "/admin/adminExhibitionView.jsp" : "/WEB-INF/exhibitionView.jsp";
+                ADMIN_ADMIN_EXHIBITION_VIEW_JSP : WEB_INF_EXHIBITION_VIEW_JSP;
         return page;
     }
 }
