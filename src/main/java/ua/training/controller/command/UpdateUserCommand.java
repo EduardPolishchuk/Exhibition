@@ -9,14 +9,15 @@ import java.util.Optional;
 
 public class UpdateUserCommand implements Command {
     private final UserService userService;
+    private final UserValidator validator;
 
-    public UpdateUserCommand(UserService userService) {
+    public UpdateUserCommand(UserService userService,UserValidator validator) {
         this.userService = userService;
+        this.validator = validator;
     }
 
     @Override
     public String execute(HttpServletRequest request) {
-        UserValidator validator = new UserValidator();
         Optional<User> optional = validator.updateValidation(request);
         User user = (User) request.getSession().getAttribute("userProfile");
         if (!optional.isPresent()) {

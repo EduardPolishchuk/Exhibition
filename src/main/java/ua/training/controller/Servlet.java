@@ -33,7 +33,8 @@ public class Servlet extends HttpServlet {
         commands.put("start" , new PreLoadCommand(new ExhibitionService()));
         commands.put("singUp" , new SingUpCommand(new UserService(), new UserValidator()));
         commands.put("search" , new SearchCommand(new ExhibitionService()));
-        commands.put("user/userupdate" , new UpdateUserCommand(new UserService()));
+        commands.put("user/userupdate" ,
+                new UpdateUserCommand(new UserService(),new UserValidator()));
         commands.put("user/userbuy" , new BuyTicketCommand(new UserService()));
         commands.put("admin/adminExhibitionView" ,
                 new ExhibitionDetailsCommand(new ExhibitionService()));
