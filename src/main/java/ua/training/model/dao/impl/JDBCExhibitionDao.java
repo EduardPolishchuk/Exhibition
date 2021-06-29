@@ -1,8 +1,8 @@
 package ua.training.model.dao.impl;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.model.dao.ExhibitionDao;
 import ua.training.model.dao.DBPropertyReader;
 import ua.training.model.dao.mapper.ExhibitionMapper;
@@ -31,7 +31,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     private static final String FIND_ALL_EXHIBITIONS = "findAllExhibitions";
 
     private final Properties properties = DBPropertyReader.getProperties();
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(JDBCExhibitionDao.class);
     private final Connection connection;
 
     public JDBCExhibitionDao(Connection connection) {

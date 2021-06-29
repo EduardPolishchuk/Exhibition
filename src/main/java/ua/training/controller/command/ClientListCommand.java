@@ -1,8 +1,8 @@
 package ua.training.controller.command;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 public class ClientListCommand implements Command{
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(ClientListCommand.class);
     private final UserService userService ;
     private final ExhibitionService exhibitionService;
 

@@ -1,9 +1,8 @@
 package ua.training.model.dao;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ua.training.model.entity.User;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GenericDao<T> extends AutoCloseable {
-    Logger logger = LogManager.getLogger();
+    Logger logger = LogManager.getLogger(GenericDao.class);
 
     boolean create (T entity);
     Optional<T> findById(int id);

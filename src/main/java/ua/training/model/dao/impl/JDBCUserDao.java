@@ -1,8 +1,8 @@
 package ua.training.model.dao.impl;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.model.dao.DBPropertyReader;
 import ua.training.model.dao.UserDao;
 import ua.training.model.dao.mapper.UserMapper;
@@ -32,7 +32,7 @@ public class JDBCUserDao implements UserDao {
     private static final String SELECT_FROM_USER_EXHIBITION = "selectFromUserExhibition";
     private static final String UPDATE_BALANCE_AND_PLACES = "updateBalanceAndPlaces";
     private final Properties properties = DBPropertyReader.getProperties();
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(JDBCUserDao.class);
     private final Connection connection;
 
 

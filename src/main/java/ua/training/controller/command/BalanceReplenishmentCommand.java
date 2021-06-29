@@ -1,8 +1,8 @@
 package ua.training.controller.command;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.model.entity.User;
 import ua.training.model.service.UserService;
 
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import static ua.training.constants.Constants.*;
 
 public class BalanceReplenishmentCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(BalanceReplenishmentCommand.class);
     private final UserService userService;
 
     public BalanceReplenishmentCommand(UserService userService) {

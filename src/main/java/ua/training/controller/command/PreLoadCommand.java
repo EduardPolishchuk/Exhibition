@@ -1,8 +1,6 @@
 package ua.training.controller.command;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import ua.training.model.entity.Exhibition;
 import ua.training.model.service.ExhibitionService;
 import static ua.training.constants.Constants.*;

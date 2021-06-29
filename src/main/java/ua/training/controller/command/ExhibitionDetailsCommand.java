@@ -1,8 +1,8 @@
 package ua.training.controller.command;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.User;
 import ua.training.model.service.ExhibitionService;
@@ -14,7 +14,7 @@ import static ua.training.constants.Constants.*;
 
 public class ExhibitionDetailsCommand implements Command {
 
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(ExhibitionDetailsCommand.class);
     private final ExhibitionService exhibitionService;
 
     public ExhibitionDetailsCommand(ExhibitionService exhibitionService) {
