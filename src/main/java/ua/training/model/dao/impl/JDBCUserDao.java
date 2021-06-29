@@ -15,19 +15,19 @@ import java.util.*;
 
 public class JDBCUserDao implements UserDao {
 
-    public static final String GET_EXHIBITION_USERS = "getExhibitionUsers";
-    public static final String BALANCE_REPLENISHMENT = "balanceReplenishment";
-    public static final String GET_USER_BALANCE = "getUserBalance";
-    public static final String USER_IS_VALID = "userIsValid";
-    public static final String UPDATE_USER = "updateUser";
-    public static final String CREATE_USER = "createUser";
-    public static final String USER = "user";
-    public static final String FIND_USER_BY_ID = "findUserByID";
-    public static final String FIND_ALL_USERS = "findAllUsers";
-    public static final String INSERT_INTO_USER_EXHIBITIONS = "insertIntoUserExhibitions";
-    public static final String UPDATE_USER_EXHIBITIONS = "updateUserExhibitions";
-    public static final String SELECT_FROM_USER_EXHIBITION = "selectFromUserExhibition";
-    public static final String UPDATE_BALANCE_AND_PLACES = "updateBalanceAndPlaces";
+    private static final String GET_EXHIBITION_USERS = "getExhibitionUsers";
+    private static final String BALANCE_REPLENISHMENT = "balanceReplenishment";
+    private static final String GET_USER_BALANCE = "getUserBalance";
+    private static final String USER_IS_VALID = "userIsValid";
+    private static final String UPDATE_USER = "updateUser";
+    private static final String CREATE_USER = "createUser";
+    private static final String USER = "user";
+    private static final String FIND_USER_BY_ID = "findUserByID";
+    private static final String FIND_ALL_USERS = "findAllUsers";
+    private static final String INSERT_INTO_USER_EXHIBITIONS = "insertIntoUserExhibitions";
+    private static final String UPDATE_USER_EXHIBITIONS = "updateUserExhibitions";
+    private static final String SELECT_FROM_USER_EXHIBITION = "selectFromUserExhibition";
+    private static final String UPDATE_BALANCE_AND_PLACES = "updateBalanceAndPlaces";
     private final Properties properties = DBPropertyReader.getProperties();
     private static final Logger logger = LogManager.getLogger();
     private Connection connection;

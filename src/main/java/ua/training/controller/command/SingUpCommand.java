@@ -26,7 +26,6 @@ public class SingUpCommand implements Command {
         if (!optional.isPresent()) {
             return SING_UP_JSP;
         }
-        System.out.println(optional.get());
         if (!userService.createUser(optional.get())) {
             result = SING_UP_JSP;
             request.getSession().setAttribute(ERROR, LOGIN_INVALID);

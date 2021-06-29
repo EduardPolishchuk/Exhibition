@@ -1,5 +1,8 @@
 package ua.training.controller.command;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.model.service.ExhibitionService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +11,7 @@ import static ua.training.constants.Constants.*;
 
 public class CancelExhibitionCommand implements Command {
     private final ExhibitionService exhibitionService;
+    private static final Logger logger = LogManager.getLogger();
 
     public CancelExhibitionCommand(ExhibitionService exhibitionService) {
         this.exhibitionService = exhibitionService;
@@ -20,6 +24,7 @@ public class CancelExhibitionCommand implements Command {
             if (!exhibitionService.cancel(Integer.parseInt(request.getParameter(EX_ID))))
                 page = ERROR_JSP;
         } catch (NumberFormatException e) {
+            logger.log(Level.ERROR, e);
             return ERROR_JSP;
         }
         return page;

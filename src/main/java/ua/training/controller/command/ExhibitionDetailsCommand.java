@@ -1,5 +1,8 @@
 package ua.training.controller.command;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.entity.User;
 import ua.training.model.service.ExhibitionService;
@@ -11,6 +14,7 @@ import static ua.training.constants.Constants.*;
 
 public class ExhibitionDetailsCommand implements Command {
 
+    private static final Logger logger = LogManager.getLogger();
     private final ExhibitionService exhibitionService;
 
     public ExhibitionDetailsCommand(ExhibitionService exhibitionService) {
@@ -25,6 +29,7 @@ public class ExhibitionDetailsCommand implements Command {
             optional = exhibitionService.findById(Integer.parseInt(request.getParameter(EX_ID)));
             request.getSession().setAttribute(EXHIBITION, optional.orElseThrow(()->new Exception(NOT_FOUND)));
         } catch (Exception e) {
+            logger.log(Level.ERROR, e.getMessage());
             return WEB_INF_ERROR_JSP;
         }
         page = User.ROLE.ADMIN.equals(request.getSession().getAttribute(ROLE)) ?

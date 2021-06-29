@@ -1,5 +1,8 @@
 package ua.training.controller.command;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
@@ -9,8 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 public class ClientListCommand implements Command{
-    private UserService userService ;
-    private ExhibitionService exhibitionService;
+    private static final Logger logger = LogManager.getLogger();
+    private final UserService userService ;
+    private final ExhibitionService exhibitionService;
 
     public ClientListCommand(UserService userService, ExhibitionService exhibitionService) {
         this.userService = userService;
@@ -25,6 +29,7 @@ public class ClientListCommand implements Command{
                 optional = exhibitionService.findById(Integer.parseInt(request.getParameter(EX_ID)));
                 request.getSession().setAttribute(EXHIBITION, optional.orElseThrow(()->new Exception(NOT_FOUND)));
             } catch (Exception e) {
+                logger.log(Level.ERROR, e.getMessage());
                 return ERROR_JSP;
             }
             request.getSession().setAttribute(USER_LIST, userService.findExhibitionUsers(optional.get()));
