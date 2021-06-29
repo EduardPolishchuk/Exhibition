@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
     private static final Logger logger = LogManager.getLogger();
-    private DataSource dataSource = ConnectionPoolHolder.getDataSource();
+    private final DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
     @Override
     public ExhibitionDao createExpositionDao() {
@@ -32,6 +32,4 @@ public class JDBCDaoFactory extends DaoFactory {
             throw new RuntimeException(e);
         }
     }
-
-
 }

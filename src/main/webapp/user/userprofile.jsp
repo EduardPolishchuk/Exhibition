@@ -41,7 +41,7 @@
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label"><fmt:message key="password"/></label>
                             <input type="password" class="form-control" id="exampleInputPassword1"
-                                   name="password" value="${userProfile.password}" ${vari} required>
+                                   name="password" value="" ${vari} required>
                         </div>
                         <c:if test="${error != null}">
                             <c:choose>

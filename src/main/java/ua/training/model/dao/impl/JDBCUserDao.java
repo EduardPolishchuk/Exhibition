@@ -11,7 +11,10 @@ import ua.training.model.entity.User;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
 
 public class JDBCUserDao implements UserDao {
 
@@ -30,7 +33,7 @@ public class JDBCUserDao implements UserDao {
     private static final String UPDATE_BALANCE_AND_PLACES = "updateBalanceAndPlaces";
     private final Properties properties = DBPropertyReader.getProperties();
     private static final Logger logger = LogManager.getLogger();
-    private Connection connection;
+    private final Connection connection;
 
 
     public JDBCUserDao(Connection connection) {

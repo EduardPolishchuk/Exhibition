@@ -27,8 +27,8 @@ public class ClientListCommand implements Command{
             Optional<Exhibition> optional;
             try {
                 optional = exhibitionService.findById(Integer.parseInt(request.getParameter(EX_ID)));
-                request.getSession().setAttribute(EXHIBITION, optional.orElseThrow(()->new Exception(NOT_FOUND)));
-            } catch (Exception e) {
+                request.getSession().setAttribute(EXHIBITION, optional.orElseThrow(()->new NumberFormatException(NOT_FOUND)));
+            } catch (NumberFormatException e) {
                 logger.log(Level.ERROR, e.getMessage());
                 return ERROR_JSP;
             }

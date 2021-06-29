@@ -1,6 +1,5 @@
 package ua.training.controller.command;
 
-import ua.training.constants.Constants;
 import ua.training.model.entity.User;
 import ua.training.model.service.ExhibitionService;
 import ua.training.model.service.UserService;
