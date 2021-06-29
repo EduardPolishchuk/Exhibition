@@ -20,6 +20,14 @@ public class JDBCUserDao implements UserDao {
     public static final String GET_USER_BALANCE = "getUserBalance";
     public static final String USER_IS_VALID = "userIsValid";
     public static final String UPDATE_USER = "updateUser";
+    public static final String CREATE_USER = "createUser";
+    public static final String USER = "user";
+    public static final String FIND_USER_BY_ID = "findUserByID";
+    public static final String FIND_ALL_USERS = "findAllUsers";
+    public static final String INSERT_INTO_USER_EXHIBITIONS = "insertIntoUserExhibitions";
+    public static final String UPDATE_USER_EXHIBITIONS = "updateUserExhibitions";
+    public static final String SELECT_FROM_USER_EXHIBITION = "selectFromUserExhibition";
+    public static final String UPDATE_BALANCE_AND_PLACES = "updateBalanceAndPlaces";
     private final Properties properties = DBPropertyReader.getProperties();
     private static final Logger logger = LogManager.getLogger();
     private Connection connection;
@@ -32,14 +40,14 @@ public class JDBCUserDao implements UserDao {
     @Override
     public boolean create(User user) {
         try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO user (login,email,password,first_name,last_name,role) VALUES (?,?,?,?,?,?)");
             int i = 1;
+            PreparedStatement ps = connection.prepareStatement(properties.getProperty(CREATE_USER));
             ps.setString(i++, user.getLogin());
             ps.setString(i++, user.getEmail());
             ps.setString(i++, user.getPassword());
             ps.setString(i++, user.getFirstName());
             ps.setString(i++, user.getLastName());
-            ps.setString(i, "user");
+            ps.setString(i, USER);
             ps.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
@@ -56,7 +64,7 @@ public class JDBCUserDao implements UserDao {
         try {
 
             UserMapper userMapper = new UserMapper();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE user.id=?");
+            PreparedStatement ps = connection.prepareStatement(properties.getProperty(FIND_USER_BY_ID));
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -74,7 +82,7 @@ public class JDBCUserDao implements UserDao {
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         try (Statement st = connection.createStatement()) {
-            ResultSet rs = st.executeQuery(properties.getProperty("findAllUsers"));
+            ResultSet rs = st.executeQuery(properties.getProperty(FIND_ALL_USERS));
             UserMapper userMapper = new UserMapper();
             while (rs.next()) {
                 users.add(userMapper.extractFromResultSet(rs));
@@ -90,12 +98,12 @@ public class JDBCUserDao implements UserDao {
     public boolean update(User user) {
         try {
             PreparedStatement ps = connection.prepareStatement(properties.getProperty(UPDATE_USER));
-            int i = 1;
-            ps.setString(i++, user.getLogin());
-            ps.setString(i++, user.getEmail());
-            ps.setString(i++, user.getPassword());
-            ps.setString(i++, user.getFirstName());
-            ps.setString(i++, user.getLastName());
+            int i = 0;
+            ps.setString(++i, user.getLogin());
+            ps.setString(++i, user.getEmail());
+            ps.setString(++i, user.getPassword());
+            ps.setString(++i, user.getFirstName());
+            ps.setString(++i, user.getLastName());
             ps.setInt(i, user.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -129,20 +137,20 @@ public class JDBCUserDao implements UserDao {
     public boolean buyTicket(User user, int exhibitionId, int amount) {
         try {
             connection.setAutoCommit(false);
-            PreparedStatement ps2 = connection.prepareStatement("update user,exposition set balance = balance - (exposition.price*?), current_places = current_places + ?  where user.id=? and exposition.id=?;");
+            PreparedStatement ps2 = connection.prepareStatement(properties.getProperty(UPDATE_BALANCE_AND_PLACES));
             ps2.setInt(1, amount);
             ps2.setInt(2, amount);
             ps2.setInt(3, user.getId());
             ps2.setInt(4, exhibitionId);
             ps2.executeUpdate();
-            PreparedStatement ps = connection.prepareStatement("SELECT * from user_has_exposition where user_id=? and exposition_id=?");
+            PreparedStatement ps = connection.prepareStatement(properties.getProperty(SELECT_FROM_USER_EXHIBITION));
             ps.setInt(1, user.getId());
             ps.setInt(2, exhibitionId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                ps = connection.prepareStatement("UPDATE user_has_exposition SET tickets_count = tickets_count+? WHERE user_id=? and exposition_id=?");
+                ps = connection.prepareStatement(properties.getProperty(UPDATE_USER_EXHIBITIONS));
             } else {
-                ps = connection.prepareStatement("INSERT INTO user_has_exposition(tickets_count, user_id, exposition_id) VALUES (?,?,?)");
+                ps = connection.prepareStatement(properties.getProperty(INSERT_INTO_USER_EXHIBITIONS));
             }
             ps.setInt(1, amount);
             ps.setInt(2, user.getId());
