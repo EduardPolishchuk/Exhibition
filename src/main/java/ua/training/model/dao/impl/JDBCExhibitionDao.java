@@ -17,6 +17,9 @@ import java.util.*;
 
 public class JDBCExhibitionDao implements ExhibitionDao {
 
+    public static final String FIND_BY_ID = "findByIdExhibition";
+    public static final String CREATE_EXHIBITION = "createExhibition";
+    public static final String ADD_EXHIBITION_HALL = "addExhibitionHall";
     private final Properties properties = DBPropertyReader.getProperties();
     private static final Logger logger = LogManager.getLogger();
     private final Connection connection;
@@ -27,7 +30,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public boolean create(Exhibition exhibition) {
-        try (PreparedStatement ps1 = connection.prepareCall(properties.getProperty("createExhibition"))) {
+        try (PreparedStatement ps1 = connection.prepareCall(properties.getProperty(CREATE_EXHIBITION))) {
             connection.setAutoCommit(false);
             int genExpositionID;
             int k = 1;
@@ -45,7 +48,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
             resultSet.next();
             genExpositionID = resultSet.getInt(1);
             for (Hall hall : exhibition.getHalls()) {
-                PreparedStatement ps2 = connection.prepareCall(properties.getProperty("addExhibitionHall"));
+                PreparedStatement ps2 = connection.prepareCall(properties.getProperty(ADD_EXHIBITION_HALL));
                 ps2.setInt(1, genExpositionID);
                 ps2.setInt(2, hall.getId());
                 ps2.setDate(3, Date.valueOf(exhibition.getDate()));
@@ -66,7 +69,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public Optional<Exhibition> findById(int id) {
         Exhibition exhibition = null;
         ExhibitionMapper expoMapper = new ExhibitionMapper();
-        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty("findByIdExhibition"))) {
+        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty(FIND_BY_ID))) {
             ps.setInt(1, id);
             ResultSet expoResultSet = ps.executeQuery();
             if (expoResultSet.next()) {
@@ -87,7 +90,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         List<Exhibition> list = new ArrayList<>();
         ExhibitionMapper expoMapper = new ExhibitionMapper();
         try (Statement statement = connection.createStatement();
-             ResultSet expoResultSet = statement.executeQuery("SELECT * FROM exposition ")) {
+             ResultSet expoResultSet = statement.executeQuery(properties.getProperty("findAllExhibitions"))) {
             while (expoResultSet.next()) {
                 Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
                 ex.setHalls(getHalls(ex));
@@ -104,7 +107,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public List<Exhibition> findFrom(int sortBy, int startIndex, int rowsCount, boolean findCanceled) {
         List<Exhibition> list = new ArrayList<>();
         ExhibitionMapper expoMapper = new ExhibitionMapper();
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM exposition WHERE is_canceled = ? ORDER BY ? LIMIT ? offset ? ")) {
+        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty("findFromExhibition"))) {
             int k = 1;
             ps.setBoolean(k++, findCanceled);
             ps.setInt(k++, sortBy);
@@ -126,8 +129,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public boolean update(Exhibition exhibition) {
-        try (PreparedStatement ps = connection.prepareStatement("UPDATE exposition, exposition_has_hall SET exposition.date=?,theme=?,theme_uk=?,price=?,description=?,description_uk=?," +
-                "image_url=?, exposition_has_hall.date=? where exposition.id=exposition_has_hall.exposition_id and exposition.id =?")) {
+        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty("updateExhibition"))) {
             connection.setAutoCommit(false);
             int k = 1;
             ps.setDate(k++, Date.valueOf(exhibition.getDate()));

@@ -46,6 +46,7 @@ public class JDBCUserDao implements UserDao {
     public Optional<User> findById(int id) {
         User user = null;
         try {
+
             UserMapper userMapper = new UserMapper();
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE user.id=?");
             ps.setInt(1, id);

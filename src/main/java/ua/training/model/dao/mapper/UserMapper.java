@@ -14,7 +14,6 @@ public class UserMapper implements ObjectMapper<User> {
     public User extractFromResultSet(ResultSet rs) throws SQLException {
         return User.builder()
                 .id(rs.getInt("id"))
-                .password(rs.getString("password"))
                 .login(rs.getString("login"))
                 .role(User.ROLE.valueOf(rs.getString("role").toUpperCase()))
                 .balance(rs.getBigDecimal("balance"))

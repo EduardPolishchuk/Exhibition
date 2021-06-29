@@ -1,12 +1,16 @@
 package ua.training.model.dao.impl;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.model.dao.DBPropertyReader;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 public class ConnectionPoolHolder {
+
+
     private static volatile DataSource dataSource;
     private static final String CONNECTION_URL = "connection.url";
     private static final String USERNAME = "dbUser";

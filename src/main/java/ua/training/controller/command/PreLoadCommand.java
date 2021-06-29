@@ -1,5 +1,8 @@
 package ua.training.controller.command;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.service.ExhibitionService;
 import static ua.training.constants.Constants.*;
@@ -10,7 +13,6 @@ public class PreLoadCommand implements Command {
     public static final int RECORDS_PER_PAGE = 3;
     public static final String CURRENT_PAGE_NUMBER = "currentPage";
     private final ExhibitionService exhibitionService;
-
     public PreLoadCommand(ExhibitionService exhibitionService) {
         this.exhibitionService = exhibitionService;
     }
