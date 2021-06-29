@@ -3,6 +3,7 @@ package ua.training.model.dao.impl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.training.model.dao.DBPropertyReader;
 import ua.training.model.dao.UserDao;
 import ua.training.model.dao.mapper.UserMapper;
 import ua.training.model.entity.Exhibition;
@@ -13,6 +14,13 @@ import java.sql.*;
 import java.util.*;
 
 public class JDBCUserDao implements UserDao {
+
+    public static final String GET_EXHIBITION_USERS = "getExhibitionUsers";
+    public static final String BALANCE_REPLENISHMENT = "balanceReplenishment";
+    public static final String GET_USER_BALANCE = "getUserBalance";
+    public static final String USER_IS_VALID = "userIsValid";
+    public static final String UPDATE_USER = "updateUser";
+    private final Properties properties = DBPropertyReader.getProperties();
     private static final Logger logger = LogManager.getLogger();
     private Connection connection;
 
@@ -65,10 +73,8 @@ public class JDBCUserDao implements UserDao {
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        final String query = "" +
-                " select * from user";
         try (Statement st = connection.createStatement()) {
-            ResultSet rs = st.executeQuery(query);
+            ResultSet rs = st.executeQuery(properties.getProperty("findAllUsers"));
             UserMapper userMapper = new UserMapper();
             while (rs.next()) {
                 users.add(userMapper.extractFromResultSet(rs));
@@ -83,7 +89,7 @@ public class JDBCUserDao implements UserDao {
     @Override
     public boolean update(User user) {
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE user SET login=?,email=?,password=?,first_name=?,last_name=? WHERE id =?");
+            PreparedStatement ps = connection.prepareStatement(properties.getProperty(UPDATE_USER));
             int i = 1;
             ps.setString(i++, user.getLogin());
             ps.setString(i++, user.getEmail());
@@ -105,7 +111,7 @@ public class JDBCUserDao implements UserDao {
         Optional<User> result = Optional.empty();
         UserMapper userMapper = new UserMapper();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE login=? AND password=?");
+            PreparedStatement ps = connection.prepareStatement(properties.getProperty(USER_IS_VALID));
             ps.setString(1, login);
             ps.setString(2, password);
             ResultSet resultSet = ps.executeQuery();
@@ -156,7 +162,7 @@ public class JDBCUserDao implements UserDao {
     public BigDecimal getUserBalance(User user) {
         BigDecimal balance = BigDecimal.valueOf(0);
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT balance from user where id=?");
+            PreparedStatement ps = connection.prepareStatement(properties.getProperty(GET_USER_BALANCE));
             ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
@@ -173,7 +179,7 @@ public class JDBCUserDao implements UserDao {
     @Override
     public BigDecimal balanceReplenishment(BigDecimal amount, User user) {
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE user set balance=balance+? where id=?");
+            PreparedStatement ps = connection.prepareStatement(properties.getProperty(BALANCE_REPLENISHMENT));
             ps.setBigDecimal(1, amount);
             ps.setInt(2, user.getId());
             ps.executeUpdate();
@@ -186,7 +192,7 @@ public class JDBCUserDao implements UserDao {
     @Override
     public List<User> getExhibitionUsers(Exhibition exhibition) {
         List<User> users = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement("select * from user left join user_has_exposition uhe on user.id = uhe.user_id where exposition_id=?")){
+        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty(GET_EXHIBITION_USERS))){
             ps.setInt(1,exhibition.getId());
             ResultSet rs = ps.executeQuery();
             UserMapper userMapper = new UserMapper();

@@ -17,9 +17,19 @@ import java.util.*;
 
 public class JDBCExhibitionDao implements ExhibitionDao {
 
-    public static final String FIND_BY_ID = "findByIdExhibition";
-    public static final String CREATE_EXHIBITION = "createExhibition";
-    public static final String ADD_EXHIBITION_HALL = "addExhibitionHall";
+    private static final String FIND_BY_ID = "findByIdExhibition";
+    private static final String CREATE_EXHIBITION = "createExhibition";
+    private static final String ADD_EXHIBITION_HALL = "addExhibitionHall";
+    private static final String GET_EXHIBITION_HALLS = "getExhibitionHalls";
+    private static final String GET_ROWS_NUMBER = "getRowsNumber";
+    private static final String FIND_BY_THEME = "findByTheme";
+    private static final String TICKETS_COUNT = "tickets_count";
+    private static final String GET_USER_EXHIBITIONS = "getUserExhibitions";
+    private static final String CANCEL_EXHIBITION = "cancelExhibition";
+    private static final String UPDATE_EXHIBITION = "updateExhibition";
+    private static final String FIND_FROM_EXHIBITION = "findFromExhibition";
+    private static final String FIND_ALL_EXHIBITIONS = "findAllExhibitions";
+
     private final Properties properties = DBPropertyReader.getProperties();
     private static final Logger logger = LogManager.getLogger();
     private final Connection connection;
@@ -90,7 +100,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         List<Exhibition> list = new ArrayList<>();
         ExhibitionMapper expoMapper = new ExhibitionMapper();
         try (Statement statement = connection.createStatement();
-             ResultSet expoResultSet = statement.executeQuery(properties.getProperty("findAllExhibitions"))) {
+             ResultSet expoResultSet = statement.executeQuery(properties.getProperty(FIND_ALL_EXHIBITIONS))) {
             while (expoResultSet.next()) {
                 Exhibition ex = expoMapper.extractFromResultSet(expoResultSet);
                 ex.setHalls(getHalls(ex));
@@ -107,7 +117,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public List<Exhibition> findFrom(int sortBy, int startIndex, int rowsCount, boolean findCanceled) {
         List<Exhibition> list = new ArrayList<>();
         ExhibitionMapper expoMapper = new ExhibitionMapper();
-        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty("findFromExhibition"))) {
+        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty(FIND_FROM_EXHIBITION))) {
             int k = 1;
             ps.setBoolean(k++, findCanceled);
             ps.setInt(k++, sortBy);
@@ -129,7 +139,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public boolean update(Exhibition exhibition) {
-        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty("updateExhibition"))) {
+        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty(UPDATE_EXHIBITION))) {
             connection.setAutoCommit(false);
             int k = 1;
             ps.setDate(k++, Date.valueOf(exhibition.getDate()));
@@ -155,7 +165,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     @Override
     public boolean cancel(int id) {
-        try (PreparedStatement ps = connection.prepareCall("UPDATE exposition,exposition_has_hall SET is_canceled=true, exposition_has_hall.date=null where exposition.id=exposition_has_hall.exposition_id and exposition.id =?")) {
+        try (PreparedStatement ps = connection.prepareCall(properties.getProperty(CANCEL_EXHIBITION))) {
             connection.setAutoCommit(false);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -173,13 +183,13 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     public Optional<Map<Exhibition, Integer>> getUserExhibitions(User user) {
         ExhibitionMapper exhibitionMapper = new ExhibitionMapper();
         Map<Exhibition, Integer> map = new HashMap<>();
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM user_has_exposition left join exposition e on user_has_exposition.exposition_id = e.id  WHERE user_id=?")) {
+        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty(GET_USER_EXHIBITIONS))) {
             ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Exhibition ex = exhibitionMapper.extractFromResultSet(rs);
                 ex.setHalls(getHalls(ex));
-                map.put(ex, rs.getInt("tickets_count"));
+                map.put(ex, rs.getInt(TICKETS_COUNT));
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage());
@@ -201,7 +211,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
     @Override
     public List<Exhibition> findByTheme(String theme) {
         List<Exhibition> result = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareCall("SELECT * FROM exposition WHERE theme = ? or theme_uk=?")) {
+        try (PreparedStatement ps = connection.prepareCall(properties.getProperty(FIND_BY_THEME))) {
             ps.setString(1, theme);
             ps.setString(2, theme);
             ResultSet rs;
@@ -220,7 +230,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
 
     public int getRowsNumber(boolean canceled) {
         int rows = 0;
-        try (PreparedStatement ps = connection.prepareStatement("SELECT COUNT(1) from exposition where is_canceled=?")) {
+        try (PreparedStatement ps = connection.prepareStatement(properties.getProperty(GET_ROWS_NUMBER))) {
             ps.setBoolean(1, canceled);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -236,7 +246,7 @@ public class JDBCExhibitionDao implements ExhibitionDao {
         HallMapper hallMapper = new HallMapper();
         Set<Hall> halls = new HashSet<>();
         try {
-            PreparedStatement ps = connection.prepareCall("SELECT  hall.name FROM hall join exposition_has_hall on hall.id = exposition_has_hall.hall_id where exposition_id =?");
+            PreparedStatement ps = connection.prepareCall(properties.getProperty(GET_EXHIBITION_HALLS));
             ps.setInt(1, exhibition.getId());
             ResultSet hallResultSet = ps.executeQuery();
             while (hallResultSet.next()) {
