@@ -1,20 +1,19 @@
 package ua.training.controller.command;
 
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import ua.training.model.entity.Exhibition;
 import ua.training.model.service.ExhibitionService;
-import static ua.training.constants.Constants.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static ua.training.constants.Constants.*;
+
 public class PreLoadCommand implements Command {
-    private static final Logger logger = LogManager.getLogger(PreLoadCommand.class);
     public static final int RECORDS_PER_PAGE = 3;
     public static final String CURRENT_PAGE_NUMBER = "currentPage";
     private final ExhibitionService exhibitionService;
+
     public PreLoadCommand(ExhibitionService exhibitionService) {
         this.exhibitionService = exhibitionService;
     }
@@ -22,7 +21,6 @@ public class PreLoadCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        logger.log(Level.ERROR, "INFO");
         String canceledParam = request.getParameter(CANCELED);
         boolean findCanceled = canceledParam != null && !canceledParam.isEmpty();
         int page = 1;
